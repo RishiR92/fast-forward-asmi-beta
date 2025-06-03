@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -108,19 +107,23 @@ const Index = () => {
               <ul className="space-y-4 text-slate-300">
                 <li className="flex items-start gap-3">
                   <span className="text-red-500 mt-1">•</span>
-                  <span>"Wait — what did we promise them last week?"</span>
+                  <span>Walk into meetings unsure who you're talking to or what was last discussed</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-red-500 mt-1">•</span>
-                  <span>Rewriting the same context for every meeting</span>
+                  <span>Promise follow-ups in voice notes and chats, but forget to act</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-red-500 mt-1">•</span>
-                  <span>Following up manually, or worse — not at all</span>
+                  <span>Spend 10–15 mins prepping before every important call</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-red-500 mt-1">•</span>
-                  <span>Showing up underprepared and bluffing through intros</span>
+                  <span>Juggle WhatsApp, calendar, Notion, and reminders just to stay on top</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Chase people manually to close loops on intros, updates, or tasks</span>
                 </li>
               </ul>
             </div>
@@ -130,19 +133,23 @@ const Index = () => {
               <ul className="space-y-4 text-slate-300">
                 <li className="flex items-start gap-3">
                   <span className="text-green-500 mt-1">•</span>
-                  <span>Shows you what's unresolved before it slips</span>
+                  <span>Get pre-meeting briefs on WhatsApp: last convo, who they are, what to say</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-green-500 mt-1">•</span>
-                  <span>Sends talking points before every call</span>
+                  <span>Asmi tracks every spoken commitment and follows up at the right time</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-green-500 mt-1">•</span>
-                  <span>Pings your team/investors for you — no chasing</span>
+                  <span>Skip the scramble — you're always 2 steps ahead, context-first</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-green-500 mt-1">•</span>
-                  <span>Contexts you without opening a single doc</span>
+                  <span>Voice-note "Reschedule that to Friday 3PM" → synced across Google/Outlook</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-green-500 mt-1">•</span>
+                  <span>Nudges your team, partners, or investors — without you lifting a finger</span>
                 </li>
               </ul>
             </div>
@@ -168,7 +175,7 @@ const Index = () => {
                 <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                   <Brain className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white">🧠 Second Brain, Inside WhatsApp</h3>
+                <h3 className="text-xl font-semibold text-white">🧠 Infinite Memory, Instant Recall</h3>
                 <p className="text-slate-300">
                   Voice notes, conversations, decisions — Asmi never forgets context or commitments.
                 </p>
