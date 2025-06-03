@@ -39,14 +39,14 @@ const Index = () => {
                   Early Access
                 </Badge>
                 <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                  Your calendar is full.{" "}
-                  <span className="gradient-text">Your head is fuller.</span>
+                  You move fast.{" "}
+                  <span className="gradient-text">Asmi clears the way.</span>
                 </h1>
                 <h2 className="text-2xl text-slate-300 leading-relaxed max-w-lg font-medium">
-                  Let Asmi handle the chaos.
+                  Your Chief of Staff — built inside WhatsApp.
                 </h2>
                 <p className="text-xl text-slate-400 leading-relaxed max-w-lg">
-                  The Chief of Staff you never had — built inside WhatsApp.
+                  Asmi remembers what you say, preps you before meetings, and follows up — so you don't have to.
                 </p>
               </div>
               
@@ -66,32 +66,32 @@ const Index = () => {
                     Join Beta
                   </Button>
                 </div>
-                <p className="text-sm text-slate-400">
-                  For people who run fast and think faster.
-                </p>
               </form>
             </div>
 
             <div className="relative animate-float">
-              <div className="whatsapp-mockup rounded-3xl p-6 shadow-2xl max-w-sm mx-auto">
-                <div className="bg-slate-800 rounded-2xl p-4 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm font-semibold">A</span>
-                    </div>
-                    <span className="text-white font-medium">Asmi</span>
+              <div className="bg-slate-800 rounded-2xl p-6 shadow-2xl max-w-sm mx-auto border border-slate-700">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-semibold">A</span>
                   </div>
-                  <div className="bg-slate-700 rounded-lg p-3 text-white text-sm">
-                    📅 Your 3pm with Sarah Chen is ready
-                    <br /><br />
-                    <strong>Context:</strong> YC founder, Series A at $15M ARR
-                    <br />
-                    <strong>Last chat:</strong> Interested in your API integration
-                    <br />
-                    <strong>Talk about:</strong> Partnership timeline, technical requirements
-                  </div>
-                  <div className="text-xs text-slate-400 text-right">2:58 PM</div>
+                  <span className="text-white font-medium">Asmi</span>
                 </div>
+                <div className="space-y-3 text-white text-sm">
+                  <div className="flex items-start gap-2">
+                    <Calendar className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                    <span><strong>Context:</strong> YC founder, Series A at $15M ARR</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <MessageSquare className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                    <span><strong>Last chat:</strong> Interested in your API integration</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Target className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span><strong>Talk about:</strong> Partnership timeline, technical requirements</span>
+                  </div>
+                </div>
+                <div className="text-xs text-slate-400 text-right mt-4">2:58 PM</div>
               </div>
             </div>
           </div>
