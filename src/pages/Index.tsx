@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -72,10 +73,11 @@ const Index = () => {
             <div className="relative animate-float">
               <div className="bg-slate-800 rounded-2xl p-6 shadow-2xl max-w-sm mx-auto border border-slate-700">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-semibold">A</span>
+                  <Calendar className="h-6 w-6 text-blue-400" />
+                  <div>
+                    <div className="text-white font-medium">Sync up with Reducto</div>
+                    <div className="text-slate-400 text-sm">3PM</div>
                   </div>
-                  <span className="text-white font-medium">Asmi</span>
                 </div>
                 <div className="space-y-3 text-white text-sm">
                   <div className="flex items-start gap-2">
@@ -346,40 +348,77 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-              How it works
+              How Asmi works
             </h2>
-            <p className="text-xl text-slate-300">Three steps. Zero friction.</p>
+            <p className="text-xl text-slate-300">Three steps. Zero effort. High leverage.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-12">
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-6">
               <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center mx-auto">
                 <span className="text-2xl font-bold text-white">1</span>
               </div>
-              <h3 className="text-2xl font-semibold text-white">Text</h3>
+              <h3 className="text-2xl font-semibold text-white">Say it</h3>
               <p className="text-slate-300">
-                Send voice messages or text to Asmi in WhatsApp. Natural, conversational.
+                Voice note or text Asmi inside WhatsApp — no commands, just talk naturally.
               </p>
+              <div className="bg-slate-800/50 rounded-lg p-4 text-left space-y-2">
+                <div className="text-slate-300 text-sm">"Remind me to follow up with Tony on pricing."</div>
+                <div className="text-slate-300 text-sm">"Schedule intro call with Alex next Tuesday at 3PM."</div>
+              </div>
             </div>
 
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-6">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-teal-600 rounded-full flex items-center justify-center mx-auto">
                 <span className="text-2xl font-bold text-white">2</span>
               </div>
-              <h3 className="text-2xl font-semibold text-white">Remember</h3>
+              <h3 className="text-2xl font-semibold text-white">It remembers</h3>
               <p className="text-slate-300">
-                Asmi processes, remembers, and connects everything to your existing context.
+                Asmi understands what matters, connects it to past context, and tracks it.
               </p>
+              <div className="text-left space-y-2 text-sm text-slate-300">
+                <div>• Remembers convos, decisions, promises — no manual entry needed</div>
+                <div>• Builds your contextual memory graph across meetings & messages</div>
+              </div>
             </div>
 
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-6">
               <div className="w-16 h-16 bg-gradient-to-r from-teal-600 to-green-600 rounded-full flex items-center justify-center mx-auto">
                 <span className="text-2xl font-bold text-white">3</span>
               </div>
-              <h3 className="text-2xl font-semibold text-white">Act</h3>
+              <h3 className="text-2xl font-semibold text-white">You stay sharp</h3>
               <p className="text-slate-300">
-                Asmi schedules, reminds, briefs, and nudges — automatically and intelligently.
+                Asmi handles the rest — scheduling, briefing, nudging, reminding — before you even ask.
               </p>
+              <div className="text-left space-y-2 text-sm text-slate-300">
+                <div>• Prepares talking points before your next call</div>
+                <div>• Follows up with your team or investors</div>
+                <div>• Sends gentle nudges automatically in WhatsApp</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Example Output Visual */}
+          <div className="mt-16 max-w-md mx-auto">
+            <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+              <div className="space-y-3 text-white text-sm">
+                <div className="flex items-start gap-2">
+                  <Brain className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                  <span>Your call with Alex is prepped.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-blue-400">💼</span>
+                  <span>Series A, $50M ARR</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <MessageSquare className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                  <span>Last chat: Pricing concerns</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  <span>Talk about: Expansion plan, next steps</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
