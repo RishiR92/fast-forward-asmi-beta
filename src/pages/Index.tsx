@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowDown, Calendar, MessageSquare, Phone, Users } from "lucide-react";
+import { ArrowDown, Calendar, MessageSquare, Phone, Users, Brain, Target } from "lucide-react";
 
 const Index = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -40,11 +40,14 @@ const Index = () => {
                   Early Access
                 </Badge>
                 <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                  You move fast.{" "}
-                  <span className="gradient-text">Asmi keeps up.</span>
+                  Your calendar is full.{" "}
+                  <span className="gradient-text">Your head is fuller.</span>
                 </h1>
-                <p className="text-xl text-slate-300 leading-relaxed max-w-lg">
-                  Your Chief of Staff — quietly working inside WhatsApp.
+                <h2 className="text-2xl text-slate-300 leading-relaxed max-w-lg font-medium">
+                  Let Asmi handle the chaos.
+                </h2>
+                <p className="text-xl text-slate-400 leading-relaxed max-w-lg">
+                  The Chief of Staff you never had — built inside WhatsApp.
                 </p>
               </div>
               
@@ -65,7 +68,7 @@ const Index = () => {
                   </Button>
                 </div>
                 <p className="text-sm text-slate-400">
-                  Onboarding 100 people who move faster than their calendar.
+                  For people who run fast and think faster.
                 </p>
               </form>
             </div>
@@ -101,45 +104,45 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
-              <h2 className="text-4xl font-bold text-red-400">Without Asmi</h2>
+              <h2 className="text-4xl font-bold text-red-400">❌ Without Asmi</h2>
               <ul className="space-y-4 text-slate-300">
                 <li className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  <span>Forget important details from conversations</span>
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>"Wait — what did we promise them last week?"</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  <span>Constantly context-switching between apps</span>
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Rewriting the same context for every meeting</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  <span>Drop the ball on follow-ups</span>
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Following up manually, or worse — not at all</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  <span>Walk into meetings unprepared</span>
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Showing up underprepared and bluffing through intros</span>
                 </li>
               </ul>
             </div>
             
             <div className="space-y-6">
-              <h2 className="text-4xl font-bold text-green-400">With Asmi</h2>
+              <h2 className="text-4xl font-bold text-green-400">✅ With Asmi</h2>
               <ul className="space-y-4 text-slate-300">
                 <li className="flex items-start gap-3">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Captures every thought, decision, and commitment</span>
+                  <span className="text-green-500 mt-1">•</span>
+                  <span>Shows you what's unresolved before it slips</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Everything happens inside WhatsApp — no friction</span>
+                  <span className="text-green-500 mt-1">•</span>
+                  <span>Sends talking points before every call</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Automatically sends nudges and follow-ups</span>
+                  <span className="text-green-500 mt-1">•</span>
+                  <span>Pings your team/investors for you — no chasing</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-green-500 mt-1">✓</span>
-                  <span>Briefs you before every meeting</span>
+                  <span className="text-green-500 mt-1">•</span>
+                  <span>Contexts you without opening a single doc</span>
                 </li>
               </ul>
             </div>
@@ -163,9 +166,9 @@ const Index = () => {
             <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-105">
               <CardContent className="p-8 space-y-4">
                 <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
-                  <MessageSquare className="h-6 w-6 text-white" />
+                  <Brain className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white">🧠 Remembers Everything</h3>
+                <h3 className="text-xl font-semibold text-white">🧠 Second Brain, Inside WhatsApp</h3>
                 <p className="text-slate-300">
                   Voice notes, conversations, decisions — Asmi never forgets context or commitments.
                 </p>
@@ -175,18 +178,6 @@ const Index = () => {
             <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-105">
               <CardContent className="p-8 space-y-4">
                 <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">📅 Natural Language Scheduling</h3>
-                <p className="text-slate-300">
-                  "Schedule coffee with Sarah next Tuesday at 3pm" — works with Google, Outlook, Apple.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-105">
-              <CardContent className="p-8 space-y-4">
-                <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-white">👥 Meeting Briefs</h3>
@@ -198,12 +189,12 @@ const Index = () => {
 
             <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-105">
               <CardContent className="p-8 space-y-4">
-                <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center">
-                  <ArrowDown className="h-6 w-6 text-white" />
+                <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
+                  <Calendar className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white">🔁 Smart Nudges</h3>
+                <h3 className="text-xl font-semibold text-white">📅 Natural Language Scheduling</h3>
                 <p className="text-slate-300">
-                  Automatically follows up on commitments via WhatsApp — no more chasing people.
+                  "Schedule coffee with Sarah next Tuesday at 3pm" — works with Google, Outlook, Apple.
                 </p>
               </CardContent>
             </Card>
@@ -222,10 +213,22 @@ const Index = () => {
 
             <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-105">
               <CardContent className="p-8 space-y-4">
+                <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center">
+                  <Target className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white">🔁 Follow-ups Handled For You</h3>
+                <p className="text-slate-300">
+                  Automatically follows up on commitments via WhatsApp — no more chasing people.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-105">
+              <CardContent className="p-8 space-y-4">
                 <div className="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center">
                   <MessageSquare className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white">🎤 Voice-First</h3>
+                <h3 className="text-xl font-semibold text-white">🎤 Just Talk — It Gets It</h3>
                 <p className="text-slate-300">
                   Just speak naturally — Asmi understands context and intent from voice messages.
                 </p>
@@ -249,8 +252,8 @@ const Index = () => {
               <CardContent className="p-8 space-y-4">
                 <div className="text-4xl mb-4">🧑‍🚀</div>
                 <h3 className="text-2xl font-bold text-white">Founders</h3>
-                <p className="text-slate-300">
-                  Free your brain from operational overhead. Focus on building, not managing tasks.
+                <p className="text-slate-300 italic mb-4">
+                  "I voice-note investor updates at midnight. Asmi turns them into follow-ups, summaries, and calendar events — before I forget."
                 </p>
                 <ul className="space-y-2 text-sm text-slate-300">
                   <li>• Remember every investor conversation</li>
@@ -264,8 +267,8 @@ const Index = () => {
               <CardContent className="p-8 space-y-4">
                 <div className="text-4xl mb-4">🧑‍💼</div>
                 <h3 className="text-2xl font-bold text-white">Startup Teams</h3>
-                <p className="text-slate-300">
-                  Close loops faster. Skip the dashboards. Keep momentum high across the team.
+                <p className="text-slate-300 italic mb-4">
+                  "No more chasing teammates. I just say it once. Asmi tracks it, reminds them, and gives me updates before standup."
                 </p>
                 <ul className="space-y-2 text-sm text-slate-300">
                   <li>• Coordinate without context-switching</li>
@@ -279,8 +282,8 @@ const Index = () => {
               <CardContent className="p-8 space-y-4">
                 <div className="text-4xl mb-4">💸</div>
                 <h3 className="text-2xl font-bold text-white">VCs & Angels</h3>
-                <p className="text-slate-300">
-                  Stay sharp across dozens of portfolio conversations and deal flow.
+                <p className="text-slate-300 italic mb-4">
+                  "I don't prep decks for calls anymore. Asmi gives me the founder's context, last chat, and deal notes in WhatsApp — right before we speak."
                 </p>
                 <ul className="space-y-2 text-sm text-slate-300">
                   <li>• Track every founder interaction</li>
@@ -410,6 +413,9 @@ const Index = () => {
           </form>
 
           <p className="text-sm text-purple-200 mt-4">
+            For people who run fast and think faster.
+          </p>
+          <p className="text-sm text-purple-300 mt-2">
             No credit card required. Early access closes December 15th.
           </p>
         </div>
