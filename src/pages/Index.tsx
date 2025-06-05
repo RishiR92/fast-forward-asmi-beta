@@ -21,11 +21,13 @@ const Index = () => {
 
   const featuresRef = useRef(null);
   const personasRef = useRef(null);
+  const socialProofRef = useRef(null);
   const howItWorksRef = useRef(null);
   const finalCtaRef = useRef(null);
 
   const featuresInView = useInView(featuresRef, { once: true, margin: "-100px" });
   const personasInView = useInView(personasRef, { once: true, margin: "-100px" });
+  const socialProofInView = useInView(socialProofRef, { once: true, margin: "-100px" });
   const howItWorksInView = useInView(howItWorksRef, { once: true, margin: "-100px" });
   const finalCtaInView = useInView(finalCtaRef, { once: true, margin: "-100px" });
 
@@ -95,7 +97,7 @@ const Index = () => {
               className="text-5xl lg:text-6xl font-bold mb-8 gradient-text-white"
               variants={itemVariants}
             >
-              Built for <span className="gradient-text-primary">high-context</span> operators
+              Built for <span className="gradient-text-primary">a high-context life</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
@@ -263,19 +265,25 @@ const Index = () => {
       </section>
 
       {/* Social Proof */}
-      <section className="py-20 px-6">
+      <section ref={socialProofRef} className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            variants={containerVariants}
+            initial="hidden"
+            animate={socialProofInView ? "visible" : "hidden"}
+          >
             {/* Gradient divider line */}
-            <div 
+            <motion.div 
               className="h-0.5 w-15 mx-auto mb-3"
               style={{
                 background: "linear-gradient(90deg, #A07CFE, #5DFF9F)",
                 borderRadius: "2px"
               }}
+              variants={itemVariants}
             />
             
-            <h2 
+            <motion.h2 
               className="text-4xl lg:text-5xl font-semibold mb-6"
               style={{
                 background: "linear-gradient(90deg, #A07CFE 0%, #5DFF9F 100%)",
@@ -286,39 +294,51 @@ const Index = () => {
                 textShadow: "0 0 12px rgba(93, 255, 159, 0.15)",
                 fontFamily: "'General Sans', Inter, sans-serif"
               }}
+              variants={itemVariants}
             >
               What early users are saying
-            </h2>
-          </div>
+            </motion.h2>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-slate-800/50 border-slate-700">
-              <CardContent className="p-6">
-                <blockquote className="text-slate-300 mb-4">
-                  "Feels like I hired an EA and never had to explain anything."
-                </blockquote>
-                <div className="text-sm text-slate-400">— Founder, Series B SaaS</div>
-              </CardContent>
-            </Card>
+          <motion.div 
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            animate={socialProofInView ? "visible" : "hidden"}
+          >
+            <motion.div variants={itemVariants}>
+              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
+                <CardContent className="p-6">
+                  <blockquote className="text-slate-300 mb-4">
+                    "Feels like I hired an EA and never had to explain anything."
+                  </blockquote>
+                  <div className="text-sm text-slate-400">— Founder, Series B SaaS</div>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card className="bg-slate-800/50 border-slate-700">
-              <CardContent className="p-6">
-                <blockquote className="text-slate-300 mb-4">
-                  "Finally, an AI that actually understands the context of fast-moving conversations."
-                </blockquote>
-                <div className="text-sm text-slate-400">— VP Growth, Unicorn Startup</div>
-              </CardContent>
-            </Card>
+            <motion.div variants={itemVariants}>
+              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
+                <CardContent className="p-6">
+                  <blockquote className="text-slate-300 mb-4">
+                    "Finally, an AI that actually understands the context of fast-moving conversations."
+                  </blockquote>
+                  <div className="text-sm text-slate-400">— VP Growth, Unicorn Startup</div>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card className="bg-slate-800/50 border-slate-700">
-              <CardContent className="p-6">
-                <blockquote className="text-slate-300 mb-4">
-                  "I can't believe how much mental overhead this removes. Game changer."
-                </blockquote>
-                <div className="text-sm text-slate-400">— Partner, Tier 1 VC</div>
-              </CardContent>
-            </Card>
-          </div>
+            <motion.div variants={itemVariants}>
+              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
+                <CardContent className="p-6">
+                  <blockquote className="text-slate-300 mb-4">
+                    "I can't believe how much mental overhead this removes. Game changer."
+                  </blockquote>
+                  <div className="text-sm text-slate-400">— Partner, Tier 1 VC</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
