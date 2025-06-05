@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, MessageSquare, Phone, Users, Brain, Target } from "lucide-react";
 import AnimatedHero from "@/components/AnimatedHero";
 import AnimatedComparison from "@/components/AnimatedComparison";
+import ToggleComparison from "@/components/ToggleComparison";
 
 const Index = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -74,7 +75,7 @@ const Index = () => {
       <AnimatedHero />
 
       {/* Problem/Solution Section */}
-      <AnimatedComparison />
+      <ToggleComparison />
 
       {/* Features Section */}
       <section ref={featuresRef} className="py-32 px-6 relative">
@@ -187,11 +188,30 @@ const Index = () => {
             initial="hidden"
             animate={personasInView ? "visible" : "hidden"}
           >
+            {/* Gradient divider line */}
+            <motion.div 
+              className="h-0.5 w-15 mx-auto mb-3"
+              style={{
+                background: "linear-gradient(90deg, #A07CFE, #5DFF9F)",
+                borderRadius: "2px"
+              }}
+              variants={itemVariants}
+            />
+            
             <motion.h2 
-              className="text-4xl lg:text-5xl font-bold mb-6"
+              className="text-4xl lg:text-5xl font-semibold mb-6"
+              style={{
+                background: "linear-gradient(90deg, #A07CFE 0%, #5DFF9F 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "-0.5px",
+                textShadow: "0 0 12px rgba(93, 255, 159, 0.15)",
+                fontFamily: "'General Sans', Inter, sans-serif"
+              }}
               variants={itemVariants}
             >
-              Built for <span className="gradient-text-primary">high-velocity</span> operators
+              Built for high-velocity operators
             </motion.h2>
           </motion.div>
 
@@ -246,7 +266,29 @@ const Index = () => {
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6">What early users are saying</h2>
+            {/* Gradient divider line */}
+            <div 
+              className="h-0.5 w-15 mx-auto mb-3"
+              style={{
+                background: "linear-gradient(90deg, #A07CFE, #5DFF9F)",
+                borderRadius: "2px"
+              }}
+            />
+            
+            <h2 
+              className="text-4xl lg:text-5xl font-semibold mb-6"
+              style={{
+                background: "linear-gradient(90deg, #A07CFE 0%, #5DFF9F 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "-0.5px",
+                textShadow: "0 0 12px rgba(93, 255, 159, 0.15)",
+                fontFamily: "'General Sans', Inter, sans-serif"
+              }}
+            >
+              What early users are saying
+            </h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
