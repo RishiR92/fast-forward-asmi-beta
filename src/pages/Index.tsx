@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -5,9 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MessageSquare, Phone, Users, Brain, Target } from "lucide-react";
+import { Calendar, MessageSquare, Phone, Users, Brain, Target, Mail, Clock, Zap } from "lucide-react";
 import AnimatedHero from "@/components/AnimatedHero";
-import AnimatedComparison from "@/components/AnimatedComparison";
 import ToggleComparison from "@/components/ToggleComparison";
 
 const Index = () => {
@@ -61,25 +61,162 @@ const Index = () => {
               className="text-2xl font-bold gradient-text-primary"
               whileHover={{ scale: 1.05 }}
             >
-              Asmi
+              Asmi AI
             </motion.div>
-            <Button 
-              variant="outline" 
-              className="border-[#5DFF9F]/20 text-[#5DFF9F] hover:bg-[#5DFF9F]/10 glass-card hover-glow"
-            >
-              Join Beta
-            </Button>
+            <div className="flex gap-4">
+              <Button 
+                variant="ghost" 
+                className="text-[#5DFF9F] hover:bg-[#5DFF9F]/10"
+              >
+                Roast My Calendar
+              </Button>
+              <Button 
+                variant="outline" 
+                className="border-[#5DFF9F]/20 text-[#5DFF9F] hover:bg-[#5DFF9F]/10 glass-card hover-glow"
+              >
+                Start on WhatsApp
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <AnimatedHero />
+      <section className="pt-32 pb-20 px-6 relative">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#A07CFE]/3 rounded-full blur-3xl animate-particle-float"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#5DFF9F]/3 rounded-full blur-3xl animate-particle-float" style={{ animationDelay: '3s' }}></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Badge className="bg-[#5DFF9F]/20 text-[#5DFF9F] border-[#5DFF9F]/30 mb-8 animate-glow-pulse">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              No app required — just chat
+            </Badge>
+            
+            <h1 className="text-5xl lg:text-7xl font-bold mb-8 gradient-text-white leading-tight">
+              Asmi is your <span className="gradient-text-primary">AI Chief of Staff.</span>
+            </h1>
+            
+            <p className="text-xl lg:text-2xl text-gray-300 mb-6 max-w-4xl mx-auto leading-relaxed">
+              She lives inside WhatsApp & iMessage.<br />
+              She remembers everything — meetings, people, and promises — so you don't have to.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+              <Button 
+                size="lg"
+                className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-semibold h-14 px-8 text-lg hover-glow"
+              >
+                Start on WhatsApp
+              </Button>
+              <Button 
+                size="lg"
+                variant="outline"
+                className="border-[#A07CFE]/30 text-[#A07CFE] hover:bg-[#A07CFE]/10 h-14 px-8 text-lg"
+              >
+                🔥 Roast My Calendar
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-      {/* Problem/Solution Section */}
-      <ToggleComparison />
+      {/* Chat Examples Section */}
+      <section className="py-20 px-6 relative">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6 gradient-text-white">
+              Your brilliant, sassy Chief of Staff
+            </h2>
+            <p className="text-xl text-gray-400">
+              She texts you like a human, thinks like AI, and remembers like an elephant.
+            </p>
+          </motion.div>
 
-      {/* Features Section */}
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* WhatsApp Chat Example */}
+            <motion.div 
+              className="glass-card-dark rounded-3xl p-8 border border-[#5DFF9F]/20"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center">
+                  <MessageSquare className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-white font-semibold">WhatsApp</span>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="bg-[#5DFF9F]/10 rounded-2xl p-4 border-l-4 border-[#5DFF9F]">
+                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi AI</p>
+                  <p className="text-white">Your call with Amanda @ Benchmark is in 1hr. Here's your brief:</p>
+                  <p className="text-gray-300 mt-2">• Series A, $50M ARR<br />• Last chat: Pricing concerns<br />• Talk about: Expansion plan</p>
+                  <p className="text-white mt-2">Want a script? 😉</p>
+                </div>
+                
+                <div className="bg-[#A07CFE]/10 rounded-2xl p-4 ml-8">
+                  <p className="text-white">Yes, make it witty but professional</p>
+                </div>
+                
+                <div className="bg-[#5DFF9F]/10 rounded-2xl p-4 border-l-4 border-[#5DFF9F]">
+                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi AI</p>
+                  <p className="text-white">"Amanda, remember when you said our pricing was 'interesting'? Let's make it boring-profitable instead. Here's the expansion plan..." 🎯</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* iMessage Chat Example */}
+            <motion.div 
+              className="glass-card-dark rounded-3xl p-8 border border-[#A07CFE]/20"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-full bg-[#007AFF] flex items-center justify-center">
+                  <MessageSquare className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-white font-semibold">iMessage</span>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="bg-[#A07CFE]/10 rounded-2xl p-4 ml-8">
+                  <p className="text-white">Keith hasn't replied to the deck I sent. It's been 48hrs</p>
+                </div>
+                
+                <div className="bg-[#5DFF9F]/10 rounded-2xl p-4 border-l-4 border-[#5DFF9F]">
+                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi AI</p>
+                  <p className="text-white">I noticed. Keith's probably drowning in emails (aren't we all?). Want me to nudge him with a gentle follow-up?</p>
+                </div>
+                
+                <div className="bg-[#A07CFE]/10 rounded-2xl p-4 ml-8">
+                  <p className="text-white">Yeah, but make it sound human</p>
+                </div>
+                
+                <div className="bg-[#5DFF9F]/10 rounded-2xl p-4 border-l-4 border-[#5DFF9F]">
+                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi AI</p>
+                  <p className="text-white">Sent: "Keith, following up on the deck — no rush if you're buried, but would love your thoughts when you get a chance!"</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* What Asmi Does Section */}
       <section ref={featuresRef} className="py-32 px-6 relative">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#A07CFE]/3 rounded-full blur-3xl animate-particle-float"></div>
@@ -97,13 +234,13 @@ const Index = () => {
               className="text-5xl lg:text-6xl font-bold mb-8 gradient-text-white"
               variants={itemVariants}
             >
-              Built for <span className="gradient-text-primary">a high-context life</span>
+              What Asmi <span className="gradient-text-primary">actually does</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
               variants={itemVariants}
             >
-              Asmi handles the cognitive overhead so you can focus on what matters.
+              No dashboards. No complex setups. Just smart assistance that works like magic.
             </motion.p>
           </motion.div>
 
@@ -116,38 +253,38 @@ const Index = () => {
             {[
               {
                 icon: Brain,
-                title: "Infinite Memory, Instant Recall",
-                description: "Voice notes, conversations, decisions — Asmi never forgets context or commitments.",
+                title: "Smart Briefs",
+                description: "1hr before your call: \"Here's your brief w/ Amanda @ Benchmark. Want a script?\"",
                 color: "A07CFE"
               },
               {
-                icon: Users,
-                title: "Meeting Briefs",
-                description: "Get context on who you're meeting, your last conversation, and key talking points.",
+                icon: Mail,
+                title: "Email Ghosting Detection",
+                description: "48hr silence: \"Want me to nudge Keith re: the deck?\" Drafts the perfect follow-up.",
                 color: "5DFF9F"
               },
               {
                 icon: Calendar,
-                title: "Natural Language Scheduling",
-                description: "\"Schedule coffee with Sarah next Tuesday at 3pm\" — works with Google, Outlook, Apple.",
+                title: "Natural Scheduling",
+                description: "\"Catch up with Amanda Friday 3pm\" → Meeting booked, briefed, and ready.",
                 color: "5DFF9F"
               },
               {
-                icon: Phone,
-                title: "Contact-Aware",
-                description: "Uses contact names from your phone — no need to explain who people are.",
+                icon: Clock,
+                title: "Chaos Fixing",
+                description: "Spots overloaded days and rebalances your calendar intelligently. No more double-books.",
                 color: "A07CFE"
               },
               {
                 icon: Target,
-                title: "Follow-ups Handled For You",
-                description: "Automatically follows up on commitments via WhatsApp — no more chasing people.",
+                title: "Meeting Outcomes",
+                description: "Post-call: \"Want to log the outcome?\" Captures notes, tags people, tracks follow-ups.",
                 color: "5DFF9F"
               },
               {
-                icon: MessageSquare,
-                title: "Just Talk — It Gets It",
-                description: "Just speak naturally — Asmi understands context and intent from voice messages.",
+                icon: Zap,
+                title: "Memory Graph",
+                description: "Builds a private map of who you talk to and why. Never walks into a meeting blind again.",
                 color: "A07CFE"
               }
             ].map((feature, index) => (
@@ -169,7 +306,7 @@ const Index = () => {
                     <h3 className="text-xl font-semibold text-white group-hover:text-white transition-colors">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
+                    <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors data-display">
                       {feature.description}
                     </p>
                   </CardContent>
@@ -180,7 +317,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Target Personas */}
+      {/* Target Audience */}
       <section ref={personasRef} className="py-20 px-6 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-[#A07CFE]/5 via-transparent to-[#5DFF9F]/5"></div>
         <div className="max-w-7xl mx-auto relative z-10">
@@ -190,16 +327,6 @@ const Index = () => {
             initial="hidden"
             animate={personasInView ? "visible" : "hidden"}
           >
-            {/* Gradient divider line */}
-            <motion.div 
-              className="h-0.5 w-15 mx-auto mb-3"
-              style={{
-                background: "linear-gradient(90deg, #A07CFE, #5DFF9F)",
-                borderRadius: "2px"
-              }}
-              variants={itemVariants}
-            />
-            
             <motion.h2 
               className="text-4xl lg:text-5xl font-semibold mb-6"
               style={{
@@ -208,12 +335,11 @@ const Index = () => {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
                 letterSpacing: "-0.5px",
-                textShadow: "0 0 12px rgba(93, 255, 159, 0.15)",
                 fontFamily: "'General Sans', Inter, sans-serif"
               }}
               variants={itemVariants}
             >
-              Built for high-velocity operators
+              Built for people who move fast
             </motion.h2>
           </motion.div>
 
@@ -225,22 +351,22 @@ const Index = () => {
           >
             {[
               {
-                emoji: "🧑‍🚀",
-                title: "Founders",
-                quote: "I voice-note investor updates at midnight. Asmi turns them into follow-ups, summaries, and calendar events — before I forget.",
-                features: ["Remember every investor conversation", "Never miss a follow-up", "Prep for every meeting"]
+                emoji: "🚀",
+                title: "Startup Founders",
+                quote: "I text Asmi my investor updates at midnight. She turns them into follow-ups and calendar events before I forget.",
+                features: ["Pre-meeting briefs with context", "Automatic follow-up detection", "Calendar chaos management"]
               },
               {
-                emoji: "🧑‍💼",
-                title: "Startup Teams", 
-                quote: "No more chasing teammates. I just say it once. Asmi tracks it, reminds them, and gives me updates before standup.",
-                features: ["Coordinate without context-switching", "Automate status updates", "Never drop commitments"]
+                emoji: "💰",
+                title: "VCs & Angels", 
+                quote: "No more prepping for founder calls. Asmi texts me their context, deal notes, and talking points right before we speak.",
+                features: ["Founder interaction tracking", "Deal context & history", "Perfect intro preparation"]
               },
               {
-                emoji: "💸",
-                title: "VCs & Angels",
-                quote: "I don't prep decks for calls anymore. Asmi gives me the founder's context, last chat, and deal notes in WhatsApp — right before we speak.",
-                features: ["Track every founder interaction", "Remember deal terms and updates", "Perfect intro preparation"]
+                emoji: "⚡",
+                title: "Startup Teams",
+                quote: "Our team uses WhatsApp more than Slack. Asmi keeps us synced without the noise.",
+                features: ["Cross-team coordination", "Project status updates", "Natural language scheduling"]
               }
             ].map((persona, index) => (
               <motion.div key={index} variants={itemVariants}>
@@ -248,7 +374,7 @@ const Index = () => {
                   <CardContent className="p-8 space-y-4">
                     <div className="text-4xl mb-4">{persona.emoji}</div>
                     <h3 className="text-2xl font-bold text-white">{persona.title}</h3>
-                    <p className="text-slate-300 italic mb-4">
+                    <p className="text-slate-300 italic mb-4 data-display">
                       "{persona.quote}"
                     </p>
                     <ul className="space-y-2 text-sm text-slate-300">
@@ -260,84 +386,6 @@ const Index = () => {
                 </Card>
               </motion.div>
             ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Social Proof */}
-      <section ref={socialProofRef} className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            className="text-center mb-16"
-            variants={containerVariants}
-            initial="hidden"
-            animate={socialProofInView ? "visible" : "hidden"}
-          >
-            {/* Gradient divider line */}
-            <motion.div 
-              className="h-0.5 w-15 mx-auto mb-3"
-              style={{
-                background: "linear-gradient(90deg, #A07CFE, #5DFF9F)",
-                borderRadius: "2px"
-              }}
-              variants={itemVariants}
-            />
-            
-            <motion.h2 
-              className="text-4xl lg:text-5xl font-semibold mb-6"
-              style={{
-                background: "linear-gradient(90deg, #A07CFE 0%, #5DFF9F 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                letterSpacing: "-0.5px",
-                textShadow: "0 0 12px rgba(93, 255, 159, 0.15)",
-                fontFamily: "'General Sans', Inter, sans-serif"
-              }}
-              variants={itemVariants}
-            >
-              What early users are saying
-            </motion.h2>
-          </motion.div>
-
-          <motion.div 
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate={socialProofInView ? "visible" : "hidden"}
-          >
-            <motion.div variants={itemVariants}>
-              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
-                <CardContent className="p-6">
-                  <blockquote className="text-slate-300 mb-4">
-                    "Feels like I hired an EA and never had to explain anything."
-                  </blockquote>
-                  <div className="text-sm text-slate-400">— Founder, Series B SaaS</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
-                <CardContent className="p-6">
-                  <blockquote className="text-slate-300 mb-4">
-                    "Finally, an AI that actually understands the context of fast-moving conversations."
-                  </blockquote>
-                  <div className="text-sm text-slate-400">— VP Growth, Unicorn Startup</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
-                <CardContent className="p-6">
-                  <blockquote className="text-slate-300 mb-4">
-                    "I can't believe how much mental overhead this removes. Game changer."
-                  </blockquote>
-                  <div className="text-sm text-slate-400">— Partner, Tier 1 VC</div>
-                </CardContent>
-              </Card>
-            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -360,13 +408,13 @@ const Index = () => {
               className="text-5xl lg:text-6xl font-bold mb-6 gradient-text-white"
               variants={itemVariants}
             >
-              How Asmi works
+              How it works
             </motion.h2>
             <motion.p 
               className="text-2xl text-gray-400 font-light"
               variants={itemVariants}
             >
-              Three steps. Zero effort. High leverage.
+              Connect once. Text forever. Be smarter immediately.
             </motion.p>
           </motion.div>
 
@@ -379,30 +427,32 @@ const Index = () => {
             {[
               {
                 number: "1",
-                title: "Say it",
-                description: "Voice note or text Asmi inside WhatsApp — no commands, just talk naturally.",
+                title: "Connect your life",
+                description: "Gmail, Calendar, Contacts → Asmi builds your life graph. Privacy-first, zero inbox reading.",
                 examples: [
-                  "\"Remind me to follow up with Tony on pricing.\"",
-                  "\"Schedule intro call with Alex next Tuesday at 3PM.\""
+                  "• Secure OAuth connections",
+                  "• Learns your communication patterns",
+                  "• Maps your professional network"
                 ]
               },
               {
                 number: "2", 
-                title: "It remembers",
-                description: "Asmi understands what matters, connects it to past context, and tracks it.",
+                title: "Text like normal",
+                description: "No commands, no setup. Just chat in WhatsApp or iMessage like you would with a human.",
                 examples: [
-                  "• Remembers convos, decisions, promises — no manual entry needed",
-                  "• Builds your contextual memory graph across meetings & messages"
+                  "\"Prep me for the 3pm with Sarah\"",
+                  "\"Why haven't I heard from the Acme deal?\"",
+                  "\"Schedule drinks with the team Friday\""
                 ]
               },
               {
                 number: "3",
-                title: "You stay sharp", 
-                description: "Asmi handles the rest — scheduling, briefing, nudging, reminding — before you even ask.",
+                title: "Stay ahead", 
+                description: "Asmi proactively briefs, follows up, and keeps you sharp. Morning prep → Meeting → Follow-up.",
                 examples: [
-                  "• Prepares talking points before your next call",
-                  "• Follows up with your team or investors", 
-                  "• Sends gentle nudges automatically in WhatsApp"
+                  "• Smart briefs 1hr before calls",
+                  "• Detects email silence automatically", 
+                  "• Suggests follow-ups and next steps"
                 ]
               }
             ].map((step, index) => (
@@ -430,40 +480,78 @@ const Index = () => {
                 </p>
                 <div className="glass-card rounded-2xl p-6 text-left space-y-3 border border-[#5DFF9F]/10 group-hover:border-[#5DFF9F]/20 transition-colors duration-300">
                   {step.examples.map((example, i) => (
-                    <div key={i} className="text-gray-300 text-sm leading-relaxed data-display">{example}</div>
+                    <div key={i} className="text-gray-300 text-sm leading-relaxed">{example}</div>
                   ))}
                 </div>
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
 
-          {/* Example Output Visual */}
+      {/* Social Proof */}
+      <section ref={socialProofRef} className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
           <motion.div 
-            className="mt-20 max-w-md mx-auto"
-            initial={{ opacity: 0, y: 50 }}
-            animate={howItWorksInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
+            className="text-center mb-16"
+            variants={containerVariants}
+            initial="hidden"
+            animate={socialProofInView ? "visible" : "hidden"}
           >
-            <div className="glass-card rounded-3xl p-8 border border-[#5DFF9F]/20 hover-lift neon-glow">
-              <div className="space-y-4 text-white">
-                <div className="flex items-start gap-3">
-                  <Brain className="h-5 w-5 text-[#A07CFE] mt-0.5 flex-shrink-0" />
-                  <span className="text-lg data-display">Your call with Alex is prepped.</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-[#5DFF9F] text-lg">💼</span>
-                  <span className="data-display">Series A, $50M ARR</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <MessageSquare className="h-5 w-5 text-[#5DFF9F] mt-0.5 flex-shrink-0" />
-                  <span className="data-display">Last chat: Pricing concerns</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Target className="h-5 w-5 text-[#5DFF9F] mt-0.5 flex-shrink-0" />
-                  <span className="data-display">Talk about: Expansion plan, next steps</span>
-                </div>
-              </div>
-            </div>
+            <motion.h2 
+              className="text-4xl lg:text-5xl font-semibold mb-6"
+              style={{
+                background: "linear-gradient(90deg, #A07CFE 0%, #5DFF9F 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "-0.5px",
+                fontFamily: "'General Sans', Inter, sans-serif"
+              }}
+              variants={itemVariants}
+            >
+              Trusted by top performers
+            </motion.h2>
+          </motion.div>
+
+          <motion.div 
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            animate={socialProofInView ? "visible" : "hidden"}
+          >
+            <motion.div variants={itemVariants}>
+              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
+                <CardContent className="p-6">
+                  <blockquote className="text-slate-300 mb-4 data-display">
+                    "Feels like I hired a Chief of Staff who actually gets it. Game changer."
+                  </blockquote>
+                  <div className="text-sm text-slate-400">— Founder, Series B SaaS</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
+                <CardContent className="p-6">
+                  <blockquote className="text-slate-300 mb-4 data-display">
+                    "Finally, an AI that understands the chaos of startup life. Worth every penny."
+                  </blockquote>
+                  <div className="text-sm text-slate-400">— VP Growth, Unicorn Startup</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <Card className="bg-slate-800/50 border-slate-700 hover-lift">
+                <CardContent className="p-6">
+                  <blockquote className="text-slate-300 mb-4 data-display">
+                    "I can't believe I lived without this. Asmi knows my portfolio better than I do."
+                  </blockquote>
+                  <div className="text-sm text-slate-400">— Partner, Tier 1 VC</div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -482,7 +570,7 @@ const Index = () => {
               variants={itemVariants}
             >
               <Badge className="bg-[#5DFF9F]/20 text-[#5DFF9F] border-[#5DFF9F]/30 animate-glow-pulse">
-                <span className="animate-typing-cursor">🔥</span> Only 100 spots left
+                🔥 Get started in 30 seconds
               </Badge>
             </motion.div>
             
@@ -490,50 +578,41 @@ const Index = () => {
               className="text-5xl lg:text-6xl font-bold mb-8 text-white leading-tight"
               variants={itemVariants}
             >
-              We're onboarding 100 people who move{" "}
-              <span className="gradient-text-primary">faster than their calendar.</span>
+              Ready to get your{" "}
+              <span className="gradient-text-primary">Chief of Staff?</span>
             </motion.h2>
             
             <motion.p 
               className="text-xl text-gray-300 mb-12 leading-relaxed"
               variants={itemVariants}
             >
-              Join the beta and get your AI Chief of Staff inside WhatsApp.
+              No app downloads. No complex setup. Just text Asmi and watch your life get organized.
             </motion.p>
 
-            <motion.form 
-              onSubmit={handleBetaSignup} 
-              className="max-w-md mx-auto space-y-6"
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
               variants={itemVariants}
             >
-              <Input
-                type="tel"
-                placeholder="Your phone number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="w-full glass-card border-[#5DFF9F]/20 text-white placeholder:text-gray-400 h-14 text-lg"
-              />
-              <Input
-                type="email"
-                placeholder="Email (optional)"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full glass-card border-[#5DFF9F]/20 text-white placeholder:text-gray-400 h-14 text-lg"
-              />
               <Button 
-                type="submit"
                 size="lg"
-                className="w-full bg-white text-black hover:bg-[#5DFF9F] hover:text-black font-semibold h-14 text-lg transition-all duration-300 hover-glow"
+                className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-semibold h-14 px-8 text-lg hover-glow"
               >
-                Join the Beta
+                Start on WhatsApp
               </Button>
-            </motion.form>
+              <Button 
+                size="lg"
+                variant="outline"
+                className="border-[#A07CFE]/30 text-[#A07CFE] hover:bg-[#A07CFE]/10 h-14 px-8 text-lg"
+              >
+                🔥 Roast My Calendar
+              </Button>
+            </motion.div>
 
             <motion.p 
-              className="text-sm text-gray-400 mt-6"
+              className="text-sm text-gray-400"
               variants={itemVariants}
             >
-              No credit card required. Early access closes December 15th.
+              Trusted by 500+ founders, VCs, and startup teams
             </motion.p>
           </motion.div>
         </div>
@@ -544,7 +623,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-2xl font-bold gradient-text-primary mb-4 md:mb-0">
-              Asmi
+              Asmi AI
             </div>
             <div className="flex space-x-8 text-gray-400">
               <a href="#" className="hover:text-[#5DFF9F] transition-colors duration-300">Privacy</a>
@@ -553,7 +632,7 @@ const Index = () => {
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-[#5DFF9F]/10 text-center text-gray-500">
-            <p>&copy; 2024 Asmi. Built for founders who move fast.</p>
+            <p>&copy; 2024 Asmi AI. Your AI Chief of Staff.</p>
           </div>
         </div>
       </footer>
