@@ -7,16 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MessageSquare, Phone, Users, Brain, Target, Mail, Clock, Zap } from "lucide-react";
-import AnimatedHero from "@/components/AnimatedHero";
-import ToggleComparison from "@/components/ToggleComparison";
 
 const Index = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleBetaSignup = (e: React.FormEvent) => {
+  const handleWaitlistSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Beta signup:", { phoneNumber, email });
+    console.log("Waitlist signup:", { phoneNumber, email });
   };
 
   const featuresRef = useRef(null);
@@ -68,13 +66,13 @@ const Index = () => {
                 variant="ghost" 
                 className="text-[#5DFF9F] hover:bg-[#5DFF9F]/10"
               >
-                Roast My Calendar
+                🔥 Roast My Calendar
               </Button>
               <Button 
                 variant="outline" 
                 className="border-[#5DFF9F]/20 text-[#5DFF9F] hover:bg-[#5DFF9F]/10 glass-card hover-glow"
               >
-                Start on WhatsApp
+                Join Waitlist
               </Button>
             </div>
           </div>
@@ -96,16 +94,16 @@ const Index = () => {
           >
             <Badge className="bg-[#5DFF9F]/20 text-[#5DFF9F] border-[#5DFF9F]/30 mb-8 animate-glow-pulse">
               <MessageSquare className="w-4 h-4 mr-2" />
-              No app required — just chat
+              Invite-only • No app required
             </Badge>
             
             <h1 className="text-5xl lg:text-7xl font-bold mb-8 gradient-text-white leading-tight">
-              Asmi is your <span className="gradient-text-primary">AI Chief of Staff.</span>
+              Your <span className="gradient-text-primary">AI Chief of Staff.</span><br />
+              On WhatsApp & iMessage.
             </h1>
             
             <p className="text-xl lg:text-2xl text-gray-300 mb-6 max-w-4xl mx-auto leading-relaxed">
-              She lives inside WhatsApp & iMessage.<br />
-              She remembers everything — meetings, people, and promises — so you don't have to.
+              Asmi remembers everything — meetings, people, and promises — so you don't have to.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
@@ -113,7 +111,7 @@ const Index = () => {
                 size="lg"
                 className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-semibold h-14 px-8 text-lg hover-glow"
               >
-                Start on WhatsApp
+                Join Waitlist
               </Button>
               <Button 
                 size="lg"
@@ -137,10 +135,10 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 gradient-text-white">
-              Your brilliant, sassy Chief of Staff
+              Your brilliant Chief of Staff
             </h2>
             <p className="text-xl text-gray-400">
-              She texts you like a human, thinks like AI, and remembers like an elephant.
+              Who texts you at exactly the right moment.
             </p>
           </motion.div>
 
@@ -157,23 +155,24 @@ const Index = () => {
                   <MessageSquare className="w-4 h-4 text-white" />
                 </div>
                 <span className="text-white font-semibold">WhatsApp</span>
+                <span className="text-xs text-gray-400">8:47 AM</span>
               </div>
               
               <div className="space-y-4">
                 <div className="bg-[#5DFF9F]/10 rounded-2xl p-4 border-l-4 border-[#5DFF9F]">
-                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi AI</p>
-                  <p className="text-white">Your call with Amanda @ Benchmark is in 1hr. Here's your brief:</p>
-                  <p className="text-gray-300 mt-2">• Series A, $50M ARR<br />• Last chat: Pricing concerns<br />• Talk about: Expansion plan</p>
-                  <p className="text-white mt-2">Want a script? 😉</p>
+                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi</p>
+                  <p className="text-white">You have 3 meetings today. Want briefs?</p>
+                  <p className="text-gray-300 mt-2">📅 10am: Amanda @ Benchmark<br />🚀 2pm: Product sync w/ Sarah<br />💰 4pm: Series A follow-up call</p>
                 </div>
                 
                 <div className="bg-[#A07CFE]/10 rounded-2xl p-4 ml-8">
-                  <p className="text-white">Yes, make it witty but professional</p>
+                  <p className="text-white">Yes, brief me on Amanda</p>
                 </div>
                 
                 <div className="bg-[#5DFF9F]/10 rounded-2xl p-4 border-l-4 border-[#5DFF9F]">
-                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi AI</p>
-                  <p className="text-white">"Amanda, remember when you said our pricing was 'interesting'? Let's make it boring-profitable instead. Here's the expansion plan..." 🎯</p>
+                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi</p>
+                  <p className="text-white">Amanda Chen, Partner @ Benchmark. You pitched 3 weeks ago. Last email: "Interesting pricing model, let's dive deeper." She's ex-Stripe, loves B2B SaaS. Talk expansion metrics + pricing strategy.</p>
+                  <p className="text-gray-300 mt-2">Want a quick script? 📝</p>
                 </div>
               </div>
             </motion.div>
@@ -190,25 +189,23 @@ const Index = () => {
                   <MessageSquare className="w-4 h-4 text-white" />
                 </div>
                 <span className="text-white font-semibold">iMessage</span>
+                <span className="text-xs text-gray-400">2:15 PM</span>
               </div>
               
               <div className="space-y-4">
                 <div className="bg-[#A07CFE]/10 rounded-2xl p-4 ml-8">
-                  <p className="text-white">Keith hasn't replied to the deck I sent. It's been 48hrs</p>
+                  <p className="text-white">Schedule coffee with Mark from Acme Corp Friday 3pm</p>
                 </div>
                 
                 <div className="bg-[#5DFF9F]/10 rounded-2xl p-4 border-l-4 border-[#5DFF9F]">
-                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi AI</p>
-                  <p className="text-white">I noticed. Keith's probably drowning in emails (aren't we all?). Want me to nudge him with a gentle follow-up?</p>
-                </div>
-                
-                <div className="bg-[#A07CFE]/10 rounded-2xl p-4 ml-8">
-                  <p className="text-white">Yeah, but make it sound human</p>
-                </div>
-                
-                <div className="bg-[#5DFF9F]/10 rounded-2xl p-4 border-l-4 border-[#5DFF9F]">
-                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi AI</p>
-                  <p className="text-white">Sent: "Keith, following up on the deck — no rush if you're buried, but would love your thoughts when you get a chance!"</p>
+                  <p className="text-[#5DFF9F] text-sm font-medium mb-1">Asmi</p>
+                  <p className="text-white">Found Mark Stevens, CTO @ Acme Corp in your contacts. Booking Friday 3pm coffee.</p>
+                  <div className="mt-3 bg-black/20 rounded-xl p-3">
+                    <p className="text-[#5DFF9F] text-sm">Calendar Invite Created</p>
+                    <p className="text-white text-sm">Coffee w/ Mark Stevens</p>
+                    <p className="text-gray-300 text-xs">Fri, Dec 8 • 3:00 PM</p>
+                  </div>
+                  <p className="text-white mt-2">Invite sent to mark@acmecorp.com ✅</p>
                 </div>
               </div>
             </motion.div>
@@ -216,7 +213,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* What Asmi Does Section */}
+      {/* Daily Flow Features */}
       <section ref={featuresRef} className="py-32 px-6 relative">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#A07CFE]/3 rounded-full blur-3xl animate-particle-float"></div>
@@ -234,13 +231,13 @@ const Index = () => {
               className="text-5xl lg:text-6xl font-bold mb-8 gradient-text-white"
               variants={itemVariants}
             >
-              What Asmi <span className="gradient-text-primary">actually does</span>
+              Your <span className="gradient-text-primary">daily flow</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
               variants={itemVariants}
             >
-              No dashboards. No complex setups. Just smart assistance that works like magic.
+              Asmi operates quietly in the background, prepping, following up, and organizing your life.
             </motion.p>
           </motion.div>
 
@@ -252,61 +249,50 @@ const Index = () => {
           >
             {[
               {
-                icon: Brain,
-                title: "Smart Briefs",
-                description: "1hr before your call: \"Here's your brief w/ Amanda @ Benchmark. Want a script?\"",
+                emoji: "🟪",
+                title: "Morning Clarity",
+                description: "\"You have 3 meetings today. Want briefs?\" Smart prep before each call with context, background, and ready scripts.",
                 color: "A07CFE"
               },
               {
-                icon: Mail,
-                title: "Email Ghosting Detection",
-                description: "48hr silence: \"Want me to nudge Keith re: the deck?\" Drafts the perfect follow-up.",
+                emoji: "🟩",
+                title: "Background Intel",
+                description: "Meeting someone new? Asmi pulls their role, company, recent activity — so you don't have to stalk LinkedIn.",
                 color: "5DFF9F"
               },
               {
-                icon: Calendar,
-                title: "Natural Scheduling",
-                description: "\"Catch up with Amanda Friday 3pm\" → Meeting booked, briefed, and ready.",
+                emoji: "🟨",
+                title: "Chat Scheduling",
+                description: "\"Call with Amanda 4pm Friday\" → Asmi finds her email, books calendar, sends clean invite. Done.",
                 color: "5DFF9F"
               },
               {
-                icon: Clock,
-                title: "Chaos Fixing",
-                description: "Spots overloaded days and rebalances your calendar intelligently. No more double-books.",
+                emoji: "🟥",
+                title: "Meeting Capture",
+                description: "\"Want to log what happened?\" Send text or voice note → Asmi saves summary + action items, tagged by people.",
                 color: "A07CFE"
               },
               {
-                icon: Target,
-                title: "Meeting Outcomes",
-                description: "Post-call: \"Want to log the outcome?\" Captures notes, tags people, tracks follow-ups.",
+                emoji: "🟦",
+                title: "Follow-Up Detection",
+                description: "\"You didn't reply to Benchmark. Want me to send a note?\" Asmi spots ghosted threads, drafts follow-ups.",
                 color: "5DFF9F"
               },
               {
-                icon: Zap,
-                title: "Memory Graph",
-                description: "Builds a private map of who you talk to and why. Never walks into a meeting blind again.",
+                emoji: "🟧",
+                title: "Calendar Chaos Control",
+                description: "\"Your Tuesday is overbooked. Shift asyncs to Friday?\" Smart rebalancing with one tap approval.",
                 color: "A07CFE"
               }
             ].map((feature, index) => (
               <motion.div key={index} variants={itemVariants}>
                 <Card className="glass-card border-white/10 hover-lift group h-full">
                   <CardContent className="p-8 space-y-6">
-                    <div 
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
-                      style={{ 
-                        background: `rgba(${feature.color === '5DFF9F' ? '93, 255, 159' : '160, 124, 254'}, 0.2)`,
-                        boxShadow: `0 0 20px rgba(${feature.color === '5DFF9F' ? '93, 255, 159' : '160, 124, 254'}, 0.3)`
-                      }}
-                    >
-                      <feature.icon 
-                        className={`h-6 w-6`}
-                        style={{ color: `#${feature.color}` }}
-                      />
-                    </div>
+                    <div className="text-4xl mb-4">{feature.emoji}</div>
                     <h3 className="text-xl font-semibold text-white group-hover:text-white transition-colors">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors data-display">
+                    <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
                       {feature.description}
                     </p>
                   </CardContent>
@@ -328,15 +314,7 @@ const Index = () => {
             animate={personasInView ? "visible" : "hidden"}
           >
             <motion.h2 
-              className="text-4xl lg:text-5xl font-semibold mb-6"
-              style={{
-                background: "linear-gradient(90deg, #A07CFE 0%, #5DFF9F 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                letterSpacing: "-0.5px",
-                fontFamily: "'General Sans', Inter, sans-serif"
-              }}
+              className="text-4xl lg:text-5xl font-semibold mb-6 gradient-text-primary"
               variants={itemVariants}
             >
               Built for people who move fast
@@ -353,20 +331,20 @@ const Index = () => {
               {
                 emoji: "🚀",
                 title: "Startup Founders",
-                quote: "I text Asmi my investor updates at midnight. She turns them into follow-ups and calendar events before I forget.",
-                features: ["Pre-meeting briefs with context", "Automatic follow-up detection", "Calendar chaos management"]
+                quote: "I live in WhatsApp. Asmi preps my investor calls, tracks follow-ups, and remembers promises I'd otherwise forget.",
+                features: ["Pre-meeting briefs with investor context", "Follow-up detection for funding rounds", "Calendar chaos management during crunch time"]
               },
               {
                 emoji: "💰",
-                title: "VCs & Angels", 
-                quote: "No more prepping for founder calls. Asmi texts me their context, deal notes, and talking points right before we speak.",
-                features: ["Founder interaction tracking", "Deal context & history", "Perfect intro preparation"]
+                title: "VCs & Solo GPs", 
+                quote: "50 founder meetings a week. Asmi remembers every conversation, preps context, and drafts perfect follow-ups.",
+                features: ["Founder background intel", "Deal flow tracking", "Portfolio company context"]
               },
               {
                 emoji: "⚡",
-                title: "Startup Teams",
-                quote: "Our team uses WhatsApp more than Slack. Asmi keeps us synced without the noise.",
-                features: ["Cross-team coordination", "Project status updates", "Natural language scheduling"]
+                title: "Fast-Moving Teams",
+                quote: "Our GTM team operates via chat. Asmi keeps us synced on prospects, deals, and next steps without the dashboard bloat.",
+                features: ["Cross-team coordination", "Prospect interaction tracking", "Natural language scheduling"]
               }
             ].map((persona, index) => (
               <motion.div key={index} variants={itemVariants}>
@@ -374,12 +352,15 @@ const Index = () => {
                   <CardContent className="p-8 space-y-4">
                     <div className="text-4xl mb-4">{persona.emoji}</div>
                     <h3 className="text-2xl font-bold text-white">{persona.title}</h3>
-                    <p className="text-slate-300 italic mb-4 data-display">
+                    <p className="text-slate-300 italic mb-4">
                       "{persona.quote}"
                     </p>
                     <ul className="space-y-2 text-sm text-slate-300">
                       {persona.features.map((feature, i) => (
-                        <li key={i}>• {feature}</li>
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="text-[#5DFF9F] mt-1">•</span>
+                          <span>{feature}</span>
+                        </li>
                       ))}
                     </ul>
                   </CardContent>
@@ -414,7 +395,7 @@ const Index = () => {
               className="text-2xl text-gray-400 font-light"
               variants={itemVariants}
             >
-              Connect once. Text forever. Be smarter immediately.
+              Connect once. Asmi learns quietly. Be smarter immediately.
             </motion.p>
           </motion.div>
 
@@ -428,21 +409,21 @@ const Index = () => {
               {
                 number: "1",
                 title: "Connect your life",
-                description: "Gmail, Calendar, Contacts → Asmi builds your life graph. Privacy-first, zero inbox reading.",
+                description: "Gmail, Calendar, Contacts → Asmi builds your life graph. Privacy-first, no inbox content reading.",
                 examples: [
                   "• Secure OAuth connections",
-                  "• Learns your communication patterns",
+                  "• Learns communication patterns",
                   "• Maps your professional network"
                 ]
               },
               {
                 number: "2", 
-                title: "Text like normal",
-                description: "No commands, no setup. Just chat in WhatsApp or iMessage like you would with a human.",
+                title: "Operate via chat",
+                description: "No setup, no workflows. Just text Asmi in WhatsApp or iMessage like you would a human Chief of Staff.",
                 examples: [
                   "\"Prep me for the 3pm with Sarah\"",
-                  "\"Why haven't I heard from the Acme deal?\"",
-                  "\"Schedule drinks with the team Friday\""
+                  "\"Why haven't I heard from Acme?\"",
+                  "\"Schedule coffee with the team Friday\""
                 ]
               },
               {
@@ -499,15 +480,7 @@ const Index = () => {
             animate={socialProofInView ? "visible" : "hidden"}
           >
             <motion.h2 
-              className="text-4xl lg:text-5xl font-semibold mb-6"
-              style={{
-                background: "linear-gradient(90deg, #A07CFE 0%, #5DFF9F 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                letterSpacing: "-0.5px",
-                fontFamily: "'General Sans', Inter, sans-serif"
-              }}
+              className="text-4xl lg:text-5xl font-semibold mb-6 gradient-text-primary"
               variants={itemVariants}
             >
               Trusted by top performers
@@ -523,10 +496,10 @@ const Index = () => {
             <motion.div variants={itemVariants}>
               <Card className="bg-slate-800/50 border-slate-700 hover-lift">
                 <CardContent className="p-6">
-                  <blockquote className="text-slate-300 mb-4 data-display">
-                    "Feels like I hired a Chief of Staff who actually gets it. Game changer."
+                  <blockquote className="text-slate-300 mb-4">
+                    "Finally, an AI that gets startup chaos. Asmi preps my investor calls better than I do."
                   </blockquote>
-                  <div className="text-sm text-slate-400">— Founder, Series B SaaS</div>
+                  <div className="text-sm text-slate-400">— Sarah Chen, Founder @ TechFlow</div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -534,10 +507,10 @@ const Index = () => {
             <motion.div variants={itemVariants}>
               <Card className="bg-slate-800/50 border-slate-700 hover-lift">
                 <CardContent className="p-6">
-                  <blockquote className="text-slate-300 mb-4 data-display">
-                    "Finally, an AI that understands the chaos of startup life. Worth every penny."
+                  <blockquote className="text-slate-300 mb-4">
+                    "I meet 40+ founders weekly. Asmi remembers every conversation so I don't have to."
                   </blockquote>
-                  <div className="text-sm text-slate-400">— VP Growth, Unicorn Startup</div>
+                  <div className="text-sm text-slate-400">— Marcus Rodriguez, Partner @ Velocity VC</div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -545,10 +518,10 @@ const Index = () => {
             <motion.div variants={itemVariants}>
               <Card className="bg-slate-800/50 border-slate-700 hover-lift">
                 <CardContent className="p-6">
-                  <blockquote className="text-slate-300 mb-4 data-display">
-                    "I can't believe I lived without this. Asmi knows my portfolio better than I do."
+                  <blockquote className="text-slate-300 mb-4">
+                    "Our GTM team lives in WhatsApp. Asmi keeps us synced without the dashboard bloat."
                   </blockquote>
-                  <div className="text-sm text-slate-400">— Partner, Tier 1 VC</div>
+                  <div className="text-sm text-slate-400">— David Park, VP Growth @ Unicorn Co</div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -556,7 +529,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* Waitlist CTA */}
       <section ref={finalCtaRef} className="py-32 px-6 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-[#A07CFE]/10 to-[#5DFF9F]/10"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -570,7 +543,7 @@ const Index = () => {
               variants={itemVariants}
             >
               <Badge className="bg-[#5DFF9F]/20 text-[#5DFF9F] border-[#5DFF9F]/30 animate-glow-pulse">
-                🔥 Get started in 30 seconds
+                🚀 Asmi is invite-only right now
               </Badge>
             </motion.div>
             
@@ -578,41 +551,44 @@ const Index = () => {
               className="text-5xl lg:text-6xl font-bold mb-8 text-white leading-tight"
               variants={itemVariants}
             >
-              Ready to get your{" "}
-              <span className="gradient-text-primary">Chief of Staff?</span>
+              Join the waitlist to be{" "}
+              <span className="gradient-text-primary">first in.</span>
             </motion.h2>
             
-            <motion.p 
-              className="text-xl text-gray-300 mb-12 leading-relaxed"
-              variants={itemVariants}
-            >
-              No app downloads. No complex setup. Just text Asmi and watch your life get organized.
-            </motion.p>
-
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
+              className="max-w-md mx-auto mb-8"
               variants={itemVariants}
             >
-              <Button 
-                size="lg"
-                className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-semibold h-14 px-8 text-lg hover-glow"
-              >
-                Start on WhatsApp
-              </Button>
-              <Button 
-                size="lg"
-                variant="outline"
-                className="border-[#A07CFE]/30 text-[#A07CFE] hover:bg-[#A07CFE]/10 h-14 px-8 text-lg"
-              >
-                🔥 Roast My Calendar
-              </Button>
+              <form onSubmit={handleWaitlistSignup} className="space-y-4">
+                <Input
+                  type="email"
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-400 h-12"
+                />
+                <Input
+                  type="tel"
+                  placeholder="WhatsApp number (optional)"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-400 h-12"
+                />
+                <Button 
+                  type="submit"
+                  size="lg"
+                  className="w-full bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-semibold h-12 text-lg hover-glow"
+                >
+                  Join Waitlist
+                </Button>
+              </form>
             </motion.div>
 
             <motion.p 
               className="text-sm text-gray-400"
               variants={itemVariants}
             >
-              Trusted by 500+ founders, VCs, and startup teams
+              We'll text you when it's ready. No spam, just Asmi.
             </motion.p>
           </motion.div>
         </div>
