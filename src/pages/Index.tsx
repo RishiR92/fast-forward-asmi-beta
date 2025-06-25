@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef } from "react";
@@ -17,10 +16,10 @@ const Index = () => {
 
   // Enhanced chat demo messages
   const whatsappMessages = [
-    { type: "user", text: "🎤 Voice note about Bill meeting", delay: 500, isVoice: true },
-    { type: "asmi", text: "Got it! Prepping your brief for Bill Gurley...", delay: 600 },
-    { type: "asmi", text: "📋 **Bill Gurley Brief**\n\n• Partner @ Benchmark Capital\n• You pitched 3 weeks ago\n• Last email: \"Interesting GTM strategy, let's dive deeper\"\n• He backed Uber—loves network effects & UGC\n• Talk about: iMessage-first strategy → viral loops → how it evolves into building own platform", delay: 1000 },
-    { type: "asmi", text: "Want me to set a follow-up reminder? 📅", delay: 1400 }
+    { type: "user", text: "Hey, can you help me prep for my meeting with Sarah tomorrow?", delay: 500 },
+    { type: "asmi", text: "Of course! Let me pull up what I know about Sarah...", delay: 600 },
+    { type: "asmi", text: "📋 **Sarah Meeting Brief**\n\n• Sarah Johnson, VP Marketing @ TechCorp\n• Last meeting: 2 weeks ago about Q4 campaign\n• Her priorities: Brand partnerships, growth metrics\n• You promised to send case studies (still pending)\n• Suggested talking points: ROI data, timeline updates", delay: 1000 },
+    { type: "asmi", text: "Should I remind you to prepare those case studies? 📊", delay: 1400 }
   ];
 
   const imessageMessages = [
@@ -67,7 +66,7 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Demo animation with faster transitions
+  // Demo animation with swish transition
   useEffect(() => {
     const demoInterval = setInterval(() => {
       if (currentDemo === "whatsapp") {
@@ -79,7 +78,7 @@ const Index = () => {
             setCurrentDemo("imessage");
             setMessageIndex(0);
             setIsTransitioning(false);
-          }, 600);
+          }, 300); // Faster swish transition
         }
       } else {
         if (messageIndex < imessageMessages.length - 1) {
@@ -90,7 +89,7 @@ const Index = () => {
             setCurrentDemo("whatsapp");
             setMessageIndex(0);
             setIsTransitioning(false);
-          }, 600);
+          }, 300); // Faster swish transition
         }
       }
     }, 600);
@@ -165,9 +164,7 @@ const Index = () => {
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              Just say it.
-              <br />
-              <span className="text-[#5DFF9F]">Asmi</span> will get it done.
+              <span className="text-[#5DFF9F]">Get Things Done.</span>
             </motion.h1>
 
             {/* Personality Typing Animation */}
@@ -200,7 +197,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Dynamic iPhone Demo */}
+      {/* Dynamic iPhone Demo - Static Height */}
       <section className="py-8 px-4 relative">
         <div className="max-w-xs mx-auto">
           <motion.div
@@ -209,10 +206,10 @@ const Index = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            {/* Sleek iPhone Frame */}
-            <div className="relative bg-black rounded-[2.5rem] p-1 shadow-2xl border border-gray-800">
+            {/* Sleek iPhone Frame - Static dimensions */}
+            <div className="relative bg-black rounded-[2.5rem] p-0.5 shadow-2xl border border-gray-700/50">
               {/* Dynamic Island */}
-              <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-24 h-5 bg-black rounded-full z-10 flex items-center justify-center">
+              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-20 h-4 bg-black rounded-full z-10 flex items-center justify-center">
                 <motion.div
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
@@ -220,10 +217,10 @@ const Index = () => {
                 />
               </div>
               
-              {/* Screen */}
-              <div className="bg-black rounded-[2.25rem] overflow-hidden relative h-[580px] w-[280px]">
+              {/* Screen - Fixed height */}
+              <div className="bg-black rounded-[2.25rem] overflow-hidden relative h-[620px] w-[300px]">
                 {/* Status Bar */}
-                <div className="flex justify-between items-center px-6 pt-4 pb-2 text-white text-xs font-medium">
+                <div className="flex justify-between items-center px-6 pt-6 pb-2 text-white text-xs font-medium">
                   <span>9:41</span>
                   <div className="flex items-center gap-1">
                     <div className="w-3 h-1.5 border border-white rounded-sm">
@@ -236,10 +233,10 @@ const Index = () => {
                   {!isTransitioning && (
                     <motion.div
                       key={currentDemo}
-                      initial={{ opacity: 0, x: currentDemo === "whatsapp" ? 100 : -100, rotateY: 15 }}
-                      animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                      exit={{ opacity: 0, x: currentDemo === "whatsapp" ? -100 : 100, rotateY: -15 }}
-                      transition={{ duration: 0.5, ease: "easeInOut" }}
+                      initial={{ opacity: 0, x: currentDemo === "whatsapp" ? 100 : -100 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: currentDemo === "whatsapp" ? -100 : 100 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }} // Swish animation
                       className="px-2 pb-4 h-full"
                     >
                       {currentDemo === "whatsapp" ? (
@@ -261,7 +258,7 @@ const Index = () => {
                           </div>
                           
                           {/* Messages */}
-                          <div className="p-3 space-y-2 bg-[#0B141A] min-h-[440px]">
+                          <div className="p-3 space-y-2 bg-[#0B141A] flex-1 overflow-y-auto">
                             <AnimatePresence>
                               {whatsappMessages.slice(0, messageIndex + 1).map((message, index) => (
                                 <motion.div
@@ -274,17 +271,6 @@ const Index = () => {
                                     "bg-[#005C4B] rounded-xl rounded-tr-md p-2.5 max-w-[85%] ml-auto shadow-lg"
                                   }
                                 >
-                                  {message.isVoice && (
-                                    <div className="flex items-center gap-2 mb-1">
-                                      <Mic className="w-3 h-3 text-white" />
-                                      <motion.div
-                                        animate={{ scaleX: [1, 1.5, 1] }}
-                                        transition={{ duration: 0.5, repeat: Infinity }}
-                                        className="flex-1 h-0.5 bg-[#5DFF9F] rounded"
-                                      />
-                                      <span className="text-xs text-gray-400">0:03</span>
-                                    </div>
-                                  )}
                                   <p className="text-white text-xs whitespace-pre-line leading-relaxed">
                                     {message.text}
                                   </p>
@@ -295,30 +281,6 @@ const Index = () => {
                                 </motion.div>
                               ))}
                             </AnimatePresence>
-                            
-                            {messageIndex < whatsappMessages.length - 1 && (
-                              <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="bg-[#202C33] rounded-xl rounded-tl-md p-2.5 max-w-[85%] flex items-center gap-2"
-                              >
-                                <div className="flex gap-1">
-                                  {[0, 1, 2].map((i) => (
-                                    <motion.div
-                                      key={i}
-                                      className="w-1 h-1 bg-[#5DFF9F] rounded-full"
-                                      animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
-                                      transition={{ 
-                                        repeat: Infinity, 
-                                        duration: 1, 
-                                        delay: i * 0.2 
-                                      }}
-                                    />
-                                  ))}
-                                </div>
-                                <span className="text-gray-400 text-xs">Asmi is thinking...</span>
-                              </motion.div>
-                            )}
                           </div>
                         </div>
                       ) : (
@@ -337,7 +299,7 @@ const Index = () => {
                           </div>
                           
                           {/* Messages */}
-                          <div className="p-3 space-y-2 bg-black min-h-[440px]">
+                          <div className="p-3 space-y-2 bg-black flex-1 overflow-y-auto">
                             <AnimatePresence>
                               {imessageMessages.slice(0, messageIndex + 1).map((message, index) => (
                                 <motion.div
@@ -380,58 +342,12 @@ const Index = () => {
                                 </motion.div>
                               ))}
                             </AnimatePresence>
-                            
-                            {messageIndex < imessageMessages.length - 1 && (
-                              <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="bg-[#3C3C43] rounded-xl rounded-tl-md p-2.5 max-w-[85%] flex items-center gap-2"
-                              >
-                                <div className="flex gap-1">
-                                  {[0, 1, 2].map((i) => (
-                                    <motion.div
-                                      key={i}
-                                      className="w-1 h-1 bg-[#5DFF9F] rounded-full"
-                                      animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
-                                      transition={{ 
-                                        repeat: Infinity, 
-                                        duration: 1, 
-                                        delay: i * 0.2 
-                                      }}
-                                    />
-                                  ))}
-                                </div>
-                                <span className="text-gray-400 text-xs">Asmi is thinking...</span>
-                              </motion.div>
-                            )}
                           </div>
                         </div>
                       )}
                     </motion.div>
                   )}
                 </AnimatePresence>
-
-                {/* Transition Animation */}
-                {isTransitioning && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute inset-0 flex items-center justify-center bg-black/80"
-                  >
-                    <motion.div
-                      animate={{ 
-                        rotate: 360,
-                        scale: [1, 1.2, 1]
-                      }}
-                      transition={{ 
-                        rotate: { duration: 1, repeat: Infinity, ease: "linear" },
-                        scale: { duration: 0.5, repeat: Infinity }
-                      }}
-                      className="w-8 h-8 border-2 border-[#5DFF9F] border-t-transparent rounded-full"
-                    />
-                  </motion.div>
-                )}
               </div>
             </div>
           </motion.div>
@@ -563,7 +479,7 @@ const Index = () => {
             </p>
 
             {/* Memory Graph Visualization */}
-            <div className="relative h-80 bg-white/[0.02] rounded-3xl border border-white/10 overflow-hidden">
+            <div className="relative h-96 bg-white/[0.02] rounded-3xl border border-white/10 overflow-hidden">
               <motion.div
                 className="absolute inset-0 flex items-center justify-center"
                 initial={{ opacity: 0 }}
@@ -572,75 +488,101 @@ const Index = () => {
               >
                 {/* Central Brain Node */}
                 <motion.div
-                  className="w-16 h-16 bg-[#5DFF9F] rounded-full flex items-center justify-center relative z-10"
+                  className="w-20 h-20 bg-[#5DFF9F] rounded-full flex items-center justify-center relative z-10"
                   animate={{ 
                     scale: [1, 1.1, 1],
                     boxShadow: [
                       "0 0 0 0 rgba(93, 255, 159, 0.4)",
-                      "0 0 0 20px rgba(93, 255, 159, 0)",
+                      "0 0 0 30px rgba(93, 255, 159, 0)",
                       "0 0 0 0 rgba(93, 255, 159, 0)"
                     ]
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <Brain className="w-8 h-8 text-black" />
+                  <Brain className="w-10 h-10 text-black" />
                 </motion.div>
 
-                {/* Connected Input Sources */}
+                {/* Connected Input Sources - Symmetric arrangement */}
                 {[
-                  { icon: Calendar, position: { top: "15%", left: "15%" }, delay: 0.2, label: "Calendar" },
-                  { icon: Mail, position: { top: "15%", right: "15%" }, delay: 0.4, label: "Mails" },
-                  { icon: Users, position: { bottom: "15%", left: "15%" }, delay: 0.6, label: "Contacts" },
-                  { icon: Mic, position: { bottom: "15%", right: "15%" }, delay: 0.8, label: "Voice Notes" },
-                  { icon: Globe, position: { top: "50%", left: "5%" }, delay: 1.0, label: "Internet" }
+                  { icon: Calendar, position: { top: "20%", left: "50%", transform: "translateX(-50%)" }, delay: 0.2, label: "Calendar" },
+                  { icon: Mail, position: { top: "50%", right: "15%" }, delay: 0.4, label: "Mails" },
+                  { icon: Mic, position: { bottom: "20%", left: "50%", transform: "translateX(-50%)" }, delay: 0.6, label: "Voice Notes" },
+                  { icon: Globe, position: { top: "50%", left: "15%" }, delay: 0.8, label: "Internet" }
                 ].map((node, index) => (
                   <motion.div
                     key={index}
-                    className="absolute flex flex-col items-center gap-2"
+                    className="absolute flex flex-col items-center gap-3"
                     style={node.position}
                     initial={{ scale: 0, opacity: 0 }}
                     animate={memoryInView ? { scale: 1, opacity: 1 } : {}}
                     transition={{ delay: node.delay, duration: 0.6 }}
                   >
-                    <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                      <node.icon className="w-5 h-5 text-[#5DFF9F]" />
+                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
+                      <node.icon className="w-6 h-6 text-[#5DFF9F]" />
                     </div>
-                    <span className="text-xs text-gray-400">{node.label}</span>
+                    <span className="text-sm text-gray-300 font-medium">{node.label}</span>
                     
-                    {/* Connection Lines */}
+                    {/* Connection Lines to center */}
                     <motion.div
-                      className="absolute w-1 bg-gradient-to-r from-[#5DFF9F] to-transparent"
+                      className="absolute w-0.5 bg-gradient-to-r from-[#5DFF9F] to-transparent"
                       style={{
-                        height: "60px",
-                        transformOrigin: "0 50%",
-                        transform: `rotate(${45 * (index + 1)}deg)`
+                        height: index % 2 === 0 ? "80px" : "100px",
+                        transformOrigin: "50% 0%",
+                        transform: index === 0 ? "rotate(90deg) translateY(-40px)" :
+                                 index === 1 ? "rotate(180deg) translateY(-50px)" :
+                                 index === 2 ? "rotate(270deg) translateY(-40px)" :
+                                 "rotate(0deg) translateY(-50px)"
                       }}
-                      initial={{ scaleX: 0 }}
-                      animate={memoryInView ? { scaleX: 1 } : {}}
+                      initial={{ scaleY: 0 }}
+                      animate={memoryInView ? { scaleY: 1 } : {}}
                       transition={{ delay: node.delay + 0.3, duration: 0.8 }}
                     />
                   </motion.div>
                 ))}
               </motion.div>
 
-              {/* Floating Data Points */}
-              {Array.from({ length: 10 }).map((_, i) => (
+              {/* Data Heavy Visualization - More floating points */}
+              {Array.from({ length: 25 }).map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-2 h-2 bg-[#5DFF9F]/60 rounded-full"
+                  className="absolute w-1.5 h-1.5 bg-[#5DFF9F]/40 rounded-full"
                   style={{
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`
                   }}
                   animate={{
-                    y: [0, -15, 0],
-                    opacity: [0.3, 1, 0.3],
-                    scale: [1, 1.3, 1]
+                    y: [0, -20, 0],
+                    x: [0, Math.random() * 10 - 5, 0],
+                    opacity: [0.2, 1, 0.2],
+                    scale: [0.8, 1.5, 0.8]
                   }}
                   transition={{
-                    duration: 3 + Math.random() * 2,
+                    duration: 4 + Math.random() * 3,
                     repeat: Infinity,
-                    delay: i * 0.2
+                    delay: i * 0.1
+                  }}
+                />
+              ))}
+
+              {/* Data Processing Lines */}
+              {Array.from({ length: 8 }).map((_, i) => (
+                <motion.div
+                  key={`line-${i}`}
+                  className="absolute h-0.5 bg-gradient-to-r from-transparent via-[#5DFF9F]/30 to-transparent"
+                  style={{
+                    width: `${30 + Math.random() * 40}%`,
+                    left: `${Math.random() * 70}%`,
+                    top: `${Math.random() * 100}%`,
+                    transform: `rotate(${Math.random() * 360}deg)`
+                  }}
+                  animate={{
+                    opacity: [0, 0.8, 0],
+                    scaleX: [0, 1, 0]
+                  }}
+                  transition={{
+                    duration: 2 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: i * 0.3
                   }}
                 />
               ))}
