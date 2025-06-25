@@ -6,67 +6,94 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MessageSquare, Phone, Users, Brain, Target, Mail, Clock, Zap, User, Eye, RotateCcw, CheckCircle, Send } from "lucide-react";
+import { Calendar, MessageSquare, Phone, Users, Brain, Target, Mail, Clock, Zap, User, Eye, RotateCcw, CheckCircle, Send, Mic, PlayCircle } from "lucide-react";
 
 const Index = () => {
   const [email, setEmail] = useState("");
-  const [currentApp, setCurrentApp] = useState("WhatsApp");
   const [currentDemo, setCurrentDemo] = useState("whatsapp");
   const [messageIndex, setMessageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [typingText, setTypingText] = useState("");
 
-  // Chat demo messages - Updated with Bill Gurley
+  // Enhanced chat demo messages
   const whatsappMessages = [
-    { type: "asmi", text: "You have 3 meetings today. Want briefs?", delay: 800 },
-    { type: "asmi", text: "📅 10am: Bill @ Benchmark\n🚀 2pm: Product sync w/ Sarah\n💰 4pm: Series A follow-up call", delay: 1200 },
-    { type: "user", text: "Yes, brief me on Bill", delay: 2000 },
-    { type: "asmi", text: "Bill Gurley, Partner @ Benchmark. You pitched 3 weeks ago. Last email: \"Interesting GTM strategy, let's dive deeper.\" He backed Uber—loves network effects & UGC. Talk about iMessage first strategy, viral loops and how it evolves into building own platform.", delay: 3000 },
-    { type: "asmi", text: "Want a quick script? 📝", delay: 4000 }
+    { type: "user", text: "🎤 Voice note about Bill meeting", delay: 500, isVoice: true },
+    { type: "asmi", text: "Got it! Prepping your brief for Bill Gurley...", delay: 800 },
+    { type: "asmi", text: "📋 **Bill Gurley Brief**\n\n• Partner @ Benchmark Capital\n• You pitched 3 weeks ago\n• Last email: \"Interesting GTM strategy, let's dive deeper\"\n• Backed Uber — loves network effects & UGC\n• Focus: iMessage-first strategy → viral loops → own platform", delay: 1500 },
+    { type: "asmi", text: "Want me to set a follow-up reminder? 📅", delay: 2200 }
   ];
 
   const imessageMessages = [
-    { type: "user", text: "Schedule coffee with Mark from Acme Corp Friday 3pm", delay: 800 },
-    { type: "asmi", text: "Found Mark Stevens, CTO @ Acme Corp in your contacts. Booking Friday 3pm coffee.", delay: 1500 },
-    { type: "asmi", text: "Calendar Invite Created\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM", delay: 2500 },
-    { type: "asmi", text: "Invite sent to mark@acmecorp.com ✅", delay: 3200 }
+    { type: "user", text: "Coffee with Mark from Acme Friday 3pm", delay: 500 },
+    { type: "asmi", text: "🔍 Found Mark Stevens, CTO @ Acme Corp", delay: 800 },
+    { type: "asmi", text: "✅ **Calendar Updated**\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM\n\nInvite sent to mark@acmecorp.com", delay: 1200 },
+    { type: "asmi", text: "Asmi's got it. 🎯", delay: 1800 }
+  ];
+
+  // Typing animation for personality
+  const personalityPhrases = [
+    "Always listening (in a good way)",
+    "Built for chaotic days",
+    "Asmi's got it",
+    "Your smart sidekick"
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentApp(prev => prev === "WhatsApp" ? "iMessage" : "WhatsApp");
-    }, 1500);
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    const typeWriter = () => {
+      const currentPhrase = personalityPhrases[phraseIndex];
+      
+      if (isDeleting) {
+        setTypingText(currentPhrase.substring(0, charIndex - 1));
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % personalityPhrases.length;
+        }
+      } else {
+        setTypingText(currentPhrase.substring(0, charIndex + 1));
+        charIndex++;
+        if (charIndex === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(() => {}, 2000);
+        }
+      }
+    };
+
+    const interval = setInterval(typeWriter, isDeleting ? 50 : 100);
     return () => clearInterval(interval);
   }, []);
 
-  // Demo animation effect - Faster transitions
+  // Demo animation with faster transitions
   useEffect(() => {
     const demoInterval = setInterval(() => {
       if (currentDemo === "whatsapp") {
         if (messageIndex < whatsappMessages.length - 1) {
           setMessageIndex(prev => prev + 1);
         } else {
-          // Switch to iMessage demo with transition
           setIsTransitioning(true);
           setTimeout(() => {
             setCurrentDemo("imessage");
             setMessageIndex(0);
             setIsTransitioning(false);
-          }, 500);
+          }, 800);
         }
       } else {
         if (messageIndex < imessageMessages.length - 1) {
           setMessageIndex(prev => prev + 1);
         } else {
-          // Switch back to WhatsApp demo with transition
           setIsTransitioning(true);
           setTimeout(() => {
             setCurrentDemo("whatsapp");
             setMessageIndex(0);
             setIsTransitioning(false);
-          }, 500);
+          }, 800);
         }
       }
-    }, 1200);
+    }, 1000);
 
     return () => clearInterval(demoInterval);
   }, [currentDemo, messageIndex]);
@@ -76,163 +103,148 @@ const Index = () => {
     console.log("Waitlist signup:", { email });
   };
 
-  const featuresRef = useRef(null);
-  const personasRef = useRef(null);
-  const socialProofRef = useRef(null);
-  const howItWorksRef = useRef(null);
+  // Refs for scroll animations
+  const heroRef = useRef(null);
+  const useCasesRef = useRef(null);
+  const memoryRef = useRef(null);
+  const testimonialsRef = useRef(null);
+  const dailyFlowRef = useRef(null);
 
-  const featuresInView = useInView(featuresRef, { once: true, margin: "-50px" });
-  const personasInView = useInView(personasRef, { once: true, margin: "-50px" });
-  const socialProofInView = useInView(socialProofRef, { once: true, margin: "-50px" });
-  const howItWorksInView = useInView(howItWorksRef, { once: true, margin: "-50px" });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.05,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const messageVariants = {
-    hidden: { opacity: 0, scale: 0.9, y: 10 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { duration: 0.3, ease: "easeOut" }
-    }
-  };
-
-  const dynamicItemVariants = {
-    hidden: { opacity: 0, y: 40, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { 
-        duration: 0.7, 
-        ease: "easeOut",
-        type: "spring",
-        stiffness: 100
-      },
-    },
-  };
+  const heroInView = useInView(heroRef, { once: true });
+  const useCasesInView = useInView(useCasesRef, { once: true, margin: "-100px" });
+  const memoryInView = useInView(memoryRef, { once: true, margin: "-100px" });
+  const testimonialsInView = useInView(testimonialsRef, { once: true, margin: "-100px" });
+  const dailyFlowInView = useInView(dailyFlowRef, { once: true, margin: "-100px" });
 
   return (
-    <div className="min-h-screen bg-[#0B0B0B] font-inter">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-[#0B0B0B]/95 backdrop-blur-sm border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
-            <motion.div 
-              className="text-xl sm:text-2xl font-bold text-white"
-              whileHover={{ scale: 1.05 }}
-            >
-              Asmi AI
-            </motion.div>
-            <Button 
-              variant="outline" 
-              className="border-[#5DFF9F]/20 text-[#5DFF9F] hover:bg-[#5DFF9F]/10 text-sm sm:text-base px-3 sm:px-4"
-            >
-              Join Waitlist
-            </Button>
-          </div>
-        </div>
+    <div className="min-h-screen bg-[#0B0B0B] font-inter overflow-x-hidden">
+      {/* Floating Navigation */}
+      <nav className="fixed top-4 left-4 right-4 z-50 flex justify-between items-center bg-black/80 backdrop-blur-md rounded-2xl px-6 py-4 border border-white/10">
+        <motion.div 
+          className="text-xl font-bold text-white"
+          whileHover={{ scale: 1.05 }}
+        >
+          Asmi
+        </motion.div>
+        <Button 
+          size="sm"
+          className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium px-6"
+        >
+          Join Waitlist
+        </Button>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-24 sm:pt-32 pb-6 sm:pb-8 px-4 sm:px-6 relative">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+      {/* Hero Section - Enhanced */}
+      <section ref={heroRef} className="pt-32 pb-12 px-4 relative min-h-screen flex flex-col justify-center">
+        <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20 mb-6 sm:mb-8 text-xs sm:text-sm">
-              <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              Invite-only • No app required
-            </Badge>
-            
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-light mb-4 sm:mb-6 text-white leading-tight tracking-tight">
-              Your AI Chief of Staff.
-            </h1>
-            
-            <div className="text-base sm:text-lg text-gray-400 mb-6 sm:mb-8 h-6 flex items-center justify-center">
-              <span className="mr-2 text-sm sm:text-base">On</span>
-              <motion.span
-                key={currentApp}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="text-[#5DFF9F] font-medium text-sm sm:text-base"
-              >
-                {currentApp}
-              </motion.span>
-            </div>
-            
-            <p className="text-lg sm:text-xl text-gray-300 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed font-light">
-              Asmi remembers everything — meetings, people, and promises — so you don't have to.
-            </p>
-
-            {/* Email Placeholder */}
-            <div className="max-w-md mx-auto mb-8">
-              <form onSubmit={handleWaitlistSignup} className="flex flex-col sm:flex-row gap-3">
-                <Input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-gray-500 h-12 text-base"
+            {/* Animated Badge */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={heroInView ? { scale: 1, opacity: 1 } : {}}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20 mb-8 text-sm px-4 py-2">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="w-2 h-2 bg-[#5DFF9F] rounded-full mr-2"
                 />
-                <Button 
-                  type="submit"
-                  size="lg"
-                  className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-12 px-6 sm:px-8 text-base whitespace-nowrap"
-                >
-                  Join Waitlist
-                </Button>
-              </form>
-            </div>
+                WhatsApp AI • Voice-First • Always Learning
+              </Badge>
+            </motion.div>
+
+            {/* Main Headline */}
+            <motion.h1 
+              className="text-5xl sm:text-7xl lg:text-8xl font-light mb-8 text-white leading-tight tracking-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
+              Just say it.
+              <br />
+              <span className="text-[#5DFF9F]">Asmi</span> remembers.
+            </motion.h1>
+
+            {/* Personality Typing Animation */}
+            <motion.div 
+              className="text-xl text-gray-400 mb-12 h-8 flex items-center justify-center"
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              <span className="font-mono">{typingText}</span>
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+                className="ml-1 text-[#5DFF9F]"
+              >
+                |
+              </motion.span>
+            </motion.div>
+
+            {/* Quick Action Demo */}
+            <motion.div
+              className="max-w-md mx-auto mb-12 bg-white/5 rounded-3xl p-6 border border-white/10"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={heroInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 1, duration: 0.6 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <motion.div
+                  animate={{ pulse: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-3 h-3 bg-red-500 rounded-full"
+                />
+                <span className="text-white text-sm">Recording...</span>
+              </div>
+              <p className="text-gray-300 text-sm mb-4">
+                "Hey Asmi, prep me for the Bill Gurley meeting"
+              </p>
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ delay: 1.5, duration: 2 }}
+                className="h-1 bg-[#5DFF9F] rounded-full"
+              />
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* iPhone-style Chat Demo Section */}
-      <section className="py-8 sm:py-12 px-4 sm:px-6 relative">
+      {/* Dynamic iPhone Demo */}
+      <section className="py-12 px-4 relative">
         <div className="max-w-sm mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
             className="relative"
           >
-            {/* iPhone Frame */}
-            <div className="relative bg-black rounded-[3rem] p-2 shadow-2xl border border-gray-800">
-              {/* iPhone Notch */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10"></div>
+            {/* iPhone 14 Pro Frame */}
+            <div className="relative bg-[#1C1C1E] rounded-[3rem] p-2 shadow-2xl">
+              {/* Dynamic Island */}
+              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-black rounded-full z-10 flex items-center justify-center">
+                <motion.div
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-2 h-2 bg-[#5DFF9F] rounded-full"
+                />
+              </div>
               
               {/* Screen */}
-              <div className="bg-[#000] rounded-[2.5rem] overflow-hidden relative min-h-[600px]">
+              <div className="bg-black rounded-[2.5rem] overflow-hidden relative min-h-[650px]">
                 {/* Status Bar */}
-                <div className="flex justify-between items-center px-6 pt-4 pb-2 text-white text-sm">
-                  <span className="font-medium">9:41</span>
+                <div className="flex justify-between items-center px-6 pt-6 pb-2 text-white text-sm font-medium">
+                  <span>9:41</span>
                   <div className="flex items-center gap-1">
                     <div className="w-4 h-2 border border-white rounded-sm">
-                      <div className="w-3 h-1 bg-white rounded-sm m-0.5"></div>
+                      <div className="w-3 h-1 bg-green-500 rounded-sm m-0.5"></div>
                     </div>
                   </div>
                 </div>
@@ -241,44 +253,61 @@ const Index = () => {
                   {!isTransitioning && (
                     <motion.div
                       key={currentDemo}
-                      initial={{ opacity: 0, x: currentDemo === "whatsapp" ? 50 : -50, scale: 0.95 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: currentDemo === "whatsapp" ? -50 : 50, scale: 0.95 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      initial={{ opacity: 0, x: currentDemo === "whatsapp" ? 100 : -100, rotateY: 15 }}
+                      animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                      exit={{ opacity: 0, x: currentDemo === "whatsapp" ? -100 : 100, rotateY: -15 }}
+                      transition={{ duration: 0.6, ease: "easeInOut" }}
                       className="px-4 pb-4 h-full"
                     >
                       {currentDemo === "whatsapp" ? (
                         <div className="bg-[#0B141A] rounded-t-3xl h-full">
                           {/* WhatsApp Header */}
                           <div className="flex items-center gap-3 p-4 bg-[#202C33] text-white">
-                            <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center">
-                              <MessageSquare className="w-4 h-4 text-white" />
+                            <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center relative">
+                              <MessageSquare className="w-5 h-5 text-white" />
+                              <motion.div
+                                animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                                className="absolute -top-1 -right-1 w-3 h-3 bg-[#5DFF9F] rounded-full"
+                              />
                             </div>
                             <div>
-                              <span className="font-medium text-sm">Asmi AI</span>
-                              <p className="text-xs text-gray-400">online</p>
+                              <span className="font-medium">Asmi AI</span>
+                              <p className="text-xs text-green-400">● online</p>
                             </div>
                           </div>
                           
                           {/* Messages */}
-                          <div className="p-4 space-y-3 bg-[#0B141A] min-h-[400px]">
+                          <div className="p-4 space-y-4 bg-[#0B141A] min-h-[450px]">
                             <AnimatePresence>
                               {whatsappMessages.slice(0, messageIndex + 1).map((message, index) => (
                                 <motion.div
                                   key={`whatsapp-${index}`}
-                                  variants={messageVariants}
-                                  initial="hidden"
-                                  animate="visible"
+                                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                                  transition={{ duration: 0.4, ease: "easeOut" }}
                                   className={message.type === 'asmi' ? 
-                                    "bg-[#202C33] rounded-2xl rounded-tl-md p-3 max-w-[85%]" :
-                                    "bg-[#005C4B] rounded-2xl rounded-tr-md p-3 max-w-[85%] ml-auto"
+                                    "bg-[#202C33] rounded-2xl rounded-tl-md p-4 max-w-[90%] shadow-lg" :
+                                    "bg-[#005C4B] rounded-2xl rounded-tr-md p-4 max-w-[90%] ml-auto shadow-lg"
                                   }
                                 >
-                                  <p className="text-white text-sm whitespace-pre-line">
+                                  {message.isVoice && (
+                                    <div className="flex items-center gap-2 mb-2">
+                                      <Mic className="w-4 h-4 text-white" />
+                                      <motion.div
+                                        animate={{ scaleX: [1, 1.5, 1] }}
+                                        transition={{ duration: 0.5, repeat: Infinity }}
+                                        className="flex-1 h-1 bg-[#5DFF9F] rounded"
+                                      />
+                                      <span className="text-xs text-gray-400">0:03</span>
+                                    </div>
+                                  )}
+                                  <p className="text-white text-sm whitespace-pre-line leading-relaxed">
                                     {message.text}
                                   </p>
-                                  <p className="text-xs text-gray-400 mt-1">
-                                    {message.type === 'asmi' ? '8:47 AM' : '8:48 AM'}
+                                  <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
+                                    <span>{message.type === 'asmi' ? '8:47 AM' : '8:48 AM'}</span>
+                                    {message.type === 'user' && <CheckCircle className="w-3 h-3 text-blue-400" />}
                                   </p>
                                 </motion.div>
                               ))}
@@ -288,60 +317,71 @@ const Index = () => {
                               <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="bg-[#202C33] rounded-2xl rounded-tl-md p-3 max-w-[85%] flex items-center gap-2"
+                                className="bg-[#202C33] rounded-2xl rounded-tl-md p-4 max-w-[90%] flex items-center gap-3"
                               >
                                 <div className="flex gap-1">
-                                  <motion.div
-                                    className="w-2 h-2 bg-[#5DFF9F] rounded-full"
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 0.8, delay: 0 }}
-                                  />
-                                  <motion.div
-                                    className="w-2 h-2 bg-[#5DFF9F] rounded-full"
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 0.8, delay: 0.2 }}
-                                  />
-                                  <motion.div
-                                    className="w-2 h-2 bg-[#5DFF9F] rounded-full"
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 0.8, delay: 0.4 }}
-                                  />
+                                  {[0, 1, 2].map((i) => (
+                                    <motion.div
+                                      key={i}
+                                      className="w-2 h-2 bg-[#5DFF9F] rounded-full"
+                                      animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+                                      transition={{ 
+                                        repeat: Infinity, 
+                                        duration: 1, 
+                                        delay: i * 0.2 
+                                      }}
+                                    />
+                                  ))}
                                 </div>
+                                <span className="text-gray-400 text-sm">Asmi is thinking...</span>
                               </motion.div>
                             )}
                           </div>
                         </div>
                       ) : (
-                        <div className="bg-[#000] rounded-t-3xl h-full">
+                        <div className="bg-black rounded-t-3xl h-full">
                           {/* iMessage Header */}
                           <div className="flex items-center gap-3 p-4 bg-[#1C1C1E] text-white border-b border-gray-800">
-                            <div className="w-8 h-8 rounded-full bg-[#007AFF] flex items-center justify-center">
-                              <MessageSquare className="w-4 h-4 text-white" />
+                            <div className="w-10 h-10 rounded-full bg-[#007AFF] flex items-center justify-center relative">
+                              <MessageSquare className="w-5 h-5 text-white" />
+                              <motion.div
+                                animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                                className="absolute -top-1 -right-1 w-3 h-3 bg-[#5DFF9F] rounded-full"
+                              />
                             </div>
-                            <span className="font-medium text-sm">Asmi AI</span>
+                            <span className="font-medium">Asmi AI</span>
                           </div>
                           
                           {/* Messages */}
-                          <div className="p-4 space-y-3 bg-[#000] min-h-[400px]">
+                          <div className="p-4 space-y-4 bg-black min-h-[450px]">
                             <AnimatePresence>
                               {imessageMessages.slice(0, messageIndex + 1).map((message, index) => (
                                 <motion.div
                                   key={`imessage-${index}`}
-                                  variants={messageVariants}
-                                  initial="hidden"
-                                  animate="visible"
+                                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                                  transition={{ duration: 0.4, ease: "easeOut" }}
                                   className={message.type === 'asmi' ? 
-                                    "bg-[#3C3C43] rounded-2xl rounded-tl-md p-3 max-w-[85%]" :
-                                    "bg-[#007AFF] rounded-2xl rounded-tr-md p-3 max-w-[85%] ml-auto"
+                                    "bg-[#3C3C43] rounded-2xl rounded-tl-md p-4 max-w-[90%] shadow-lg" :
+                                    "bg-[#007AFF] rounded-2xl rounded-tr-md p-4 max-w-[90%] ml-auto shadow-lg"
                                   }
                                 >
-                                  <p className="text-white text-sm whitespace-pre-line">
+                                  <p className="text-white text-sm whitespace-pre-line leading-relaxed">
                                     {message.text}
                                   </p>
-                                  {message.text.includes("Calendar Invite Created") && (
-                                    <div className="mt-2 bg-black/20 rounded-xl p-2">
-                                      <p className="text-[#5DFF9F] text-xs">✅ Event Created</p>
-                                    </div>
+                                  {message.text.includes("Calendar Updated") && (
+                                    <motion.div 
+                                      initial={{ scale: 0 }}
+                                      animate={{ scale: 1 }}
+                                      transition={{ delay: 0.3 }}
+                                      className="mt-3 bg-black/20 rounded-xl p-3"
+                                    >
+                                      <div className="flex items-center gap-2 text-[#5DFF9F] text-sm">
+                                        <Calendar className="w-4 h-4" />
+                                        <span>Event Created</span>
+                                      </div>
+                                    </motion.div>
                                   )}
                                 </motion.div>
                               ))}
@@ -351,25 +391,23 @@ const Index = () => {
                               <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="bg-[#3C3C43] rounded-2xl rounded-tl-md p-3 max-w-[85%] flex items-center gap-2"
+                                className="bg-[#3C3C43] rounded-2xl rounded-tl-md p-4 max-w-[90%] flex items-center gap-3"
                               >
                                 <div className="flex gap-1">
-                                  <motion.div
-                                    className="w-2 h-2 bg-[#5DFF9F] rounded-full"
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 0.8, delay: 0 }}
-                                  />
-                                  <motion.div
-                                    className="w-2 h-2 bg-[#5DFF9F] rounded-full"
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 0.8, delay: 0.2 }}
-                                  />
-                                  <motion.div
-                                    className="w-2 h-2 bg-[#5DFF9F] rounded-full"
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 0.8, delay: 0.4 }}
-                                  />
+                                  {[0, 1, 2].map((i) => (
+                                    <motion.div
+                                      key={i}
+                                      className="w-2 h-2 bg-[#5DFF9F] rounded-full"
+                                      animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+                                      transition={{ 
+                                        repeat: Infinity, 
+                                        duration: 1, 
+                                        delay: i * 0.2 
+                                      }}
+                                    />
+                                  ))}
                                 </div>
+                                <span className="text-gray-400 text-sm">Asmi is thinking...</span>
                               </motion.div>
                             )}
                           </div>
@@ -379,18 +417,24 @@ const Index = () => {
                   )}
                 </AnimatePresence>
 
-                {/* Transition Loading */}
+                {/* Transition Animation */}
                 {isTransitioning && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 flex items-center justify-center bg-black/50"
+                    className="absolute inset-0 flex items-center justify-center bg-black/80"
                   >
                     <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-8 h-8 border-2 border-[#5DFF9F] border-t-transparent rounded-full"
+                      animate={{ 
+                        rotate: 360,
+                        scale: [1, 1.2, 1]
+                      }}
+                      transition={{ 
+                        rotate: { duration: 1, repeat: Infinity, ease: "linear" },
+                        scale: { duration: 0.5, repeat: Infinity }
+                      }}
+                      className="w-12 h-12 border-3 border-[#5DFF9F] border-t-transparent rounded-full"
                     />
                   </motion.div>
                 )}
@@ -400,479 +444,411 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Daily Flow Features - Enhanced with Dynamic Animations */}
-      <section ref={featuresRef} className="py-16 sm:py-20 px-4 sm:px-6 relative">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div 
-            className="text-center mb-12 sm:mb-16"
-            variants={containerVariants}
-            initial="hidden"
-            animate={featuresInView ? "visible" : "hidden"}
-          >
-            <motion.h2 
-              className="text-3xl sm:text-4xl lg:text-5xl font-light mb-6 text-white"
-              variants={dynamicItemVariants}
-              whileInView={{ scale: [1, 1.02, 1] }}
-              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-            >
-              Your daily flow
-            </motion.h2>
-            <motion.p 
-              className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light"
-              variants={dynamicItemVariants}
-            >
-              Asmi operates quietly in the background, prepping, following up, and organizing your life.
-            </motion.p>
-          </motion.div>
-
-          <motion.div 
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate={featuresInView ? "visible" : "hidden"}
-          >
-            {[
-              {
-                icon: Clock,
-                title: "Morning Clarity",
-                description: "\"You have 3 meetings today. Want briefs?\" Smart prep before each call with context, background, and ready scripts.",
-                color: "text-blue-400"
-              },
-              {
-                icon: Eye,
-                title: "Background Intel",
-                description: "Meeting someone new? Asmi pulls their role, company, recent activity — so you don't have to stalk LinkedIn.",
-                color: "text-green-400"
-              },
-              {
-                icon: Calendar,
-                title: "Chat Scheduling",
-                description: "\"Call with Amanda 4pm Friday\" → Asmi finds her email, books calendar, sends clean invite. Done.",
-                color: "text-yellow-400"
-              },
-              {
-                icon: MessageSquare,
-                title: "Meeting Capture",
-                description: "\"Want to log what happened?\" Send text or voice note → Asmi saves summary + action items, tagged by people.",
-                color: "text-red-400"
-              },
-              {
-                icon: Mail,
-                title: "Follow-Up Detection",
-                description: "\"You didn't reply to Benchmark. Want me to send a note?\" Asmi spots ghosted threads, drafts follow-ups.",
-                color: "text-purple-400"
-              },
-              {
-                icon: RotateCcw,
-                title: "Calendar Chaos Control",
-                description: "\"Your Tuesday is overbooked. Shift asyncs to Friday?\" Smart rebalancing with one tap approval.",
-                color: "text-orange-400"
-              }
-            ].map((feature, index) => (
-              <motion.div 
-                key={index} 
-                variants={dynamicItemVariants}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -10,
-                  transition: { duration: 0.3 }
-                }}
-                whileInView={{
-                  y: [0, -5, 0],
-                  transition: { 
-                    duration: 3, 
-                    repeat: Infinity, 
-                    delay: index * 0.2,
-                    repeatType: "reverse"
-                  }
-                }}
-                className="group"
-              >
-                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all duration-500 h-full group-hover:bg-white/[0.04]">
-                  <CardContent className="p-4 sm:p-6 space-y-4">
-                    <motion.div
-                      whileHover={{ rotate: 360, scale: 1.2 }}
-                      transition={{ duration: 0.6 }}
-                      className={`w-6 h-6 sm:w-8 sm:h-8 ${feature.color} group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <feature.icon className="w-full h-full" />
-                    </motion.div>
-                    <h3 className="text-lg sm:text-xl font-medium text-white group-hover:text-[#5DFF9F] transition-colors duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed text-sm sm:text-base group-hover:text-gray-300 transition-colors duration-300">
-                      {feature.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Target Audience - Enhanced with Dynamic Animations */}
-      <section ref={personasRef} className="py-12 sm:py-16 px-4 sm:px-6 relative">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div 
-            className="text-center mb-10 sm:mb-12"
-            variants={containerVariants}
-            initial="hidden"
-            animate={personasInView ? "visible" : "hidden"}
-          >
-            <motion.h2 
-              className="text-3xl sm:text-4xl font-light mb-4 text-white"
-              variants={dynamicItemVariants}
-              whileInView={{ 
-                scale: [1, 1.02, 1],
-                transition: { duration: 2, repeat: Infinity, repeatType: "reverse" }
-              }}
-            >
-              Built for people who move fast
-            </motion.h2>
-          </motion.div>
-
-          <motion.div 
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate={personasInView ? "visible" : "hidden"}
-          >
-            {[
-              {
-                emoji: "🚀",
-                title: "Startup Founders",
-                quote: "I live in WhatsApp. Asmi preps my investor calls, tracks follow-ups, and remembers promises I'd otherwise forget.",
-                features: ["Pre-meeting briefs with investor context", "Follow-up detection for funding rounds", "Calendar chaos management during crunch time"]
-              },
-              {
-                emoji: "⚡",
-                title: "Fast-Moving Teams", 
-                quote: "Our GTM team operates via chat. Asmi keeps us synced on prospects, deals, and next steps without the dashboard bloat.",
-                features: ["Cross-team coordination", "Prospect interaction tracking", "Natural language scheduling"]
-              },
-              {
-                emoji: "💰",
-                title: "VCs & Solo GPs",
-                quote: "50 founder meetings a week. Asmi remembers every conversation, preps context, and drafts perfect follow-ups.",
-                features: ["Founder background intel", "Deal flow tracking", "Portfolio company context"]
-              }
-            ].map((persona, index) => (
-              <motion.div 
-                key={index} 
-                variants={dynamicItemVariants}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -10,
-                  transition: { duration: 0.3 }
-                }}
-                whileInView={{
-                  y: [0, -8, 0],
-                  transition: { 
-                    duration: 4, 
-                    repeat: Infinity, 
-                    delay: index * 0.3,
-                    repeatType: "reverse"
-                  }
-                }}
-                className="group"
-              >
-                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all duration-500 h-full group-hover:bg-white/[0.04]">
-                  <CardContent className="p-4 sm:p-6 space-y-4">
-                    <motion.div 
-                      className="text-2xl sm:text-3xl mb-3"
-                      whileHover={{ scale: 1.3, rotate: 15 }}
-                      transition={{ duration: 0.3 }}
-                      animate={{
-                        rotate: [0, 5, -5, 0],
-                        transition: { 
-                          duration: 6, 
-                          repeat: Infinity, 
-                          delay: index * 0.5 
-                        }
-                      }}
-                    >
-                      {persona.emoji}
-                    </motion.div>
-                    <h3 className="text-lg sm:text-xl font-medium text-white group-hover:text-[#5DFF9F] transition-colors duration-300">{persona.title}</h3>
-                    <p className="text-gray-300 italic mb-3 text-sm sm:text-base group-hover:text-gray-200 transition-colors duration-300">
-                      "{persona.quote}"
-                    </p>
-                    <ul className="space-y-2 text-xs sm:text-sm text-gray-300 group-hover:text-gray-200 transition-colors duration-300">
-                      {persona.features.map((feature, i) => (
-                        <motion.li 
-                          key={i} 
-                          className="flex items-start gap-2"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.1 }}
-                          whileHover={{ x: 5 }}
-                        >
-                          <span className="text-[#5DFF9F] mt-1 text-xs">•</span>
-                          <span>{feature}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* How It Works - Enhanced with Dynamic Animations */}
-      <section ref={howItWorksRef} className="py-16 sm:py-20 px-4 sm:px-6 relative">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div 
-            className="text-center mb-12 sm:mb-16"
-            variants={containerVariants}
-            initial="hidden"
-            animate={howItWorksInView ? "visible" : "hidden"}
-          >
-            <motion.h2 
-              className="text-3xl sm:text-4xl lg:text-5xl font-light mb-4 text-white"
-              variants={dynamicItemVariants}
-              whileInView={{ 
-                scale: [1, 1.02, 1],
-                transition: { duration: 2, repeat: Infinity, repeatType: "reverse" }
-              }}
-            >
-              How it works
-            </motion.h2>
-            <motion.p 
-              className="text-lg sm:text-xl text-gray-400 font-light"
-              variants={dynamicItemVariants}
-            >
-              Connect once. Asmi learns quietly. Be smarter immediately.
-            </motion.p>
-          </motion.div>
-
-          <motion.div 
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12"
-            variants={containerVariants}
-            initial="hidden"
-            animate={howItWorksInView ? "visible" : "hidden"}
-          >
-            {[
-              {
-                number: "1",
-                title: "Connect your life",
-                description: "Gmail, Calendar, Contacts → Asmi builds your life graph. Privacy-first, no inbox content reading.",
-                examples: [
-                  "• Secure OAuth connections",
-                  "• Learns communication patterns",
-                  "• Maps your professional network"
-                ]
-              },
-              {
-                number: "2", 
-                title: "Operate via chat",
-                description: "No setup, no workflows. Just text Asmi in WhatsApp or iMessage like you would a human Chief of Staff.",
-                examples: [
-                  "\"Prep me for the 3pm with Sarah\"",
-                  "\"Why haven't I heard from Acme?\"",
-                  "\"Schedule coffee with the team Friday\""
-                ]
-              },
-              {
-                number: "3",
-                title: "Stay ahead", 
-                description: "Asmi proactively briefs, follows up, and keeps you sharp. Morning prep → Meeting → Follow-up.",
-                examples: [
-                  "• Smart briefs 1hr before calls",
-                  "• Detects email silence automatically", 
-                  "• Suggests follow-ups and next steps"
-                ]
-              }
-            ].map((step, index) => (
-              <motion.div 
-                key={index} 
-                className="text-center space-y-4 sm:space-y-6 group"
-                variants={dynamicItemVariants}
-                whileInView={{
-                  y: [0, -10, 0],
-                  transition: { 
-                    duration: 3, 
-                    repeat: Infinity, 
-                    delay: index * 0.4,
-                    repeatType: "reverse"
-                  }
-                }}
-              >
-                <motion.div 
-                  className="w-12 h-12 sm:w-16 sm:h-16 bg-white/[0.02] border border-white/10 rounded-full flex items-center justify-center mx-auto group-hover:bg-white/[0.05] group-hover:border-[#5DFF9F]/30 transition-all duration-500"
-                  whileHover={{ 
-                    scale: 1.2, 
-                    rotate: 10,
-                    transition: { duration: 0.3 }
-                  }}
-                  animate={{
-                    rotate: [0, 5, -5, 0],
-                    transition: { 
-                      duration: 8, 
-                      repeat: Infinity, 
-                      delay: index * 0.6 
-                    }
-                  }}
-                >
-                  <span className="text-xl sm:text-2xl font-medium text-[#5DFF9F] group-hover:scale-110 transition-transform duration-300">{step.number}</span>
-                </motion.div>
-                <motion.h3 
-                  className="text-xl sm:text-2xl font-medium text-white group-hover:text-[#5DFF9F] transition-colors duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {step.title}
-                </motion.h3>
-                <p className="text-gray-400 leading-relaxed text-sm sm:text-base font-light group-hover:text-gray-300 transition-colors duration-300">
-                  {step.description}
-                </p>
-                <motion.div 
-                  className="bg-white/[0.02] border border-white/10 rounded-2xl p-3 sm:p-4 text-left space-y-2 group-hover:bg-white/[0.04] group-hover:border-white/20 transition-all duration-500"
-                  whileHover={{ 
-                    scale: 1.02, 
-                    y: -5,
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  {step.examples.map((example, i) => (
-                    <motion.div 
-                      key={i} 
-                      className="text-gray-300 text-xs sm:text-sm leading-relaxed group-hover:text-gray-200 transition-colors duration-300"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      whileHover={{ x: 5 }}
-                    >
-                      {example}
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Social Proof */}
-      <section ref={socialProofRef} className="py-12 sm:py-16 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            className="text-center mb-10 sm:mb-12"
-            variants={containerVariants}
-            initial="hidden"
-            animate={socialProofInView ? "visible" : "hidden"}
-          >
-            <motion.h2 
-              className="text-3xl sm:text-4xl font-light mb-4 text-white"
-              variants={itemVariants}
-            >
-              Trusted by top performers
-            </motion.h2>
-          </motion.div>
-
-          <motion.div 
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate={socialProofInView ? "visible" : "hidden"}
-          >
-            <motion.div variants={itemVariants} whileHover={{ scale: 1.02, y: -5 }}>
-              <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all duration-300">
-                <CardContent className="p-4 sm:p-6">
-                  <blockquote className="text-gray-300 mb-4 text-sm sm:text-base">
-                    "Finally, an AI that gets startup chaos. Asmi preps my investor calls better than I do."
-                  </blockquote>
-                  <div className="text-xs sm:text-sm text-gray-400">— Sarah Chen, Founder @ TechFlow</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants} whileHover={{ scale: 1.02, y: -5 }}>
-              <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all duration-300">
-                <CardContent className="p-4 sm:p-6">
-                  <blockquote className="text-gray-300 mb-4 text-sm sm:text-base">
-                    "I meet 40+ founders weekly. Asmi remembers every conversation so I don't have to."
-                  </blockquote>
-                  <div className="text-xs sm:text-sm text-gray-400">— Marcus Rodriguez, Partner @ Velocity VC</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants} whileHover={{ scale: 1.02, y: -5 }}>
-              <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all duration-300">
-                <CardContent className="p-4 sm:p-6">
-                  <blockquote className="text-gray-300 mb-4 text-sm sm:text-base">
-                    "Our GTM team lives in WhatsApp. Asmi keeps us synced without the dashboard bloat."
-                  </blockquote>
-                  <div className="text-xs sm:text-sm text-gray-400">— David Park, VP Growth @ Unicorn Co</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Final Waitlist CTA */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 relative">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+      {/* Waitlist CTA */}
+      <section className="py-16 px-4 relative">
+        <div className="max-w-md mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20 text-sm mb-6">
-              🚀 Asmi is invite-only right now
-            </Badge>
+            <h3 className="text-3xl font-light mb-6 text-white">
+              Ready to be 100x more productive?
+            </h3>
             
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-6 sm:mb-8 text-white leading-tight">
-              Join the waitlist to be{" "}
-              <span className="text-[#5DFF9F]">first in.</span>
-            </h2>
+            <form onSubmit={handleWaitlistSignup} className="flex flex-col gap-4">
+              <Input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-14 text-lg rounded-2xl px-6"
+              />
+              <Button 
+                type="submit"
+                size="lg"
+                className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-14 text-lg rounded-2xl"
+              >
+                Join Waitlist
+              </Button>
+            </form>
             
-            <div className="max-w-md mx-auto mb-6 sm:mb-8">
-              <form onSubmit={handleWaitlistSignup} className="flex flex-col sm:flex-row gap-3">
-                <Input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-gray-500 h-12 text-base"
-                />
-                <Button 
-                  type="submit"
-                  size="lg"
-                  className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-12 px-6 sm:px-8 text-base whitespace-nowrap"
-                >
-                  Join Waitlist
-                </Button>
-              </form>
-            </div>
-
-            <p className="text-sm text-gray-400">
+            <p className="text-gray-400 text-sm mt-4">
               We'll text you when it's ready. No spam, just Asmi.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 sm:py-12 px-4 sm:px-6 bg-[#0D0D0D] border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <div className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-0">
-              Asmi AI
+      {/* Use Case Story Tiles */}
+      <section ref={useCasesRef} className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2 
+            className="text-4xl font-light text-center mb-16 text-white"
+            initial={{ opacity: 0, y: 30 }}
+            animate={useCasesInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            Real-life flows
+          </motion.h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                step: "You whisper on the go",
+                result: "Asmi logs and reminds you later",
+                icon: Mic,
+                color: "text-blue-400"
+              },
+              {
+                step: "Mention someone in a voice note",
+                result: "Asmi pulls their LinkedIn + last meeting notes",
+                icon: User,
+                color: "text-green-400"
+              },
+              {
+                step: "Want to reschedule?",
+                result: "Asmi checks your calendar + suggests new time",
+                icon: Calendar,
+                color: "text-purple-400"
+              }
+            ].map((flow, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                animate={useCasesInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.2, duration: 0.8 }}
+                whileHover={{ scale: 1.05, y: -10 }}
+                className="group"
+              >
+                <Card className="bg-white/[0.02] border-white/10 hover:border-[#5DFF9F]/30 transition-all duration-500 h-full group-hover:bg-white/[0.05]">
+                  <CardContent className="p-8 text-center space-y-6">
+                    <motion.div
+                      className={`w-16 h-16 mx-auto ${flow.color} group-hover:scale-110 transition-transform duration-300`}
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <flow.icon className="w-full h-full" />
+                    </motion.div>
+                    
+                    <div className="space-y-4">
+                      <p className="text-gray-300 text-lg leading-relaxed">
+                        "{flow.step}"
+                      </p>
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={useCasesInView ? { width: "100%" } : {}}
+                        transition={{ delay: index * 0.3 + 0.5, duration: 1 }}
+                        className="h-0.5 bg-gradient-to-r from-[#5DFF9F] to-[#A07CFE] rounded"
+                      />
+                      <p className="text-white font-medium text-lg">
+                        {flow.result}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Memory Engine Visualization */}
+      <section ref={memoryRef} className="py-20 px-4 relative">
+        <div className="max-w-6xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={memoryInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl font-light mb-8 text-white">
+              Asmi Memory Engine
+            </h2>
+            <p className="text-xl text-gray-400 mb-16 max-w-3xl mx-auto">
+              Every voice note, meeting, and name connects in real-time
+            </p>
+
+            {/* Memory Graph Visualization */}
+            <div className="relative h-96 bg-white/[0.02] rounded-3xl border border-white/10 overflow-hidden">
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={memoryInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.5, duration: 1 }}
+              >
+                {/* Central Brain Node */}
+                <motion.div
+                  className="w-20 h-20 bg-[#5DFF9F] rounded-full flex items-center justify-center relative z-10"
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    boxShadow: [
+                      "0 0 0 0 rgba(93, 255, 159, 0.4)",
+                      "0 0 0 20px rgba(93, 255, 159, 0)",
+                      "0 0 0 0 rgba(93, 255, 159, 0)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Brain className="w-10 h-10 text-black" />
+                </motion.div>
+
+                {/* Connected Nodes */}
+                {[
+                  { icon: Calendar, position: { top: "20%", left: "20%" }, delay: 0.2 },
+                  { icon: MessageSquare, position: { top: "20%", right: "20%" }, delay: 0.4 },
+                  { icon: User, position: { bottom: "20%", left: "20%" }, delay: 0.6 },
+                  { icon: Mail, position: { bottom: "20%", right: "20%" }, delay: 0.8 }
+                ].map((node, index) => (
+                  <motion.div
+                    key={index}
+                    className="absolute w-12 h-12 bg-white/10 rounded-full flex items-center justify-center"
+                    style={node.position}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={memoryInView ? { scale: 1, opacity: 1 } : {}}
+                    transition={{ delay: node.delay, duration: 0.6 }}
+                  >
+                    <node.icon className="w-6 h-6 text-[#5DFF9F]" />
+                    
+                    {/* Connection Lines */}
+                    <motion.div
+                      className="absolute w-1 bg-gradient-to-r from-[#5DFF9F] to-transparent"
+                      style={{
+                        height: "100px",
+                        transformOrigin: "0 50%",
+                        transform: `rotate(${45 * (index + 1)}deg)`
+                      }}
+                      initial={{ scaleX: 0 }}
+                      animate={memoryInView ? { scaleX: 1 } : {}}
+                      transition={{ delay: node.delay + 0.3, duration: 0.8 }}
+                    />
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              {/* Floating Data Points */}
+              {Array.from({ length: 12 }).map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-[#5DFF9F]/60 rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`
+                  }}
+                  animate={{
+                    y: [0, -20, 0],
+                    opacity: [0.3, 1, 0.3],
+                    scale: [1, 1.5, 1]
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: i * 0.2
+                  }}
+                />
+              ))}
             </div>
-            <div className="flex space-x-6 sm:space-x-8 text-gray-400 text-sm sm:text-base">
-              <a href="#" className="hover:text-[#5DFF9F] transition-colors duration-300">Privacy</a>
-              <a href="#" className="hover:text-[#5DFF9F] transition-colors duration-300">Terms</a>
-              <a href="#" className="hover:text-[#5DFF9F] transition-colors duration-300">Contact</a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section ref={testimonialsRef} className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2 
+            className="text-4xl font-light text-center mb-16 text-white"
+            initial={{ opacity: 0, y: 30 }}
+            animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            Loved by fast movers
+          </motion.h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                quote: "Every voice note I send becomes action. Love it.",
+                name: "Alex Chen",
+                role: "Series A Founder",
+                avatar: "🚀"
+              },
+              {
+                quote: "Asmi remembers every conversation so I don't have to.",
+                name: "Marcus Rodriguez", 
+                role: "Partner @ Velocity VC",
+                avatar: "💰"
+              },
+              {
+                quote: "Our team lives in WhatsApp. Asmi keeps us synced.",
+                name: "Sarah Park",
+                role: "VP Growth @ Scale Co",
+                avatar: "⚡"
+              }
+            ].map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.2, duration: 0.8 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+              >
+                <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all duration-300 h-full">
+                  <CardContent className="p-8 space-y-6">
+                    {/* Speech Bubble */}
+                    <motion.div
+                      className="bg-[#5DFF9F]/10 rounded-2xl p-4 relative"
+                      whileHover={{ backgroundColor: "rgba(93, 255, 159, 0.15)" }}
+                    >
+                      <p className="text-white text-lg leading-relaxed">
+                        "{testimonial.quote}"
+                      </p>
+                      <div className="absolute -bottom-2 left-6 w-4 h-4 bg-[#5DFF9F]/10 rotate-45" />
+                    </motion.div>
+
+                    {/* User Info */}
+                    <div className="flex items-center gap-4">
+                      <motion.div
+                        className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-xl"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                      >
+                        {testimonial.avatar}
+                      </motion.div>
+                      <div>
+                        <p className="text-white font-medium">{testimonial.name}</p>
+                        <p className="text-gray-400 text-sm">{testimonial.role}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Daily Flow Timeline */}
+      <section ref={dailyFlowRef} className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2 
+            className="text-4xl font-light text-center mb-16 text-white"
+            initial={{ opacity: 0, y: 30 }}
+            animate={dailyFlowInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            Your day with Asmi
+          </motion.h2>
+
+          {/* Horizontal Scrolling Timeline */}
+          <div className="overflow-x-auto pb-6">
+            <div className="flex gap-8 min-w-max">
+              {[
+                {
+                  time: "7:00 AM",
+                  title: "Morning Brief",
+                  description: "Asmi texts your day's agenda",
+                  icon: Clock,
+                  color: "text-yellow-400"
+                },
+                {
+                  time: "10:30 AM", 
+                  title: "Pre-Meeting Intel",
+                  description: "Context on who you're meeting",
+                  icon: Eye,
+                  color: "text-blue-400"
+                },
+                {
+                  time: "2:15 PM",
+                  title: "Voice Note Capture",
+                  description: "Record thoughts on the go",
+                  icon: Mic,
+                  color: "text-green-400"
+                },
+                {
+                  time: "6:00 PM",
+                  title: "Follow-Up Reminders", 
+                  description: "Never ghost important people",
+                  icon: RotateCcw,
+                  color: "text-purple-400"
+                }
+              ].map((moment, index) => (
+                <motion.div
+                  key={index}
+                  className="flex-none w-72"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={dailyFlowInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: index * 0.3, duration: 0.8 }}
+                  whileHover={{ y: -10 }}
+                >
+                  <Card className="bg-white/[0.02] border-white/10 hover:border-[#5DFF9F]/30 transition-all duration-300 h-full">
+                    <CardContent className="p-8 text-center space-y-6">
+                      <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20">
+                        {moment.time}
+                      </Badge>
+                      
+                      <motion.div
+                        className={`w-16 h-16 mx-auto ${moment.color}`}
+                        whileHover={{ rotate: 360, scale: 1.1 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <moment.icon className="w-full h-full" />
+                      </motion.div>
+                      
+                      <div className="space-y-3">
+                        <h3 className="text-xl font-medium text-white">
+                          {moment.title}
+                        </h3>
+                        <p className="text-gray-400 leading-relaxed">
+                          {moment.description}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
             </div>
           </div>
-          <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/5 text-center text-gray-500 text-sm">
-            <p>&copy; 2024 Asmi AI. Your AI Chief of Staff.</p>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 px-4 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-2xl mx-auto"
+        >
+          <h2 className="text-5xl font-light mb-8 text-white">
+            Ready to move faster?
+          </h2>
+          
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button 
+              size="lg"
+              className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-16 px-12 text-xl rounded-2xl"
+            >
+              Join Waitlist
+            </Button>
+          </motion.div>
+          
+          <p className="text-gray-400 mt-6">
+            Join 10,000+ fast movers already on the list
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 border-t border-white/5">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+          <div className="text-2xl font-bold text-white mb-4 sm:mb-0">
+            Asmi
+          </div>
+          <div className="flex space-x-8 text-gray-400">
+            <a href="#" className="hover:text-[#5DFF9F] transition-colors">Privacy</a>
+            <a href="#" className="hover:text-[#5DFF9F] transition-colors">Terms</a>
+            <a href="#" className="hover:text-[#5DFF9F] transition-colors">Contact</a>
           </div>
         </div>
       </footer>
