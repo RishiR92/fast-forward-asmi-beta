@@ -18,22 +18,22 @@ const Index = () => {
   // Enhanced chat demo messages
   const whatsappMessages = [
     { type: "user", text: "🎤 Voice note about Bill meeting", delay: 500, isVoice: true },
-    { type: "asmi", text: "Got it! Prepping your brief for Bill Gurley...", delay: 800 },
-    { type: "asmi", text: "📋 **Bill Gurley Brief**\n\n• Partner @ Benchmark Capital\n• You pitched 3 weeks ago\n• Last email: \"Interesting GTM strategy, let's dive deeper\"\n• Backed Uber — loves network effects & UGC\n• Focus: iMessage-first strategy → viral loops → own platform", delay: 1500 },
-    { type: "asmi", text: "Want me to set a follow-up reminder? 📅", delay: 2200 }
+    { type: "asmi", text: "Got it! Prepping your brief for Bill Gurley...", delay: 600 },
+    { type: "asmi", text: "📋 **Bill Gurley Brief**\n\n• Partner @ Benchmark Capital\n• You pitched 3 weeks ago\n• Last email: \"Interesting GTM strategy, let's dive deeper\"\n• He backed Uber—loves network effects & UGC\n• Talk about: iMessage-first strategy → viral loops → how it evolves into building own platform", delay: 1000 },
+    { type: "asmi", text: "Want me to set a follow-up reminder? 📅", delay: 1400 }
   ];
 
   const imessageMessages = [
     { type: "user", text: "Coffee with Mark from Acme Friday 3pm", delay: 500 },
-    { type: "asmi", text: "🔍 Found Mark Stevens, CTO @ Acme Corp", delay: 800 },
-    { type: "asmi", text: "✅ **Calendar Updated**\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM\n\nInvite sent to mark@acmecorp.com", delay: 1200 },
-    { type: "asmi", text: "Asmi's got it. 🎯", delay: 1800 }
+    { type: "asmi", text: "🔍 Found Mark Stevens, CTO @ Acme Corp", delay: 600 },
+    { type: "asmi", text: "✅ **Calendar Updated**\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM\n\nInvite sent to mark@acmecorp.com", delay: 900 },
+    { type: "asmi", text: "Asmi's got it. 🎯", delay: 1200 }
   ];
 
   // Typing animation for personality
   const personalityPhrases = [
     "Always listening (in a good way)",
-    "Built for chaotic days",
+    "Built for chaotic days", 
     "Asmi's got it",
     "Your smart sidekick"
   ];
@@ -93,7 +93,7 @@ const Index = () => {
           }, 800);
         }
       }
-    }, 1000);
+    }, 800);
 
     return () => clearInterval(demoInterval);
   }, [currentDemo, messageIndex]);
@@ -134,8 +134,8 @@ const Index = () => {
         </Button>
       </nav>
 
-      {/* Hero Section - Enhanced */}
-      <section ref={heroRef} className="pt-32 pb-12 px-4 relative min-h-screen flex flex-col justify-center">
+      {/* Hero Section */}
+      <section ref={heroRef} className="pt-32 pb-8 px-4 relative">
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -154,25 +154,25 @@ const Index = () => {
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                   className="w-2 h-2 bg-[#5DFF9F] rounded-full mr-2"
                 />
-                WhatsApp AI • Voice-First • Always Learning
+                Your AI Chief of Staff
               </Badge>
             </motion.div>
 
             {/* Main Headline */}
             <motion.h1 
-              className="text-5xl sm:text-7xl lg:text-8xl font-light mb-8 text-white leading-tight tracking-tight"
+              className="text-4xl sm:text-6xl lg:text-7xl font-light mb-6 text-white leading-tight tracking-tight"
               initial={{ opacity: 0, y: 20 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
               Just say it.
               <br />
-              <span className="text-[#5DFF9F]">Asmi</span> remembers.
+              <span className="text-[#5DFF9F]">Asmi</span> remembers, acts, and makes you <span className="text-[#5DFF9F]">100x</span> more productive.
             </motion.h1>
 
             {/* Personality Typing Animation */}
             <motion.div 
-              className="text-xl text-gray-400 mb-12 h-8 flex items-center justify-center"
+              className="text-lg text-gray-400 mb-8 h-8 flex items-center justify-center"
               initial={{ opacity: 0 }}
               animate={heroInView ? { opacity: 1 } : {}}
               transition={{ delay: 0.8, duration: 0.6 }}
@@ -187,38 +187,21 @@ const Index = () => {
               </motion.span>
             </motion.div>
 
-            {/* Quick Action Demo */}
-            <motion.div
-              className="max-w-md mx-auto mb-12 bg-white/5 rounded-3xl p-6 border border-white/10"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={heroInView ? { opacity: 1, scale: 1 } : {}}
+            {/* Platform Badge */}
+            <motion.p
+              className="text-gray-300 text-lg mb-12"
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
               transition={{ delay: 1, duration: 0.6 }}
-              whileHover={{ scale: 1.02 }}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <motion.div
-                  animate={{ pulse: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-3 h-3 bg-red-500 rounded-full"
-                />
-                <span className="text-white text-sm">Recording...</span>
-              </div>
-              <p className="text-gray-300 text-sm mb-4">
-                "Hey Asmi, prep me for the Bill Gurley meeting"
-              </p>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ delay: 1.5, duration: 2 }}
-                className="h-1 bg-[#5DFF9F] rounded-full"
-              />
-            </motion.div>
+              On WhatsApp/iMessage
+            </motion.p>
           </motion.div>
         </div>
       </section>
 
       {/* Dynamic iPhone Demo */}
-      <section className="py-12 px-4 relative">
+      <section className="py-8 px-4 relative">
         <div className="max-w-sm mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -238,7 +221,7 @@ const Index = () => {
               </div>
               
               {/* Screen */}
-              <div className="bg-black rounded-[2.5rem] overflow-hidden relative min-h-[650px]">
+              <div className="bg-black rounded-[2.5rem] overflow-hidden relative h-[600px]">
                 {/* Status Bar */}
                 <div className="flex justify-between items-center px-6 pt-6 pb-2 text-white text-sm font-medium">
                   <span>9:41</span>
@@ -278,7 +261,7 @@ const Index = () => {
                           </div>
                           
                           {/* Messages */}
-                          <div className="p-4 space-y-4 bg-[#0B141A] min-h-[450px]">
+                          <div className="p-4 space-y-3 bg-[#0B141A] min-h-[450px]">
                             <AnimatePresence>
                               {whatsappMessages.slice(0, messageIndex + 1).map((message, index) => (
                                 <motion.div
@@ -287,8 +270,8 @@ const Index = () => {
                                   animate={{ opacity: 1, scale: 1, y: 0 }}
                                   transition={{ duration: 0.4, ease: "easeOut" }}
                                   className={message.type === 'asmi' ? 
-                                    "bg-[#202C33] rounded-2xl rounded-tl-md p-4 max-w-[90%] shadow-lg" :
-                                    "bg-[#005C4B] rounded-2xl rounded-tr-md p-4 max-w-[90%] ml-auto shadow-lg"
+                                    "bg-[#202C33] rounded-2xl rounded-tl-md p-3 max-w-[85%] shadow-lg" :
+                                    "bg-[#005C4B] rounded-2xl rounded-tr-md p-3 max-w-[85%] ml-auto shadow-lg"
                                   }
                                 >
                                   {message.isVoice && (
@@ -317,7 +300,7 @@ const Index = () => {
                               <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="bg-[#202C33] rounded-2xl rounded-tl-md p-4 max-w-[90%] flex items-center gap-3"
+                                className="bg-[#202C33] rounded-2xl rounded-tl-md p-3 max-w-[85%] flex items-center gap-3"
                               >
                                 <div className="flex gap-1">
                                   {[0, 1, 2].map((i) => (
@@ -354,7 +337,7 @@ const Index = () => {
                           </div>
                           
                           {/* Messages */}
-                          <div className="p-4 space-y-4 bg-black min-h-[450px]">
+                          <div className="p-4 space-y-3 bg-black min-h-[450px]">
                             <AnimatePresence>
                               {imessageMessages.slice(0, messageIndex + 1).map((message, index) => (
                                 <motion.div
@@ -363,8 +346,8 @@ const Index = () => {
                                   animate={{ opacity: 1, scale: 1, y: 0 }}
                                   transition={{ duration: 0.4, ease: "easeOut" }}
                                   className={message.type === 'asmi' ? 
-                                    "bg-[#3C3C43] rounded-2xl rounded-tl-md p-4 max-w-[90%] shadow-lg" :
-                                    "bg-[#007AFF] rounded-2xl rounded-tr-md p-4 max-w-[90%] ml-auto shadow-lg"
+                                    "bg-[#3C3C43] rounded-2xl rounded-tl-md p-3 max-w-[85%] shadow-lg" :
+                                    "bg-[#007AFF] rounded-2xl rounded-tr-md p-3 max-w-[85%] ml-auto shadow-lg"
                                   }
                                 >
                                   <p className="text-white text-sm whitespace-pre-line leading-relaxed">
@@ -391,7 +374,7 @@ const Index = () => {
                               <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="bg-[#3C3C43] rounded-2xl rounded-tl-md p-4 max-w-[90%] flex items-center gap-3"
+                                className="bg-[#3C3C43] rounded-2xl rounded-tl-md p-3 max-w-[85%] flex items-center gap-3"
                               >
                                 <div className="flex gap-1">
                                   {[0, 1, 2].map((i) => (
@@ -445,14 +428,14 @@ const Index = () => {
       </section>
 
       {/* Waitlist CTA */}
-      <section className="py-16 px-4 relative">
+      <section className="py-12 px-4 relative">
         <div className="max-w-md mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-3xl font-light mb-6 text-white">
+            <h3 className="text-2xl font-light mb-6 text-white">
               Ready to be 100x more productive?
             </h3>
             
@@ -462,12 +445,12 @@ const Index = () => {
                 placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-14 text-lg rounded-2xl px-6"
+                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-12 text-base rounded-2xl px-6"
               />
               <Button 
                 type="submit"
                 size="lg"
-                className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-14 text-lg rounded-2xl"
+                className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-12 text-base rounded-2xl"
               >
                 Join Waitlist
               </Button>
@@ -481,10 +464,10 @@ const Index = () => {
       </section>
 
       {/* Use Case Story Tiles */}
-      <section ref={useCasesRef} className="py-20 px-4">
+      <section ref={useCasesRef} className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.h2 
-            className="text-4xl font-light text-center mb-16 text-white"
+            className="text-3xl font-light text-center mb-12 text-white"
             initial={{ opacity: 0, y: 30 }}
             animate={useCasesInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
@@ -492,7 +475,7 @@ const Index = () => {
             Real-life flows
           </motion.h2>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 step: "You whisper on the go",
@@ -522,17 +505,17 @@ const Index = () => {
                 className="group"
               >
                 <Card className="bg-white/[0.02] border-white/10 hover:border-[#5DFF9F]/30 transition-all duration-500 h-full group-hover:bg-white/[0.05]">
-                  <CardContent className="p-8 text-center space-y-6">
+                  <CardContent className="p-6 text-center space-y-4">
                     <motion.div
-                      className={`w-16 h-16 mx-auto ${flow.color} group-hover:scale-110 transition-transform duration-300`}
+                      className={`w-12 h-12 mx-auto ${flow.color} group-hover:scale-110 transition-transform duration-300`}
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
                     >
                       <flow.icon className="w-full h-full" />
                     </motion.div>
                     
-                    <div className="space-y-4">
-                      <p className="text-gray-300 text-lg leading-relaxed">
+                    <div className="space-y-3">
+                      <p className="text-gray-300 text-base leading-relaxed">
                         "{flow.step}"
                       </p>
                       <motion.div
@@ -541,7 +524,7 @@ const Index = () => {
                         transition={{ delay: index * 0.3 + 0.5, duration: 1 }}
                         className="h-0.5 bg-gradient-to-r from-[#5DFF9F] to-[#A07CFE] rounded"
                       />
-                      <p className="text-white font-medium text-lg">
+                      <p className="text-white font-medium text-base">
                         {flow.result}
                       </p>
                     </div>
@@ -554,22 +537,22 @@ const Index = () => {
       </section>
 
       {/* Memory Engine Visualization */}
-      <section ref={memoryRef} className="py-20 px-4 relative">
+      <section ref={memoryRef} className="py-16 px-4 relative">
         <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={memoryInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl font-light mb-8 text-white">
+            <h2 className="text-3xl font-light mb-6 text-white">
               Asmi Memory Engine
             </h2>
-            <p className="text-xl text-gray-400 mb-16 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-400 mb-12 max-w-3xl mx-auto">
               Every voice note, meeting, and name connects in real-time
             </p>
 
             {/* Memory Graph Visualization */}
-            <div className="relative h-96 bg-white/[0.02] rounded-3xl border border-white/10 overflow-hidden">
+            <div className="relative h-80 bg-white/[0.02] rounded-3xl border border-white/10 overflow-hidden">
               <motion.div
                 className="absolute inset-0 flex items-center justify-center"
                 initial={{ opacity: 0 }}
@@ -578,7 +561,7 @@ const Index = () => {
               >
                 {/* Central Brain Node */}
                 <motion.div
-                  className="w-20 h-20 bg-[#5DFF9F] rounded-full flex items-center justify-center relative z-10"
+                  className="w-16 h-16 bg-[#5DFF9F] rounded-full flex items-center justify-center relative z-10"
                   animate={{ 
                     scale: [1, 1.1, 1],
                     boxShadow: [
@@ -589,7 +572,7 @@ const Index = () => {
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <Brain className="w-10 h-10 text-black" />
+                  <Brain className="w-8 h-8 text-black" />
                 </motion.div>
 
                 {/* Connected Nodes */}
@@ -601,19 +584,19 @@ const Index = () => {
                 ].map((node, index) => (
                   <motion.div
                     key={index}
-                    className="absolute w-12 h-12 bg-white/10 rounded-full flex items-center justify-center"
+                    className="absolute w-10 h-10 bg-white/10 rounded-full flex items-center justify-center"
                     style={node.position}
                     initial={{ scale: 0, opacity: 0 }}
                     animate={memoryInView ? { scale: 1, opacity: 1 } : {}}
                     transition={{ delay: node.delay, duration: 0.6 }}
                   >
-                    <node.icon className="w-6 h-6 text-[#5DFF9F]" />
+                    <node.icon className="w-5 h-5 text-[#5DFF9F]" />
                     
                     {/* Connection Lines */}
                     <motion.div
                       className="absolute w-1 bg-gradient-to-r from-[#5DFF9F] to-transparent"
                       style={{
-                        height: "100px",
+                        height: "80px",
                         transformOrigin: "0 50%",
                         transform: `rotate(${45 * (index + 1)}deg)`
                       }}
@@ -626,7 +609,7 @@ const Index = () => {
               </motion.div>
 
               {/* Floating Data Points */}
-              {Array.from({ length: 12 }).map((_, i) => (
+              {Array.from({ length: 10 }).map((_, i) => (
                 <motion.div
                   key={i}
                   className="absolute w-2 h-2 bg-[#5DFF9F]/60 rounded-full"
@@ -635,9 +618,9 @@ const Index = () => {
                     top: `${Math.random() * 100}%`
                   }}
                   animate={{
-                    y: [0, -20, 0],
+                    y: [0, -15, 0],
                     opacity: [0.3, 1, 0.3],
-                    scale: [1, 1.5, 1]
+                    scale: [1, 1.3, 1]
                   }}
                   transition={{
                     duration: 3 + Math.random() * 2,
@@ -652,10 +635,10 @@ const Index = () => {
       </section>
 
       {/* Testimonials */}
-      <section ref={testimonialsRef} className="py-20 px-4">
+      <section ref={testimonialsRef} className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.h2 
-            className="text-4xl font-light text-center mb-16 text-white"
+            className="text-3xl font-light text-center mb-12 text-white"
             initial={{ opacity: 0, y: 30 }}
             animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
@@ -663,7 +646,7 @@ const Index = () => {
             Loved by fast movers
           </motion.h2>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 quote: "Every voice note I send becomes action. Love it.",
@@ -692,22 +675,22 @@ const Index = () => {
                 whileHover={{ scale: 1.05, y: -5 }}
               >
                 <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all duration-300 h-full">
-                  <CardContent className="p-8 space-y-6">
+                  <CardContent className="p-6 space-y-4">
                     {/* Speech Bubble */}
                     <motion.div
                       className="bg-[#5DFF9F]/10 rounded-2xl p-4 relative"
                       whileHover={{ backgroundColor: "rgba(93, 255, 159, 0.15)" }}
                     >
-                      <p className="text-white text-lg leading-relaxed">
+                      <p className="text-white text-base leading-relaxed">
                         "{testimonial.quote}"
                       </p>
                       <div className="absolute -bottom-2 left-6 w-4 h-4 bg-[#5DFF9F]/10 rotate-45" />
                     </motion.div>
 
                     {/* User Info */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                       <motion.div
-                        className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-xl"
+                        className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-lg"
                         whileHover={{ scale: 1.1, rotate: 5 }}
                       >
                         {testimonial.avatar}
@@ -726,10 +709,10 @@ const Index = () => {
       </section>
 
       {/* Daily Flow Timeline */}
-      <section ref={dailyFlowRef} className="py-20 px-4">
+      <section ref={dailyFlowRef} className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.h2 
-            className="text-4xl font-light text-center mb-16 text-white"
+            className="text-3xl font-light text-center mb-12 text-white"
             initial={{ opacity: 0, y: 30 }}
             animate={dailyFlowInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
@@ -739,7 +722,7 @@ const Index = () => {
 
           {/* Horizontal Scrolling Timeline */}
           <div className="overflow-x-auto pb-6">
-            <div className="flex gap-8 min-w-max">
+            <div className="flex gap-6 min-w-max">
               {[
                 {
                   time: "7:00 AM",
@@ -772,31 +755,31 @@ const Index = () => {
               ].map((moment, index) => (
                 <motion.div
                   key={index}
-                  className="flex-none w-72"
+                  className="flex-none w-64"
                   initial={{ opacity: 0, x: 50 }}
                   animate={dailyFlowInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: index * 0.3, duration: 0.8 }}
                   whileHover={{ y: -10 }}
                 >
                   <Card className="bg-white/[0.02] border-white/10 hover:border-[#5DFF9F]/30 transition-all duration-300 h-full">
-                    <CardContent className="p-8 text-center space-y-6">
+                    <CardContent className="p-6 text-center space-y-4">
                       <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20">
                         {moment.time}
                       </Badge>
                       
                       <motion.div
-                        className={`w-16 h-16 mx-auto ${moment.color}`}
+                        className={`w-12 h-12 mx-auto ${moment.color}`}
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.6 }}
                       >
                         <moment.icon className="w-full h-full" />
                       </motion.div>
                       
-                      <div className="space-y-3">
-                        <h3 className="text-xl font-medium text-white">
+                      <div className="space-y-2">
+                        <h3 className="text-lg font-medium text-white">
                           {moment.title}
                         </h3>
-                        <p className="text-gray-400 leading-relaxed">
+                        <p className="text-gray-400 leading-relaxed text-sm">
                           {moment.description}
                         </p>
                       </div>
@@ -810,14 +793,14 @@ const Index = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 px-4 text-center">
+      <section className="py-16 px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-2xl mx-auto"
         >
-          <h2 className="text-5xl font-light mb-8 text-white">
+          <h2 className="text-4xl font-light mb-8 text-white">
             Ready to move faster?
           </h2>
           
@@ -827,7 +810,7 @@ const Index = () => {
           >
             <Button 
               size="lg"
-              className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-16 px-12 text-xl rounded-2xl"
+              className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-14 px-10 text-lg rounded-2xl"
             >
               Join Waitlist
             </Button>
@@ -840,12 +823,12 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t border-white/5">
+      <footer className="py-8 px-4 border-t border-white/5">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center">
-          <div className="text-2xl font-bold text-white mb-4 sm:mb-0">
+          <div className="text-xl font-bold text-white mb-4 sm:mb-0">
             Asmi
           </div>
-          <div className="flex space-x-8 text-gray-400">
+          <div className="flex space-x-6 text-gray-400">
             <a href="#" className="hover:text-[#5DFF9F] transition-colors">Privacy</a>
             <a href="#" className="hover:text-[#5DFF9F] transition-colors">Terms</a>
             <a href="#" className="hover:text-[#5DFF9F] transition-colors">Contact</a>
