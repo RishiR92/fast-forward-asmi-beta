@@ -99,7 +99,7 @@ export const SwipeableStories = () => {
                   animate={{ rotate: step === 'after' ? 360 : 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <stories[currentStory].icon className="w-full h-full" />
+                  {React.createElement(stories[currentStory].icon, { className: "w-full h-full" })}
                 </motion.div>
 
                 {/* Chat Bubble */}
