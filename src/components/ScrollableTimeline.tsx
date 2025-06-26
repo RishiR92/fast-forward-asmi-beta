@@ -62,9 +62,19 @@ export const ScrollableTimeline = () => {
 
       {/* Mobile Swipe Indicators */}
       <div className="flex justify-center items-center gap-4 mb-6 md:hidden">
-        <ChevronLeft className="w-5 h-5 text-gray-400" />
-        <span className="text-gray-400 text-sm">Swipe to explore</span>
-        <ChevronRight className="w-5 h-5 text-gray-400" />
+        <motion.div
+          animate={{ x: [-5, 5, -5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <ChevronLeft className="w-5 h-5 text-gray-400" />
+        </motion.div>
+        <span className="text-gray-400 text-sm">Swipe to explore timeline</span>
+        <motion.div
+          animate={{ x: [5, -5, 5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <ChevronRight className="w-5 h-5 text-gray-400" />
+        </motion.div>
       </div>
 
       {/* Scrollable Timeline */}
@@ -77,9 +87,9 @@ export const ScrollableTimeline = () => {
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.2, duration: 0.8 }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -10, scale: 1.02 }}
             >
-              <Card className="bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/10 hover:border-[#5DFF9F]/30 transition-all duration-300 h-full backdrop-blur-xl shadow-2xl">
+              <Card className="bg-gradient-to-br from-black/40 to-black/20 border border-white/5 hover:border-[#5DFF9F]/20 transition-all duration-300 h-full backdrop-blur-xl shadow-2xl">
                 <CardContent className="p-6 space-y-4">
                   {/* Time Badge */}
                   <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20 font-medium">
@@ -88,7 +98,7 @@ export const ScrollableTimeline = () => {
                   
                   {/* Icon - Monochromatic and premium */}
                   <motion.div
-                    className={`w-12 h-12 mx-auto p-3 rounded-xl bg-white/5 border border-white/10 ${moment.color}`}
+                    className={`w-12 h-12 mx-auto p-3 rounded-xl bg-white/[0.03] border border-white/5 ${moment.color}`}
                     whileHover={{ rotate: 360, scale: 1.1 }}
                     transition={{ duration: 0.6 }}
                   >
@@ -115,7 +125,7 @@ export const ScrollableTimeline = () => {
 
                     {/* Asmi Response */}
                     <motion.div
-                      className="bg-[#1F2937] rounded-xl rounded-tl-md p-3 mr-8 relative shadow-lg border border-white/10"
+                      className="bg-[#1F2937] rounded-xl rounded-tl-md p-3 mr-8 relative shadow-lg border border-white/5"
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.3 + 0.8 }}
@@ -136,9 +146,11 @@ export const ScrollableTimeline = () => {
       {/* Scroll indicators for larger screens */}
       <div className="hidden md:flex justify-center gap-2 mt-6">
         {timelineMoments.map((_, index) => (
-          <div
+          <motion.div
             key={index}
-            className="w-2 h-2 rounded-full bg-white/20"
+            className="w-2 h-2 rounded-full bg-white/10"
+            whileHover={{ scale: 1.5, backgroundColor: "rgba(93, 255, 159, 0.5)" }}
+            transition={{ duration: 0.2 }}
           />
         ))}
       </div>
