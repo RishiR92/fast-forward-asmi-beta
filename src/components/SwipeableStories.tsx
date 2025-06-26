@@ -1,5 +1,4 @@
-
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Mic, CheckCircle, Calendar } from "lucide-react";
