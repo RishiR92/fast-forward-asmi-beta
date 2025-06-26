@@ -9,6 +9,7 @@ interface MemoryNode {
   icon: React.ComponentType<any>;
   label: string;
   position: { x: number; y: number };
+  mobilePosition: { x: number; y: number };
   data: string[];
 }
 
@@ -18,6 +19,7 @@ const memoryNodes: MemoryNode[] = [
     icon: Calendar,
     label: "Calendar",
     position: { x: 50, y: 20 },
+    mobilePosition: { x: 50, y: 25 },
     data: ["Meeting with Sarah @ 3pm", "Investor call @ 5pm", "Team standup @ 9am"]
   },
   {
@@ -25,6 +27,7 @@ const memoryNodes: MemoryNode[] = [
     icon: Mail,
     label: "Mails",
     position: { x: 80, y: 50 },
+    mobilePosition: { x: 75, y: 50 },
     data: ["Follow-up from John", "Q4 report due", "Partnership proposal"]
   },
   {
@@ -32,6 +35,7 @@ const memoryNodes: MemoryNode[] = [
     icon: Mic,
     label: "Voice Notes",
     position: { x: 50, y: 80 },
+    mobilePosition: { x: 50, y: 75 },
     data: ["Remember to call mom", "Book flight to NYC", "Review pitch deck"]
   },
   {
@@ -39,6 +43,7 @@ const memoryNodes: MemoryNode[] = [
     icon: Globe,
     label: "Internet",
     position: { x: 20, y: 50 },
+    mobilePosition: { x: 25, y: 50 },
     data: ["Sarah's LinkedIn updated", "Company news alert", "Market trends"]
   }
 ];
@@ -61,10 +66,10 @@ export const NeuralMemoryEngine = () => {
             Every mail, meeting, and voice note connects in real-time
           </p>
 
-          {/* Neural Network Visualization */}
-          <div className="relative h-96 bg-white/[0.02] rounded-3xl border border-white/10 overflow-hidden">
+          {/* Neural Network Visualization - Responsive */}
+          <div className="relative h-80 md:h-96 bg-gradient-to-br from-white/[0.03] to-white/[0.01] rounded-3xl border border-white/10 overflow-hidden backdrop-blur-xl">
             {/* Data Points Animation */}
-            {Array.from({ length: 30 }).map((_, i) => (
+            {Array.from({ length: 20 }).map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute w-1 h-1 bg-[#5DFF9F]/40 rounded-full"
@@ -98,97 +103,82 @@ export const NeuralMemoryEngine = () => {
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <div className="w-16 h-16 bg-[#5DFF9F] rounded-full flex items-center justify-center">
-                <Brain className="w-8 h-8 text-black" />
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-[#5DFF9F] rounded-full flex items-center justify-center shadow-lg">
+                <Brain className="w-6 h-6 md:w-8 md:h-8 text-black" />
               </div>
             </motion.div>
 
-            {/* Memory Nodes */}
-            {memoryNodes.map((node, index) => (
-              <motion.div
-                key={node.id}
-                className="absolute cursor-pointer"
-                style={{
-                  left: `${node.position.x}%`,
-                  top: `${node.position.y}%`,
-                  transform: 'translate(-50%, -50%)'
-                }}
-                initial={{ scale: 0, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ delay: index * 0.2, duration: 0.6 }}
-                whileHover={{ scale: 1.1 }}
-                onTap={() => setActiveNode(activeNode === node.id ? null : node.id)}
-              >
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center relative">
-                    <node.icon className="w-5 h-5 text-[#5DFF9F]" />
-                    {activeNode === node.id && (
-                      <motion.div
-                        className="absolute inset-0 bg-[#5DFF9F]/20 rounded-full"
-                        animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
-                        transition={{ duration: 1, repeat: Infinity }}
-                      />
-                    )}
-                  </div>
-                  <span className="text-xs text-gray-300 font-medium whitespace-nowrap">
-                    {node.label}
-                  </span>
-                </div>
-
-                {/* Connection Line to Center */}
+            {/* Memory Nodes - Responsive positioning */}
+            {memoryNodes.map((node, index) => {
+              const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+              const position = isMobile ? node.mobilePosition : node.position;
+              
+              return (
                 <motion.div
-                  className="absolute w-0.5 bg-gradient-to-r from-[#5DFF9F] to-transparent origin-center"
+                  key={node.id}
+                  className="absolute cursor-pointer z-20"
                   style={{
-                    height: `${Math.sqrt(
-                      Math.pow(50 - node.position.x, 2) + Math.pow(50 - node.position.y, 2)
-                    )}px`,
-                    transform: `rotate(${Math.atan2(
-                      50 - node.position.y,
-                      50 - node.position.x
-                    )}rad)`,
-                    left: '50%',
-                    top: '50%',
-                    transformOrigin: '0 50%'
+                    left: `${position.x}%`,
+                    top: `${position.y}%`,
+                    transform: 'translate(-50%, -50%)'
                   }}
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ delay: index * 0.3 + 0.5, duration: 0.8 }}
-                />
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: index * 0.2, duration: 0.6 }}
+                  whileHover={{ scale: 1.1 }}
+                  onTap={() => setActiveNode(activeNode === node.id ? null : node.id)}
+                >
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-full flex items-center justify-center relative backdrop-blur-sm border border-white/20">
+                      <node.icon className="w-4 h-4 md:w-5 md:h-5 text-[#5DFF9F]" />
+                      {activeNode === node.id && (
+                        <motion.div
+                          className="absolute inset-0 bg-[#5DFF9F]/20 rounded-full"
+                          animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+                          transition={{ duration: 1, repeat: Infinity }}
+                        />
+                      )}
+                    </div>
+                    <span className="text-xs text-gray-300 font-medium whitespace-nowrap">
+                      {node.label}
+                    </span>
+                  </div>
 
-                {/* Data Popup */}
-                {activeNode === node.id && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 z-20"
-                  >
-                    <Card className="bg-black/90 border-[#5DFF9F]/30 p-3 min-w-48">
-                      <div className="space-y-1">
-                        {node.data.map((item, i) => (
-                          <motion.p
-                            key={i}
-                            className="text-xs text-white"
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                          >
-                            • {item}
-                          </motion.p>
-                        ))}
-                      </div>
-                    </Card>
-                  </motion.div>
-                )}
-              </motion.div>
-            ))}
+                  {/* Data Popup - Better positioned for mobile */}
+                  {activeNode === node.id && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 z-30"
+                    >
+                      <Card className="bg-black/90 border-[#5DFF9F]/30 p-3 min-w-40 md:min-w-48 backdrop-blur-xl">
+                        <div className="space-y-1">
+                          {node.data.map((item, i) => (
+                            <motion.p
+                              key={i}
+                              className="text-xs text-white"
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.1 }}
+                            >
+                              • {item}
+                            </motion.p>
+                          ))}
+                        </div>
+                      </Card>
+                    </motion.div>
+                  )}
+                </motion.div>
+              );
+            })}
 
-            {/* Processing Lines */}
-            {Array.from({ length: 6 }).map((_, i) => (
+            {/* Processing Lines - Reduced for mobile */}
+            {Array.from({ length: 4 }).map((_, i) => (
               <motion.div
                 key={`line-${i}`}
                 className="absolute h-0.5 bg-gradient-to-r from-transparent via-[#5DFF9F]/30 to-transparent"
                 style={{
-                  width: `${30 + Math.random() * 40}%`,
+                  width: `${20 + Math.random() * 30}%`,
                   left: `${Math.random() * 70}%`,
                   top: `${Math.random() * 100}%`,
                   transform: `rotate(${Math.random() * 360}deg)`

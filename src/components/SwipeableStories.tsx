@@ -16,21 +16,21 @@ const stories: Story[] = [
   {
     id: "voice-meeting",
     before: "🎤 Schedule coffee with Sarah tomorrow 3pm",
-    after: "✅ Meeting scheduled\n📧 Invite sent to sarah@company.com\n📋 Prep notes ready",
+    after: "✅ Meeting scheduled with Sarah Johnson\n📧 Invite sent to sarah@wisprflow.ai\n📋 Prep notes ready:\n• Q4 marketing strategy discussion\n• Brand partnership opportunities\n• Review pending case studies",
     icon: Mic,
     color: "text-blue-400"
   },
   {
     id: "prep-meeting", 
     before: "Meeting with John in 30 mins",
-    after: "📊 John's LinkedIn pulled\n💼 Last meeting notes: Q4 goals\n🎯 Suggested talking points ready",
+    after: "👤 John Martinez, Senior Developer @ InnovateTech\n💼 Background: 8+ years in fintech, recently promoted\n🎯 Suggested talking points:\n• New API integration timeline\n• Team scaling plans\n• Code review process improvements",
     icon: Calendar,
     color: "text-green-400"
   },
   {
     id: "voice-note",
     before: "🎤 Remind me to follow up with investors about Series A",
-    after: "📝 Action item saved\n⏰ Reminder set for next week\n📧 Draft follow-up email ready",
+    after: "📝 Action item saved to priority list\n⏰ Reminder set for Monday 9 AM\n📧 Draft follow-up email prepared:\n• Updated pitch deck attached\n• Financial projections included\n• Meeting availability options",
     icon: CheckCircle,
     color: "text-purple-400"
   }
@@ -47,7 +47,7 @@ export const SwipeableStories = () => {
       setTimeout(() => {
         setStep('before');
         setCurrentStory((prev) => (prev + 1) % stories.length);
-      }, 3000);
+      }, 4000); // Longer viewing time
     }
   };
 
@@ -58,7 +58,7 @@ export const SwipeableStories = () => {
   const IconComponent = stories[currentStory].icon;
 
   return (
-    <div className="py-16 px-4">
+    <div className="py-16 px-4" id="real-life-flows">
       <motion.h2 
         className="text-3xl font-light text-center mb-12 text-white"
         initial={{ opacity: 0, y: 30 }}
@@ -83,14 +83,14 @@ export const SwipeableStories = () => {
               transition={{ duration: 0.4 }}
               className="absolute inset-0"
             >
-              <Card className="bg-white/[0.02] border-white/10 h-full p-6 flex flex-col justify-center">
+              <Card className="bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/10 backdrop-blur-xl h-full p-6 flex flex-col justify-center shadow-2xl">
                 {/* Story Progress Dots */}
                 <div className="flex justify-center gap-2 mb-6">
                   {stories.map((_, index) => (
                     <div
                       key={index}
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        index === currentStory ? 'bg-[#5DFF9F]' : 'bg-white/20'
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === currentStory ? 'bg-[#5DFF9F] scale-110' : 'bg-white/20'
                       }`}
                     />
                   ))}
@@ -107,10 +107,10 @@ export const SwipeableStories = () => {
 
                 {/* Chat Bubble */}
                 <motion.div
-                  className={`rounded-xl p-4 max-w-xs mx-auto relative ${
+                  className={`rounded-2xl p-4 max-w-xs mx-auto relative shadow-lg ${
                     step === 'before' 
-                      ? 'bg-[#007AFF] text-white ml-auto' 
-                      : 'bg-[#202C33] text-white mr-auto'
+                      ? 'bg-[#007AFF] text-white ml-auto rounded-tr-md' 
+                      : 'bg-[#1F2937] text-white mr-auto rounded-tl-md border border-white/10'
                   }`}
                   layout
                 >
@@ -128,7 +128,7 @@ export const SwipeableStories = () => {
                   <div className={`absolute top-3 w-3 h-3 rotate-45 ${
                     step === 'before' 
                       ? 'bg-[#007AFF] -right-1' 
-                      : 'bg-[#202C33] -left-1'
+                      : 'bg-[#1F2937] -left-1'
                   }`} />
                 </motion.div>
 
@@ -144,9 +144,9 @@ export const SwipeableStories = () => {
                   />
                 </motion.div>
 
-                {/* Tap hint */}
+                {/* Dynamic hint text */}
                 <p className="text-center text-gray-400 text-xs mt-4">
-                  Tap to see Asmi in action
+                  {step === 'before' ? 'Tap to see Asmi in action' : 'Tap for next task'}
                 </p>
               </Card>
             </motion.div>

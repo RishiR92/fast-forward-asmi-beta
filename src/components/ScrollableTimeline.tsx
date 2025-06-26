@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Eye, Mic, RotateCcw } from "lucide-react";
+import { Clock, Eye, Mic, RotateCcw, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface TimelineMoment {
   time: string;
@@ -20,7 +20,7 @@ const timelineMoments: TimelineMoment[] = [
     userInput: "Good morning",
     asmiAction: "📅 Today: 3 meetings, 5 follow-ups\n🎯 Priority: Close Acme deal\n⚡️ Sarah's birthday - send note",
     icon: Clock,
-    color: "text-yellow-400"
+    color: "text-[#5DFF9F]"
   },
   {
     time: "10:30 AM", 
@@ -28,7 +28,7 @@ const timelineMoments: TimelineMoment[] = [
     userInput: "Meeting with John in 10",
     asmiAction: "👤 John Smith, CTO @ TechFlow\n💼 Last met: Q3 roadmap discussion\n🎯 How to win: Focus on ROI metrics",
     icon: Eye,
-    color: "text-blue-400"
+    color: "text-[#5DFF9F]"
   },
   {
     time: "2:15 PM",
@@ -36,7 +36,7 @@ const timelineMoments: TimelineMoment[] = [
     userInput: "🎤 Follow up with investors about Series A timeline",
     asmiAction: "✅ Action saved\n📅 Reminder set for Monday\n📧 Draft email ready to send",
     icon: Mic,
-    color: "text-green-400"
+    color: "text-[#5DFF9F]"
   },
   {
     time: "6:00 PM",
@@ -44,7 +44,7 @@ const timelineMoments: TimelineMoment[] = [
     userInput: "End of day",
     asmiAction: "📬 3 pending follow-ups\n👤 Sarah: Thank you note sent\n💼 Acme: Proposal needs review",
     icon: RotateCcw,
-    color: "text-purple-400"
+    color: "text-[#5DFF9F]"
   }
 ];
 
@@ -60,9 +60,16 @@ export const ScrollableTimeline = () => {
         Your day with Asmi
       </motion.h2>
 
+      {/* Mobile Swipe Indicators */}
+      <div className="flex justify-center items-center gap-4 mb-6 md:hidden">
+        <ChevronLeft className="w-5 h-5 text-gray-400" />
+        <span className="text-gray-400 text-sm">Swipe to explore</span>
+        <ChevronRight className="w-5 h-5 text-gray-400" />
+      </div>
+
       {/* Scrollable Timeline */}
-      <div className="overflow-x-auto pb-6">
-        <div className="flex gap-6 min-w-max px-4">
+      <div className="overflow-x-auto pb-6 scrollbar-hide">
+        <div className="flex gap-6 min-w-max px-4 md:justify-center">
           {timelineMoments.map((moment, index) => (
             <motion.div
               key={index}
@@ -72,16 +79,16 @@ export const ScrollableTimeline = () => {
               transition={{ delay: index * 0.2, duration: 0.8 }}
               whileHover={{ y: -10 }}
             >
-              <Card className="bg-white/[0.02] border-white/10 hover:border-[#5DFF9F]/30 transition-all duration-300 h-full">
+              <Card className="bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/10 hover:border-[#5DFF9F]/30 transition-all duration-300 h-full backdrop-blur-xl shadow-2xl">
                 <CardContent className="p-6 space-y-4">
                   {/* Time Badge */}
-                  <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20">
+                  <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20 font-medium">
                     {moment.time}
                   </Badge>
                   
-                  {/* Icon */}
+                  {/* Icon - Monochromatic and premium */}
                   <motion.div
-                    className={`w-12 h-12 mx-auto ${moment.color}`}
+                    className={`w-12 h-12 mx-auto p-3 rounded-xl bg-white/5 border border-white/10 ${moment.color}`}
                     whileHover={{ rotate: 360, scale: 1.1 }}
                     transition={{ duration: 0.6 }}
                   >
@@ -97,7 +104,7 @@ export const ScrollableTimeline = () => {
                   <div className="space-y-3">
                     {/* User Input */}
                     <motion.div
-                      className="bg-[#007AFF] rounded-xl rounded-tr-md p-3 ml-8 relative"
+                      className="bg-[#007AFF] rounded-xl rounded-tr-md p-3 ml-8 relative shadow-lg"
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.3 + 0.5 }}
@@ -108,7 +115,7 @@ export const ScrollableTimeline = () => {
 
                     {/* Asmi Response */}
                     <motion.div
-                      className="bg-[#202C33] rounded-xl rounded-tl-md p-3 mr-8 relative"
+                      className="bg-[#1F2937] rounded-xl rounded-tl-md p-3 mr-8 relative shadow-lg border border-white/10"
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.3 + 0.8 }}
@@ -116,7 +123,7 @@ export const ScrollableTimeline = () => {
                       <p className="text-white text-sm leading-relaxed whitespace-pre-line">
                         {moment.asmiAction}
                       </p>
-                      <div className="absolute top-3 -left-1 w-3 h-3 bg-[#202C33] rotate-45" />
+                      <div className="absolute top-3 -left-1 w-3 h-3 bg-[#1F2937] rotate-45" />
                     </motion.div>
                   </div>
                 </CardContent>
@@ -124,6 +131,16 @@ export const ScrollableTimeline = () => {
             </motion.div>
           ))}
         </div>
+      </div>
+
+      {/* Scroll indicators for larger screens */}
+      <div className="hidden md:flex justify-center gap-2 mt-6">
+        {timelineMoments.map((_, index) => (
+          <div
+            key={index}
+            className="w-2 h-2 rounded-full bg-white/20"
+          />
+        ))}
       </div>
     </div>
   );

@@ -1,35 +1,36 @@
-
 import { useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare, CheckCircle, Mic } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { MessageSquare, CheckCircle, Mic, Loader2, Send } from "lucide-react";
 import { SwipeableStories } from "@/components/SwipeableStories";
 import { NeuralMemoryEngine } from "@/components/NeuralMemoryEngine";
 import { TypingTestimonials } from "@/components/TypingTestimonials";
 import { ScrollableTimeline } from "@/components/ScrollableTimeline";
-import { StickyWaitlistCTA } from "@/components/StickyWaitlistCTA";
 
 const Index = () => {
   const [currentDemo, setCurrentDemo] = useState("whatsapp");
   const [messageIndex, setMessageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [typingText, setTypingText] = useState("");
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Enhanced chat demo messages
+  // Enhanced chat demo messages with slower, more realistic timing
   const whatsappMessages = [
-    { type: "user", text: "Hey, can you help me prep for my meeting with Sarah tomorrow?", delay: 500 },
-    { type: "asmi", text: "Of course! Let me pull up what I know about Sarah...", delay: 600 },
-    { type: "asmi", text: "📋 **Sarah Meeting Brief**\n\n• Sarah Johnson, VP Marketing @ TechCorp\n• Last meeting: 2 weeks ago about Q4 campaign\n• Her priorities: Brand partnerships, growth metrics\n• You promised to send case studies (still pending)\n• Suggested talking points: ROI data, timeline updates", delay: 1000 },
-    { type: "asmi", text: "Should I remind you to prepare those case studies? 📊", delay: 1400 }
+    { type: "user", text: "Hey, can you help me prep for my meeting with Sarah tomorrow?", delay: 800 },
+    { type: "asmi", text: "Of course! Let me pull up what I know about Sarah...", delay: 1200 },
+    { type: "asmi", text: "📋 **Sarah Meeting Brief**\n\n• Sarah Johnson, VP Marketing @ TechCorp\n• Last meeting: 2 weeks ago about Q4 campaign\n• Her priorities: Brand partnerships, growth metrics\n• You promised to send case studies (still pending)\n• Suggested talking points: ROI data, timeline updates", delay: 1800 },
+    { type: "asmi", text: "Should I remind you to prepare those case studies? 📊", delay: 2200 }
   ];
 
   const imessageMessages = [
-    { type: "user", text: "🎤 Coffee with Mark from Acme Friday 3pm", delay: 500, isVoice: true },
-    { type: "asmi", text: "🔍 Found Mark Stevens, CTO @ Acme Corp", delay: 600 },
-    { type: "asmi", text: "✅ **Calendar Updated**\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM\n\nInvite sent to mark@acmecorp.com", delay: 900 },
-    { type: "asmi", text: "Asmi's got it. 🎯", delay: 1200 }
+    { type: "user", text: "🎤 Coffee with Mark from Acme Friday 3pm", delay: 800, isVoice: true },
+    { type: "asmi", text: "🔍 Found Mark Stevens, CTO @ Acme Corp", delay: 1200 },
+    { type: "asmi", text: "✅ **Calendar Updated**\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM\n\nInvite sent to mark@acmecorp.com", delay: 1600 },
+    { type: "asmi", text: "Asmi's got it. 🎯", delay: 2000 }
   ];
 
   // Typing animation for personality
@@ -69,33 +70,37 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Demo animation with swish transition
+  // Demo animation with slower, more realistic timing
   useEffect(() => {
     const demoInterval = setInterval(() => {
       if (currentDemo === "whatsapp") {
         if (messageIndex < whatsappMessages.length - 1) {
           setMessageIndex(prev => prev + 1);
         } else {
-          setIsTransitioning(true);
           setTimeout(() => {
-            setCurrentDemo("imessage");
-            setMessageIndex(0);
-            setIsTransitioning(false);
-          }, 200);
+            setIsTransitioning(true);
+            setTimeout(() => {
+              setCurrentDemo("imessage");
+              setMessageIndex(0);
+              setIsTransitioning(false);
+            }, 300);
+          }, 1500);
         }
       } else {
         if (messageIndex < imessageMessages.length - 1) {
           setMessageIndex(prev => prev + 1);
         } else {
-          setIsTransitioning(true);
           setTimeout(() => {
-            setCurrentDemo("whatsapp");
-            setMessageIndex(0);
-            setIsTransitioning(false);
-          }, 200);
+            setIsTransitioning(true);
+            setTimeout(() => {
+              setCurrentDemo("whatsapp");
+              setMessageIndex(0);
+              setIsTransitioning(false);
+            }, 300);
+          }, 1500);
         }
       }
-    }, 800);
+    }, 1200); // Slower timing
 
     return () => clearInterval(demoInterval);
   }, [currentDemo, messageIndex]);
@@ -103,6 +108,18 @@ const Index = () => {
   // Refs for scroll animations
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    console.log("Waitlist signup:", { email });
+    setIsLoading(false);
+    setEmail("");
+  };
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] font-inter overflow-x-hidden">
@@ -330,6 +347,51 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Waitlist CTA - Moved before Real-life Flows */}
+      <section className="py-16 px-4 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-2xl mx-auto"
+        >
+          <h2 className="text-4xl font-light mb-8 text-white">
+            Ready to move 100X faster?
+          </h2>
+          
+          <motion.div
+            className="bg-white/[0.02] backdrop-blur-md rounded-2xl border border-white/10 p-6 max-w-md mx-auto mb-8"
+            whileHover={{ scale: 1.02 }}
+          >
+            <form onSubmit={handleWaitlistSubmit} className="flex gap-3">
+              <Input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 flex-1"
+                required
+              />
+              <Button 
+                type="submit"
+                disabled={isLoading}
+                className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium px-6"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+              </Button>
+            </form>
+            
+            <p className="text-gray-400 text-xs mt-3 text-center">
+              Join 10,000+ fast movers • No spam, just Asmi
+            </p>
+          </motion.div>
+        </motion.div>
+      </section>
+
       {/* Interactive Stories */}
       <SwipeableStories />
 
@@ -371,9 +433,6 @@ const Index = () => {
           </p>
         </motion.div>
       </section>
-
-      {/* Sticky Waitlist CTA */}
-      <StickyWaitlistCTA />
 
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-white/5">
