@@ -67,7 +67,7 @@ export const NeuralMemoryEngine = () => {
           </p>
 
           {/* Neural Network Visualization - Responsive */}
-          <div className="relative h-80 md:h-96 bg-gradient-to-br from-white/[0.03] to-white/[0.01] rounded-3xl border border-white/10 overflow-hidden backdrop-blur-xl">
+          <div className="relative h-80 md:h-96 bg-gradient-to-br from-white/[0.03] to-white/[0.01] rounded-3xl border border-white/10 overflow-hidden backdrop-blur-xl mx-auto max-w-4xl">
             {/* Data Points Animation */}
             {Array.from({ length: 20 }).map((_, i) => (
               <motion.div
@@ -144,19 +144,24 @@ export const NeuralMemoryEngine = () => {
                     </span>
                   </div>
 
-                  {/* Data Popup - Better positioned for mobile */}
+                  {/* Data Popup - Better positioned and sized for mobile */}
                   {activeNode === node.id && (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8, y: 10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
-                      className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 z-30"
+                      className="absolute top-full mt-2 z-30"
+                      style={{
+                        left: position.x > 75 ? 'auto' : '50%',
+                        right: position.x > 75 ? '0' : 'auto',
+                        transform: position.x > 75 ? 'translateX(0)' : 'translateX(-50%)'
+                      }}
                     >
-                      <Card className="bg-black/90 border-[#5DFF9F]/30 p-3 min-w-40 md:min-w-48 backdrop-blur-xl">
+                      <Card className="bg-black/90 border-[#5DFF9F]/30 p-3 backdrop-blur-xl w-48 md:w-56">
                         <div className="space-y-1">
                           {node.data.map((item, i) => (
                             <motion.p
                               key={i}
-                              className="text-xs text-white"
+                              className="text-xs text-white break-words"
                               initial={{ opacity: 0, x: -10 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: i * 0.1 }}

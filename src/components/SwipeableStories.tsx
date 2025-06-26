@@ -16,21 +16,21 @@ const stories: Story[] = [
   {
     id: "voice-meeting",
     before: "🎤 Schedule coffee with Sarah tomorrow 3pm",
-    after: "✅ Meeting scheduled with Sarah Johnson\n📧 Invite sent to sarah@wisprflow.ai\n📋 Prep notes ready:\n• Q4 marketing strategy discussion\n• Brand partnership opportunities\n• Review pending case studies",
+    after: "✅ Meeting scheduled with Sarah Johnson\n\n📧 Invite sent to sarah@wisprflow.ai\n\n📋 Prep notes ready:\n\n• Q4 marketing strategy discussion\n\n• Brand partnership opportunities\n\n• Review pending case studies",
     icon: Mic,
     color: "text-blue-400"
   },
   {
     id: "prep-meeting", 
     before: "Meeting with John in 30 mins",
-    after: "👤 John Martinez, Senior Developer @ InnovateTech\n💼 Background: 8+ years in fintech, recently promoted\n🎯 Suggested talking points:\n• New API integration timeline\n• Team scaling plans\n• Code review process improvements",
+    after: "👤 John Martinez, Senior Developer @ InnovateTech\n\n💼 Background: 8+ years in fintech, recently promoted\n\n🎯 Suggested talking points:\n\n• New API integration timeline\n\n• Team scaling plans\n\n• Code review process improvements",
     icon: Calendar,
     color: "text-green-400"
   },
   {
     id: "voice-note",
     before: "🎤 Remind me to follow up with investors about Series A",
-    after: "📝 Action item saved to priority list\n⏰ Reminder set for Monday 9 AM\n📧 Draft follow-up email prepared:\n• Updated pitch deck attached\n• Financial projections included\n• Meeting availability options",
+    after: "📝 Action item saved to priority list\n\n⏰ Reminder set for Monday 9 AM\n\n📧 Draft follow-up email prepared:\n\n• Updated pitch deck attached\n\n• Financial projections included\n\n• Meeting availability options",
     icon: CheckCircle,
     color: "text-purple-400"
   }
@@ -48,14 +48,16 @@ export const SwipeableStories = () => {
     setIsTransitioning(true);
     
     if (step === 'before') {
-      setStep('after');
-      setTimeout(() => setIsTransitioning(false), 400);
-    } else {
-      setStep('before');
       setTimeout(() => {
+        setStep('after');
+        setIsTransitioning(false);
+      }, 150);
+    } else {
+      setTimeout(() => {
+        setStep('before');
         setCurrentStory((prev) => (prev + 1) % stories.length);
         setIsTransitioning(false);
-      }, 400);
+      }, 150);
     }
   }, [step, isTransitioning]);
 
@@ -79,59 +81,49 @@ export const SwipeableStories = () => {
           onClick={nextStory}
           whileTap={{ scale: 0.98 }}
         >
-          <AnimatePresence mode="wait">
+          <Card className="bg-gradient-to-br from-black/40 to-black/20 border border-white/5 backdrop-blur-xl h-full p-6 flex flex-col justify-center shadow-2xl hover:border-white/10 transition-all duration-300">
+            {/* Story Progress Dots */}
+            <div className="flex justify-center gap-2 mb-6">
+              {stories.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentStory ? 'bg-[#5DFF9F] scale-110' : 'bg-white/10'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Icon */}
             <motion.div
-              key={`${currentStory}-${step}`}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute inset-0"
+              className={`w-12 h-12 mx-auto mb-6 ${stories[currentStory].color}`}
+              animate={{ 
+                rotate: step === 'after' ? 360 : 0,
+                scale: step === 'after' ? 1.1 : 1
+              }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
             >
-              <Card className="bg-gradient-to-br from-black/40 to-black/20 border border-white/5 backdrop-blur-xl h-full p-6 flex flex-col justify-center shadow-2xl hover:border-white/10 transition-all duration-300">
-                {/* Story Progress Dots */}
-                <div className="flex justify-center gap-2 mb-6">
-                  {stories.map((_, index) => (
-                    <div
-                      key={index}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === currentStory ? 'bg-[#5DFF9F] scale-110' : 'bg-white/10'
-                      }`}
-                    />
-                  ))}
-                </div>
+              <IconComponent className="w-full h-full" />
+            </motion.div>
 
-                {/* Icon */}
+            {/* Chat Bubble */}
+            <AnimatePresence mode="wait">
+              {!isTransitioning && (
                 <motion.div
-                  className={`w-12 h-12 mx-auto mb-6 ${stories[currentStory].color}`}
-                  animate={{ 
-                    rotate: step === 'after' ? 360 : 0,
-                    scale: step === 'after' ? 1.1 : 1
-                  }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                >
-                  <IconComponent className="w-full h-full" />
-                </motion.div>
-
-                {/* Chat Bubble */}
-                <motion.div
+                  key={`${currentStory}-${step}`}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
                   className={`rounded-2xl p-4 max-w-xs mx-auto relative shadow-lg transition-all duration-300 ${
                     step === 'before' 
                       ? 'bg-[#007AFF] text-white ml-auto rounded-tr-md' 
                       : 'bg-[#1F2937] text-white mr-auto rounded-tl-md border border-white/5'
                   }`}
-                  layout
-                  transition={{ duration: 0.3 }}
                 >
-                  <motion.p
-                    className="text-sm whitespace-pre-line leading-relaxed"
-                    key={`${currentStory}-${step}`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                  >
+                  <p className="text-sm whitespace-pre-line leading-relaxed">
                     {step === 'before' ? stories[currentStory].before : stories[currentStory].after}
-                  </motion.p>
+                  </p>
                   
                   {/* Chat bubble tail */}
                   <div className={`absolute top-3 w-3 h-3 rotate-45 transition-all duration-300 ${
@@ -140,32 +132,32 @@ export const SwipeableStories = () => {
                       : 'bg-[#1F2937] -left-1'
                   }`} />
                 </motion.div>
+              )}
+            </AnimatePresence>
 
-                {/* Progress Bar */}
-                <motion.div
-                  className="mt-6 mx-auto bg-white/5 rounded-full h-1 w-32 overflow-hidden"
-                >
-                  <motion.div
-                    className="h-full bg-[#5DFF9F] rounded-full"
-                    initial={{ width: "0%" }}
-                    animate={{ width: step === 'after' ? "100%" : "50%" }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                  />
-                </motion.div>
-
-                {/* Dynamic hint text */}
-                <motion.p 
-                  className="text-center text-gray-400 text-xs mt-4"
-                  key={step}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {step === 'before' ? 'Tap to see Asmi in action' : 'Tap for next task'}
-                </motion.p>
-              </Card>
+            {/* Progress Bar */}
+            <motion.div
+              className="mt-6 mx-auto bg-white/5 rounded-full h-1 w-32 overflow-hidden"
+            >
+              <motion.div
+                className="h-full bg-[#5DFF9F] rounded-full"
+                initial={{ width: "0%" }}
+                animate={{ width: step === 'after' ? "100%" : "50%" }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+              />
             </motion.div>
-          </AnimatePresence>
+
+            {/* Dynamic hint text */}
+            <motion.p 
+              className="text-center text-gray-400 text-xs mt-4"
+              key={step}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {step === 'before' ? 'Tap to see Asmi in action' : 'Tap for next task'}
+            </motion.p>
+          </Card>
         </motion.div>
       </div>
     </div>
