@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
@@ -54,6 +55,8 @@ export const SwipeableStories = () => {
     nextStory();
   };
 
+  const IconComponent = stories[currentStory].icon;
+
   return (
     <div className="py-16 px-4">
       <motion.h2 
@@ -67,8 +70,9 @@ export const SwipeableStories = () => {
 
       <div className="max-w-sm mx-auto" ref={containerRef}>
         <motion.div
-          className="relative h-96"
+          className="relative h-96 cursor-pointer"
           onTap={handleSwipe}
+          onClick={handleSwipe}
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -98,7 +102,7 @@ export const SwipeableStories = () => {
                   animate={{ rotate: step === 'after' ? 360 : 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {React.createElement(stories[currentStory].icon, { className: "w-full h-full" })}
+                  <IconComponent className="w-full h-full" />
                 </motion.div>
 
                 {/* Chat Bubble */}
