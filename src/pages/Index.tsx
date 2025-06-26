@@ -395,7 +395,7 @@ const Index = () => {
       {/* Scrollable Timeline */}
       <ScrollableTimeline />
 
-      {/* Final CTA - Updated */}
+      {/* Final CTA - Updated for urgency */}
       <section className="py-16 px-4 text-center mb-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -403,9 +403,24 @@ const Index = () => {
           transition={{ duration: 0.8 }}
           className="max-w-2xl mx-auto"
         >
+          <motion.div className="mb-4">
+            <Badge className="bg-red-500/10 text-red-400 border-red-500/20 mb-4 text-sm px-4 py-2">
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+                className="w-2 h-2 bg-red-400 rounded-full mr-2"
+              />
+              Only 47 spots left
+            </Badge>
+          </motion.div>
+
           <h2 className="text-4xl font-light mb-8 text-white">
-            We're onboarding 100 people who move faster than their calendar.
+            We're onboarding <span className="text-[#5DFF9F]">100 people</span> who move faster than their calendar.
           </h2>
+          
+          <p className="text-gray-300 text-lg mb-8">
+            Join the exclusive beta before we close applications.
+          </p>
           
           <motion.div
             className="bg-gradient-to-br from-black/40 to-black/20 backdrop-blur-xl rounded-2xl border border-white/5 p-6 max-w-md mx-auto mb-8 shadow-2xl"
@@ -428,10 +443,14 @@ const Index = () => {
                 {isLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
-                  "Join the beta"
+                  "Secure my spot"
                 )}
               </Button>
             </form>
+            
+            <p className="text-gray-400 text-xs mt-3 text-center">
+              Applications close when we hit 100 members
+            </p>
           </motion.div>
         </motion.div>
       </section>
