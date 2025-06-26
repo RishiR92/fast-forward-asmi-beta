@@ -116,7 +116,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] font-inter overflow-x-hidden">
-      {/* Floating Navigation - Updated without Join Waitlist */}
+      {/* Floating Navigation */}
       <nav className="fixed top-4 left-4 right-4 z-50 flex justify-between items-center bg-black/80 backdrop-blur-md rounded-2xl px-6 py-4 border border-white/10">
         <motion.div 
           className="text-xl font-bold text-white"
@@ -193,7 +193,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Dynamic iPhone Demo - Fixed */}
+      {/* Dynamic iPhone Demo */}
       <section className="py-8 px-4 relative">
         <div className="max-w-sm mx-auto">
           <motion.div
@@ -338,7 +338,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Waitlist CTA - Updated text */}
+      {/* Waitlist CTA - Updated with urgency */}
       <section className="py-16 px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -380,6 +380,22 @@ const Index = () => {
               Join the tribe of top 1% operators in the world
             </p>
           </motion.div>
+
+          {/* Urgency Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <Badge className="bg-red-500/10 text-red-400 border-red-500/20 text-sm px-4 py-2">
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+                className="w-2 h-2 bg-red-400 rounded-full mr-2"
+              />
+              Only 47 spots left in beta
+            </Badge>
+          </motion.div>
         </motion.div>
       </section>
 
@@ -410,7 +426,7 @@ const Index = () => {
                 transition={{ duration: 1, repeat: Infinity }}
                 className="w-2 h-2 bg-red-400 rounded-full mr-2"
               />
-              Only 47 spots left
+              Only 47 spots left in beta
             </Badge>
           </motion.div>
 
