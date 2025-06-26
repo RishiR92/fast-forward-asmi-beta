@@ -51,13 +51,13 @@ export const SwipeableStories = () => {
       setTimeout(() => {
         setStep('after');
         setIsTransitioning(false);
-      }, 150);
+      }, 200);
     } else {
       setTimeout(() => {
         setStep('before');
         setCurrentStory((prev) => (prev + 1) % stories.length);
         setIsTransitioning(false);
-      }, 150);
+      }, 200);
     }
   }, [step, isTransitioning]);
 
@@ -106,33 +106,31 @@ export const SwipeableStories = () => {
               <IconComponent className="w-full h-full" />
             </motion.div>
 
-            {/* Chat Bubble */}
+            {/* Chat Bubble - Improved transitions */}
             <AnimatePresence mode="wait">
-              {!isTransitioning && (
-                <motion.div
-                  key={`${currentStory}-${step}`}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                  className={`rounded-2xl p-4 max-w-xs mx-auto relative shadow-lg transition-all duration-300 ${
-                    step === 'before' 
-                      ? 'bg-[#007AFF] text-white ml-auto rounded-tr-md' 
-                      : 'bg-[#1F2937] text-white mr-auto rounded-tl-md border border-white/5'
-                  }`}
-                >
-                  <p className="text-sm whitespace-pre-line leading-relaxed">
-                    {step === 'before' ? stories[currentStory].before : stories[currentStory].after}
-                  </p>
-                  
-                  {/* Chat bubble tail */}
-                  <div className={`absolute top-3 w-3 h-3 rotate-45 transition-all duration-300 ${
-                    step === 'before' 
-                      ? 'bg-[#007AFF] -right-1' 
-                      : 'bg-[#1F2937] -left-1'
-                  }`} />
-                </motion.div>
-              )}
+              <motion.div
+                key={`${currentStory}-${step}`}
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className={`rounded-2xl p-4 max-w-xs mx-auto relative shadow-lg transition-all duration-300 ${
+                  step === 'before' 
+                    ? 'bg-[#007AFF] text-white ml-auto rounded-tr-md' 
+                    : 'bg-[#1F2937] text-white mr-auto rounded-tl-md border border-white/5'
+                }`}
+              >
+                <p className="text-sm whitespace-pre-line leading-relaxed">
+                  {step === 'before' ? stories[currentStory].before : stories[currentStory].after}
+                </p>
+                
+                {/* Chat bubble tail */}
+                <div className={`absolute top-3 w-3 h-3 rotate-45 transition-all duration-300 ${
+                  step === 'before' 
+                    ? 'bg-[#007AFF] -right-1' 
+                    : 'bg-[#1F2937] -left-1'
+                }`} />
+              </motion.div>
             </AnimatePresence>
 
             {/* Progress Bar */}
@@ -155,7 +153,7 @@ export const SwipeableStories = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              {step === 'before' ? 'Tap to see Asmi in action' : 'Tap for next task'}
+              Tap for next task
             </motion.p>
           </Card>
         </motion.div>

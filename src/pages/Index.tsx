@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef } from "react";
@@ -18,21 +17,21 @@ const Index = () => {
   const [typingText, setTypingText] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [demoKey, setDemoKey] = useState(0); // Add key to force re-render
+  const [demoKey, setDemoKey] = useState(0);
 
-  // Enhanced chat demo messages with slower, more realistic timing
+  // Enhanced chat demo messages with better content formatting
   const whatsappMessages = [
-    { type: "user", text: "Hey, can you help me prep for my meeting with Sarah tomorrow?", delay: 1500 },
-    { type: "asmi", text: "Of course! Let me pull up what I know about Sarah...", delay: 2000 },
-    { type: "asmi", text: "📋 **Sarah Meeting Brief**\n\n• Sarah Johnson, VP Marketing @ TechCorp\n• Last meeting: 2 weeks ago about Q4 campaign\n• Her priorities: Brand partnerships, growth metrics\n• You promised to send case studies (still pending)\n• Suggested talking points: ROI data, timeline updates", delay: 2500 },
-    { type: "asmi", text: "Should I remind you to prepare those case studies? 📊", delay: 3000 }
+    { type: "user", text: "Hey, can you help me prep for my meeting with Sarah tomorrow?", delay: 2000, timestamp: "8:47 AM" },
+    { type: "asmi", text: "Of course! Let me pull up what I know about Sarah...", delay: 2500, timestamp: "8:47 AM" },
+    { type: "asmi", text: "Sarah Meeting Brief\n\n• Sarah Johnson, VP Marketing @ TechCorp\n• Last meeting: Q4 campaign discussion\n• Her priorities: Brand partnerships, growth metrics\n• Pending: Case studies you promised\n• Focus: ROI data, timeline updates", delay: 3000, timestamp: "8:48 AM" },
+    { type: "asmi", text: "Should I remind you to prepare those case studies? 📊", delay: 3500, timestamp: "8:48 AM" }
   ];
 
   const imessageMessages = [
-    { type: "user", text: "🎤 Coffee with Mark from Acme Friday 3pm", delay: 1500, isVoice: true },
-    { type: "asmi", text: "🔍 Found Mark Stevens, CTO @ Acme Corp", delay: 2000 },
-    { type: "asmi", text: "✅ **Calendar Updated**\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM\n\nInvite sent to mark@acmecorp.com", delay: 2500 },
-    { type: "asmi", text: "Asmi's got it. 🎯", delay: 3000 }
+    { type: "user", text: "Coffee with Mark from Acme Friday 3pm", delay: 2000, isVoice: true, timestamp: "2:15 PM" },
+    { type: "asmi", text: "🔍 Found Mark Stevens, CTO @ Acme Corp", delay: 2500, timestamp: "2:15 PM" },
+    { type: "asmi", text: "Calendar Updated\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM\n\nInvite sent to mark@acmecorp.com", delay: 3000, timestamp: "2:16 PM" },
+    { type: "asmi", text: "Asmi's got it. 🎯", delay: 3500, timestamp: "2:16 PM" }
   ];
 
   // Typing animation for personality
@@ -90,10 +89,10 @@ const Index = () => {
         setTimeout(() => {
           setCurrentDemo(prev => prev === "whatsapp" ? "imessage" : "whatsapp");
           setMessageIndex(0);
-          setDemoKey(prev => prev + 1); // Force re-render
+          setDemoKey(prev => prev + 1);
           setIsTransitioning(false);
         }, 300);
-      }, 2000);
+      }, 3000);
       
       return () => clearTimeout(resetTimer);
     }
@@ -117,7 +116,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] font-inter overflow-x-hidden">
-      {/* Floating Navigation */}
+      {/* Floating Navigation - Updated without Join Waitlist */}
       <nav className="fixed top-4 left-4 right-4 z-50 flex justify-between items-center bg-black/80 backdrop-blur-md rounded-2xl px-6 py-4 border border-white/10">
         <motion.div 
           className="text-xl font-bold text-white"
@@ -125,12 +124,9 @@ const Index = () => {
         >
           Asmi
         </motion.div>
-        <Button 
-          size="sm"
-          className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium px-6"
-        >
-          Join Waitlist
-        </Button>
+        <div className="text-gray-400 text-sm">
+          Your AI Chief of Staff
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -209,13 +205,9 @@ const Index = () => {
           >
             {/* iPhone 15 Pro Frame - Fixed width */}
             <div className="relative bg-gray-800 rounded-[3rem] p-1 shadow-2xl border border-gray-600/30 mx-auto w-[340px]">
-              {/* Dynamic Island */}
+              {/* Dynamic Island - No green blinking */}
               <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full z-10 flex items-center justify-center">
-                <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-1.5 h-1.5 bg-[#5DFF9F] rounded-full"
-                />
+                <div className="w-1.5 h-1.5 bg-gray-500 rounded-full" />
               </div>
               
               {/* Screen - Fixed dimensions */}
@@ -241,16 +233,11 @@ const Index = () => {
                       className="px-2 pb-4 h-full"
                     >
                       {currentDemo === "whatsapp" ? (
-                        <div className="bg-[#0B141A] rounded-t-3xl h-full">
-                          {/* WhatsApp Header */}
+                        <div className="bg-[#0B141A] rounded-t-3xl h-full flex flex-col">
+                          {/* WhatsApp Header - No green blinking */}
                           <div className="flex items-center gap-3 p-4 bg-[#202C33] text-white">
-                            <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center relative">
+                            <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center">
                               <MessageSquare className="w-5 h-5 text-white" />
-                              <motion.div
-                                animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                                className="absolute -top-1 -right-1 w-3 h-3 bg-[#5DFF9F] rounded-full"
-                              />
                             </div>
                             <div>
                               <span className="font-medium">Asmi AI</span>
@@ -272,10 +259,15 @@ const Index = () => {
                                 }
                               >
                                 <p className="text-white text-sm whitespace-pre-line leading-relaxed">
-                                  {message.text}
+                                  {message.text.includes('Sarah Meeting Brief') ? (
+                                    <span>
+                                      <strong>Sarah Meeting Brief</strong>
+                                      {message.text.replace('Sarah Meeting Brief', '')}
+                                    </span>
+                                  ) : message.text}
                                 </p>
                                 <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
-                                  <span>{message.type === 'asmi' ? '8:47 AM' : '8:48 AM'}</span>
+                                  <span>{message.timestamp}</span>
                                   {message.type === 'user' && <CheckCircle className="w-3 h-3 text-blue-400" />}
                                 </p>
                               </motion.div>
@@ -283,16 +275,11 @@ const Index = () => {
                           </div>
                         </div>
                       ) : (
-                        <div className="bg-black rounded-t-3xl h-full">
-                          {/* iMessage Header */}
+                        <div className="bg-black rounded-t-3xl h-full flex flex-col">
+                          {/* iMessage Header - No green blinking */}
                           <div className="flex items-center gap-3 p-4 bg-[#1C1C1E] text-white border-b border-gray-800">
-                            <div className="w-10 h-10 rounded-full bg-[#007AFF] flex items-center justify-center relative">
+                            <div className="w-10 h-10 rounded-full bg-[#007AFF] flex items-center justify-center">
                               <MessageSquare className="w-5 h-5 text-white" />
-                              <motion.div
-                                animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                                className="absolute -top-1 -right-1 w-3 h-3 bg-[#5DFF9F] rounded-full"
-                              />
                             </div>
                             <span className="font-medium">Asmi AI</span>
                           </div>
@@ -313,16 +300,29 @@ const Index = () => {
                                 {message.isVoice && (
                                   <div className="flex items-center gap-2 mb-2">
                                     <Mic className="w-4 h-4 text-white" />
-                                    <motion.div
-                                      animate={{ scaleX: [1, 1.5, 1] }}
-                                      transition={{ duration: 0.5, repeat: Infinity }}
-                                      className="flex-1 h-1 bg-[#5DFF9F] rounded"
-                                    />
-                                    <span className="text-xs text-gray-400">0:03</span>
+                                    {/* Static sound bars */}
+                                    <div className="flex items-center gap-0.5 flex-1">
+                                      <div className="w-1 h-2 bg-[#5DFF9F] rounded"></div>
+                                      <div className="w-1 h-4 bg-[#5DFF9F] rounded"></div>
+                                      <div className="w-1 h-3 bg-[#5DFF9F] rounded"></div>
+                                      <div className="w-1 h-5 bg-[#5DFF9F] rounded"></div>
+                                      <div className="w-1 h-2 bg-[#5DFF9F] rounded"></div>
+                                      <div className="w-1 h-4 bg-[#5DFF9F] rounded"></div>
+                                      <div className="w-1 h-3 bg-[#5DFF9F] rounded"></div>
+                                    </div>
+                                    <span className="text-xs text-gray-400">0:05</span>
                                   </div>
                                 )}
                                 <p className="text-white text-sm whitespace-pre-line leading-relaxed">
-                                  {message.text}
+                                  {message.text.includes('Calendar Updated') ? (
+                                    <span>
+                                      <strong>Calendar Updated</strong>
+                                      {message.text.replace('Calendar Updated', '')}
+                                    </span>
+                                  ) : message.text}
+                                </p>
+                                <p className="text-xs text-gray-400 mt-1 text-right">
+                                  {message.timestamp}
                                 </p>
                               </motion.div>
                             ))}
@@ -377,7 +377,7 @@ const Index = () => {
             </form>
             
             <p className="text-gray-400 text-xs mt-3 text-center">
-              Join 10,000+ fast movers • No spam, just Asmi
+              Join the tribe of top 1% operators in the world
             </p>
           </motion.div>
         </motion.div>
@@ -395,7 +395,7 @@ const Index = () => {
       {/* Scrollable Timeline */}
       <ScrollableTimeline />
 
-      {/* Final CTA */}
+      {/* Final CTA - Updated */}
       <section className="py-16 px-4 text-center mb-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -404,24 +404,35 @@ const Index = () => {
           className="max-w-2xl mx-auto"
         >
           <h2 className="text-4xl font-light mb-8 text-white">
-            Be among top 1%?
+            We're onboarding 100 people who move faster than their calendar.
           </h2>
           
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-br from-black/40 to-black/20 backdrop-blur-xl rounded-2xl border border-white/5 p-6 max-w-md mx-auto mb-8 shadow-2xl"
+            whileHover={{ scale: 1.02 }}
           >
-            <Button 
-              size="lg"
-              className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium h-14 px-10 text-lg rounded-2xl"
-            >
-              Join Waitlist
-            </Button>
+            <form onSubmit={handleWaitlistSubmit} className="flex gap-3">
+              <Input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-white/[0.03] border-white/10 text-white placeholder:text-gray-400 flex-1"
+                required
+              />
+              <Button 
+                type="submit"
+                disabled={isLoading}
+                className="bg-[#5DFF9F] text-black hover:bg-[#5DFF9F]/90 font-medium px-6"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  "Join the beta"
+                )}
+              </Button>
+            </form>
           </motion.div>
-          
-          <p className="text-gray-400 mt-6">
-            Join 10,000+ fast movers already on the list
-          </p>
         </motion.div>
       </section>
 
