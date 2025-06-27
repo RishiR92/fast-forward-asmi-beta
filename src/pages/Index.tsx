@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -41,6 +42,8 @@ const Index = () => {
     "Asmi's got it",
     "Your smart sidekick"
   ];
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     let phraseIndex = 0;
@@ -112,6 +115,9 @@ const Index = () => {
     console.log("Waitlist signup:", { email });
     setIsLoading(false);
     setEmail("");
+    
+    // Navigate to success page
+    navigate('/success');
   };
 
   return (
