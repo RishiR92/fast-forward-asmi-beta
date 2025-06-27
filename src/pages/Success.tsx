@@ -49,12 +49,12 @@ const Success = () => {
 
       {/* Header */}
       <header className="relative z-10 p-6 flex justify-between items-center">
-        <Link to="/" className="text-foreground font-inter text-xl font-semibold">
+        <Link to="/" className="text-white font-inter text-xl font-semibold">
           Asmi
         </Link>
         <Link 
           to="/" 
-          className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm"
+          className="text-white/60 hover:text-white transition-colors duration-300 text-sm"
         >
           ← Back
         </Link>
@@ -85,7 +85,7 @@ const Success = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-foreground font-inter text-3xl font-bold leading-tight"
+              className="text-white font-inter text-3xl font-bold leading-tight"
             >
               Welcome to the revolution.
             </motion.h1>
@@ -95,7 +95,7 @@ const Success = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8 }}
-              className="text-muted-foreground text-lg leading-relaxed"
+              className="text-white/70 text-lg leading-relaxed"
             >
               <span>You're now part of the same inner circle as </span>
               
@@ -109,7 +109,7 @@ const Success = () => {
                   {[...names, names[0]].map((name, index) => (
                     <div
                       key={index}
-                      className="h-8 flex items-center justify-center font-semibold text-primary"
+                      className="h-8 flex items-center justify-center font-semibold text-[#5DFF9F]"
                     >
                       {name}
                     </div>
@@ -129,8 +129,8 @@ const Success = () => {
               transition={{ delay: 1.2, duration: 0.8 }}
               className="inline-flex items-center space-x-2 bg-card/50 backdrop-blur-sm border border-border rounded-full px-6 py-3"
             >
-              <span className="text-muted-foreground">Position</span>
-              <span className="font-bold text-2xl text-primary font-mono">
+              <span className="text-white/60">Position</span>
+              <span className="font-bold text-2xl text-[#5DFF9F] font-mono">
                 #{waitlistNumber}
               </span>
             </motion.div>
@@ -140,10 +140,10 @@ const Success = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.8, duration: 0.8 }}
-              className="text-foreground font-medium text-lg pt-4"
+              className="text-white font-medium text-lg pt-4"
             >
               The future moves fast. <br />
-              <span className="text-primary font-semibold">You're already ahead.</span>
+              <span className="text-[#5DFF9F] font-semibold">You're already ahead.</span>
             </motion.div>
           </div>
         </motion.div>
