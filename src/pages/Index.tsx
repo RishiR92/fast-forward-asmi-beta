@@ -213,8 +213,8 @@ const Index = () => {
               
               {/* Screen - Mobile optimized */}
               <div className="bg-black rounded-[2.3rem] overflow-hidden relative h-[580px] w-full">
-                {/* Status Bar */}
-                <div className="flex justify-between items-center px-6 pt-6 pb-2 text-white text-xs font-medium">
+                {/* Fixed Status Bar */}
+                <div className="absolute top-0 left-0 right-0 z-20 flex justify-between items-center px-6 pt-6 pb-2 text-white text-xs font-medium bg-black rounded-t-[2.3rem]">
                   <span>9:41</span>
                   <div className="flex items-center gap-1">
                     <div className="w-3 h-1.5 border border-white rounded-sm">
@@ -228,9 +228,20 @@ const Index = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="px-1 pb-3 h-full"
+                  className="pt-14 pb-3 px-1 h-full"
                 >
-                  <div className="bg-[#0B141A] rounded-t-2xl h-full flex flex-col">
+                  <div className="bg-[#0B141A] h-full flex flex-col">
+                    {/* WhatsApp Header */}
+                    <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3 border-b border-gray-700/30">
+                      <div className="w-8 h-8 bg-[#5DFF9F] rounded-full flex items-center justify-center">
+                        <span className="text-black text-xs font-bold">A</span>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-white text-sm font-medium">Asmi - Chief of staff</h3>
+                        <p className="text-gray-400 text-xs">online</p>
+                      </div>
+                    </div>
+                    
                     {/* Messages with autoscroll only - no manual scroll */}
                     <div className="p-3 space-y-2 bg-[#0B141A] flex-1 overflow-hidden">
                       {whatsappMessages.slice(0, messageIndex + 1).map((message, index) => (
