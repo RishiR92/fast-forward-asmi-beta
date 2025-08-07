@@ -20,12 +20,17 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [demoKey, setDemoKey] = useState(0);
 
-  // Enhanced chat demo messages with better content formatting
+  // Enhanced chat demo messages with new script
   const whatsappMessages = [
-    { type: "user", text: "Hey, can you help me prep for my meeting with Sarah tomorrow?", delay: 2000, timestamp: "8:47 AM" },
-    { type: "asmi", text: "Of course! Let me pull up what I know about Sarah...", delay: 2500, timestamp: "8:47 AM" },
-    { type: "asmi", text: "Sarah Meeting Brief\n\n• Sarah Johnson, VP Marketing @ TechCorp\n• Last meeting: Q4 campaign discussion\n• Her priorities: Brand partnerships, growth metrics\n• Pending: Case studies you promised\n• Focus: ROI data, timeline updates", delay: 3000, timestamp: "8:48 AM" },
-    { type: "asmi", text: "Should I remind you to prepare those case studies? 📊", delay: 3500, timestamp: "8:48 AM" }
+    { type: "user", text: "Asmi, you look intriguing! What can you do for me?", delay: 2000, timestamp: "9:15 AM" },
+    { type: "asmi", text: "Hi Alex. Asmi is your smart chief of staff. To get started, first integrate your calendar and mail here and see the magic!", delay: 2500, timestamp: "9:15 AM" },
+    { type: "system", text: "Gmail linked ✅\nCalendar linked ✅", delay: 2000, timestamp: "9:16 AM" },
+    { type: "asmi", text: "Well well Alex, you are absolutely crushing it\n\n• Serial entrepreneur & CEO at TechFlow\n• Boston Marathon finisher (3:12 best time)\n• 5× founder with 2 successful exits\n• Stanford MBA, former McKinsey consultant\n• Angel investor in 15+ startups\n• Lives in Palo Alto, originally from Boston", delay: 3000, timestamp: "9:16 AM" },
+    { type: "asmi", text: "Insights from your emails & calendar\n\n📧 \"Need to finalize Q3 roadmap by Friday - pressure from board\"\n📧 \"Marketing strategy review 2 weeks overdue, Sophia asking for feedback\"\n📧 \"Steve Johnson following up on Acme Corp partnership - big opportunity\"\n📅 Back-to-back meetings every day this week\n📅 3 investor calls scheduled for next week\n📧 \"Pat from Sequoia mentioned potential Series B introduction\"", delay: 3500, timestamp: "9:17 AM" },
+    { type: "user", text: "Schedule a call with Steve for 3 PM tomorrow.", delay: 2000, timestamp: "9:18 AM" },
+    { type: "asmi", text: "Call with Steve\n\n🕒 03:00 PM, Aug 8, 2025\n👤 Steve Johnson\n📋 Agenda: Catch up + next steps\n🔗 meet.google.com/xyz-1234", delay: 2500, timestamp: "9:18 AM" },
+    { type: "user", text: "Confirmed", delay: 1500, timestamp: "9:19 AM" },
+    { type: "asmi", text: "Meeting scheduled ✅", delay: 1500, timestamp: "9:19 AM" }
   ];
 
   const imessageMessages = [
