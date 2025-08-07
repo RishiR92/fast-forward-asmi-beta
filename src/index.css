@@ -92,7 +92,10 @@
   animation: particle-float 6s ease-in-out infinite;
 }
 
-/* Removed global smooth scrolling to prevent auto-scroll interference */
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {

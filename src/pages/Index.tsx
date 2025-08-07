@@ -108,7 +108,12 @@ const Index = () => {
   // Demo animation with autoscroll and message refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // Removed auto-scroll to prevent interference with user scrolling
+  // Auto-scroll to bottom when new message appears
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
+  }, [messageIndex]);
 
   // Enhanced demo controller with beautiful transitions
   useEffect(() => {
