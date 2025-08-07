@@ -111,7 +111,7 @@ const Index = () => {
   // Auto-scroll to bottom when new message appears
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
     }
   }, [messageIndex]);
 
