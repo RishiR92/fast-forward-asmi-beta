@@ -12,32 +12,33 @@ import { TypingTestimonials } from "@/components/TypingTestimonials";
 import { ScrollableTimeline } from "@/components/ScrollableTimeline";
 
 const Index = () => {
-  const [currentDemo, setCurrentDemo] = useState("whatsapp");
   const [messageIndex, setMessageIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [typingText, setTypingText] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [demoKey, setDemoKey] = useState(0);
 
-  // Enhanced chat demo messages with new script
+  // WhatsApp demo messages with the new script
   const whatsappMessages = [
     { type: "user", text: "Asmi, you look intriguing! What can you do for me?", delay: 2000, timestamp: "9:15 AM" },
     { type: "asmi", text: "Hi Alex. Asmi is your smart chief of staff. To get started, first integrate your calendar and mail here and see the magic!", delay: 2500, timestamp: "9:15 AM" },
-    { type: "system", text: "Gmail linked ✅\nCalendar linked ✅", delay: 2000, timestamp: "9:16 AM" },
+    { type: "asmi", text: "Gmail linked ✅\nCalendar linked ✅", delay: 2000, timestamp: "9:16 AM" },
     { type: "asmi", text: "Well well Alex, you are absolutely crushing it\n\n• Serial entrepreneur & CEO at TechFlow\n• Boston Marathon finisher (3:12 best time)\n• 5× founder with 2 successful exits\n• Stanford MBA, former McKinsey consultant\n• Angel investor in 15+ startups\n• Lives in Palo Alto, originally from Boston", delay: 3000, timestamp: "9:16 AM" },
     { type: "asmi", text: "Insights from your emails & calendar\n\n📧 \"Need to finalize Q3 roadmap by Friday - pressure from board\"\n📧 \"Marketing strategy review 2 weeks overdue, Sophia asking for feedback\"\n📧 \"Steve Johnson following up on Acme Corp partnership - big opportunity\"\n📅 Back-to-back meetings every day this week\n📅 3 investor calls scheduled for next week\n📧 \"Pat from Sequoia mentioned potential Series B introduction\"", delay: 3500, timestamp: "9:17 AM" },
     { type: "user", text: "Schedule a call with Steve for 3 PM tomorrow.", delay: 2000, timestamp: "9:18 AM" },
     { type: "asmi", text: "Call with Steve\n\n🕒 03:00 PM, Aug 8, 2025\n👤 Steve Johnson\n📋 Agenda: Catch up + next steps\n🔗 meet.google.com/xyz-1234", delay: 2500, timestamp: "9:18 AM" },
     { type: "user", text: "Confirmed", delay: 1500, timestamp: "9:19 AM" },
-    { type: "asmi", text: "Meeting scheduled ✅", delay: 1500, timestamp: "9:19 AM" }
-  ];
-
-  const imessageMessages = [
-    { type: "user", text: "Coffee with Mark from Acme Friday 3pm", delay: 2000, isVoice: true, timestamp: "2:15 PM" },
-    { type: "asmi", text: "🔍 Found Mark Stevens, CTO @ Acme Corp", delay: 2500, timestamp: "2:15 PM" },
-    { type: "asmi", text: "Calendar Updated\nCoffee w/ Mark Stevens\nFri, Dec 8 • 3:00 PM\n\nInvite sent to mark@acmecorp.com", delay: 3000, timestamp: "2:16 PM" },
-    { type: "asmi", text: "Asmi's got it. 🎯", delay: 3500, timestamp: "2:16 PM" }
+    { type: "asmi", text: "Meeting scheduled ✅", delay: 1500, timestamp: "9:19 AM" },
+    { type: "user", text: "Help me prep for this meeting.", delay: 2000, timestamp: "9:20 AM" },
+    { type: "asmi", text: "Meeting Prep: Steve Johnson\n\nObjective: Align on Q3 roadmap & secure Acme Corp partnership\n\nProfile:\n• VP Sales at Acme Corp (3 years)\n• Former director at Oracle, strong enterprise sales background\n• MIT Sloan MBA, lives in Austin\n• Key decision maker for vendor partnerships ($500K+ deals)", delay: 3000, timestamp: "9:20 AM" },
+    { type: "asmi", text: "Context:\n• Last spoke July 15 about contract terms and pricing structure\n• Steve expressed concerns about implementation timeline\n• His team is evaluating 3 vendors, decision due end of August\n• Acme Corp expanding West Coast operations - good timing", delay: 3500, timestamp: "9:21 AM" },
+    { type: "user", text: "Book 1 hr dinner with Sophia to run me through marketing plan. Pick a quiet downtown SF spot.", delay: 2000, timestamp: "9:22 AM" },
+    { type: "asmi", text: "Dinner with Sophia\n\n🕗 07:00 PM, Aug 8, 2025\n👤 Sophia Lee, BrightWave\n📍 The Rotunda at Neiman Marcus\n📋 Agenda: Marketing plan walkthrough", delay: 2500, timestamp: "9:22 AM" },
+    { type: "user", text: "Confirmed", delay: 1500, timestamp: "9:23 AM" },
+    { type: "asmi", text: "Dinner scheduled ✅", delay: 1500, timestamp: "9:23 AM" },
+    { type: "asmi", text: "Pat (Sequoia) reached out 2 days ago about an investment chat. Want me to draft a reply?", delay: 3000, timestamp: "9:24 AM" },
+    { type: "user", text: "Yes", delay: 1500, timestamp: "9:24 AM" },
+    { type: "asmi", text: "Draft Reply to Pat\n\n\"Hi Pat, thanks for reaching out. I'd love to explore this further. How about we schedule a call for next week? I'm available Tuesday-Thursday afternoons. Looking forward to connecting.\"", delay: 2500, timestamp: "9:25 AM" }
   ];
 
   // Typing animation for personality
@@ -79,32 +80,34 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Fixed demo animation with proper timing and state management
+  // Demo animation with autoscroll and message refs
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Auto-scroll to bottom when new message appears
   useEffect(() => {
-    const currentMessages = currentDemo === "whatsapp" ? whatsappMessages : imessageMessages;
-    
-    if (messageIndex < currentMessages.length - 1) {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [messageIndex]);
+
+  // WhatsApp demo animation 
+  useEffect(() => {
+    if (messageIndex < whatsappMessages.length - 1) {
       const timer = setTimeout(() => {
         setMessageIndex(prev => prev + 1);
-      }, currentMessages[messageIndex].delay);
+      }, whatsappMessages[messageIndex].delay);
       
       return () => clearTimeout(timer);
     } else {
-      // Reset to next demo after all messages are shown
+      // Loop back to beginning after all messages shown
       const resetTimer = setTimeout(() => {
-        setIsTransitioning(true);
-        
-        setTimeout(() => {
-          setCurrentDemo(prev => prev === "whatsapp" ? "imessage" : "whatsapp");
-          setMessageIndex(0);
-          setDemoKey(prev => prev + 1);
-          setIsTransitioning(false);
-        }, 300);
-      }, 3000);
+        setMessageIndex(0);
+        setDemoKey(prev => prev + 1);
+      }, 4000);
       
       return () => clearTimeout(resetTimer);
     }
-  }, [currentDemo, messageIndex]);
+  }, [messageIndex]);
 
   // Refs for scroll animations
   const heroRef = useRef(null);
@@ -233,116 +236,52 @@ const Index = () => {
                   </div>
                 </div>
 
-                <AnimatePresence mode="wait">
-                  {!isTransitioning && (
-                    <motion.div
-                      key={`${currentDemo}-${demoKey}`}
-                      initial={{ opacity: 0, x: currentDemo === "whatsapp" ? 100 : -100 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: currentDemo === "whatsapp" ? -100 : 100 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="px-2 pb-4 h-full"
-                    >
-                      {currentDemo === "whatsapp" ? (
-                        <div className="bg-[#0B141A] rounded-t-3xl h-full flex flex-col">
-                          {/* WhatsApp Header - No green blinking */}
-                          <div className="flex items-center gap-3 p-4 bg-[#202C33] text-white">
-                            <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center">
-                              <MessageSquare className="w-5 h-5 text-white" />
-                            </div>
-                            <div>
-                              <span className="font-medium">Asmi AI</span>
-                              <p className="text-xs text-green-400">● online</p>
-                            </div>
-                          </div>
-                          
-                          {/* Messages */}
-                          <div className="p-4 space-y-3 bg-[#0B141A] flex-1 overflow-y-auto">
-                            {whatsappMessages.slice(0, messageIndex + 1).map((message, index) => (
-                              <motion.div
-                                key={`whatsapp-${index}-${demoKey}`}
-                                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                transition={{ duration: 0.4, ease: "easeOut" }}
-                                className={message.type === 'asmi' ? 
-                                  "bg-[#202C33] rounded-2xl rounded-tl-lg p-3 max-w-[85%] shadow-lg" :
-                                  "bg-[#005C4B] rounded-2xl rounded-tr-lg p-3 max-w-[85%] ml-auto shadow-lg"
-                                }
-                              >
-                                <p className="text-white text-sm whitespace-pre-line leading-relaxed">
-                                  {message.text.includes('Sarah Meeting Brief') ? (
-                                    <span>
-                                      <strong>Sarah Meeting Brief</strong>
-                                      {message.text.replace('Sarah Meeting Brief', '')}
-                                    </span>
-                                  ) : message.text}
-                                </p>
-                                <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
-                                  <span>{message.timestamp}</span>
-                                  {message.type === 'user' && <CheckCircle className="w-3 h-3 text-blue-400" />}
-                                </p>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="bg-black rounded-t-3xl h-full flex flex-col">
-                          {/* iMessage Header - No green blinking */}
-                          <div className="flex items-center gap-3 p-4 bg-[#1C1C1E] text-white border-b border-gray-800">
-                            <div className="w-10 h-10 rounded-full bg-[#007AFF] flex items-center justify-center">
-                              <MessageSquare className="w-5 h-5 text-white" />
-                            </div>
-                            <span className="font-medium">Asmi AI</span>
-                          </div>
-                          
-                          {/* Messages */}
-                          <div className="p-4 space-y-3 bg-black flex-1 overflow-y-auto">
-                            {imessageMessages.slice(0, messageIndex + 1).map((message, index) => (
-                              <motion.div
-                                key={`imessage-${index}-${demoKey}`}
-                                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                transition={{ duration: 0.4, ease: "easeOut" }}
-                                className={message.type === 'asmi' ? 
-                                  "bg-[#3C3C43] rounded-2xl rounded-tl-lg p-3 max-w-[85%] shadow-lg" :
-                                  "bg-[#007AFF] rounded-2xl rounded-tr-lg p-3 max-w-[85%] ml-auto shadow-lg"
-                                }
-                              >
-                                {message.isVoice && (
-                                  <div className="flex items-center gap-2 mb-2">
-                                    <Mic className="w-4 h-4 text-white" />
-                                    {/* Static sound bars */}
-                                    <div className="flex items-center gap-0.5 flex-1">
-                                      <div className="w-1 h-2 bg-[#5DFF9F] rounded"></div>
-                                      <div className="w-1 h-4 bg-[#5DFF9F] rounded"></div>
-                                      <div className="w-1 h-3 bg-[#5DFF9F] rounded"></div>
-                                      <div className="w-1 h-5 bg-[#5DFF9F] rounded"></div>
-                                      <div className="w-1 h-2 bg-[#5DFF9F] rounded"></div>
-                                      <div className="w-1 h-4 bg-[#5DFF9F] rounded"></div>
-                                      <div className="w-1 h-3 bg-[#5DFF9F] rounded"></div>
-                                    </div>
-                                    <span className="text-xs text-gray-400">0:05</span>
-                                  </div>
-                                )}
-                                <p className="text-white text-sm whitespace-pre-line leading-relaxed">
-                                  {message.text.includes('Calendar Updated') ? (
-                                    <span>
-                                      <strong>Calendar Updated</strong>
-                                      {message.text.replace('Calendar Updated', '')}
-                                    </span>
-                                  ) : message.text}
-                                </p>
-                                <p className="text-xs text-gray-400 mt-1 text-right">
-                                  {message.timestamp}
-                                </p>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <motion.div
+                  key={demoKey}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="px-2 pb-4 h-full"
+                >
+                  <div className="bg-[#0B141A] rounded-t-3xl h-full flex flex-col">
+                    {/* WhatsApp Header */}
+                    <div className="flex items-center gap-3 p-4 bg-[#202C33] text-white">
+                      <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center">
+                        <MessageSquare className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <span className="font-medium">Asmi AI</span>
+                        <p className="text-xs text-green-400">● online</p>
+                      </div>
+                    </div>
+                    
+                    {/* Messages with smooth autoscroll */}
+                    <div className="p-4 space-y-3 bg-[#0B141A] flex-1 overflow-y-auto scroll-smooth">
+                      {whatsappMessages.slice(0, messageIndex + 1).map((message, index) => (
+                        <motion.div
+                          key={`whatsapp-${index}-${demoKey}`}
+                          initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                          className={message.type === 'asmi' ? 
+                            "bg-[#202C33] rounded-2xl rounded-tl-lg p-3 max-w-[85%] shadow-lg" :
+                            "bg-[#005C4B] rounded-2xl rounded-tr-lg p-3 max-w-[85%] ml-auto shadow-lg"
+                          }
+                        >
+                          <p className="text-white text-sm whitespace-pre-line leading-relaxed">
+                            {message.text}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
+                            <span>{message.timestamp}</span>
+                            {message.type === 'user' && <CheckCircle className="w-3 h-3 text-blue-400" />}
+                          </p>
+                        </motion.div>
+                      ))}
+                      {/* Invisible element for autoscroll target */}
+                      <div ref={messagesEndRef} />
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
