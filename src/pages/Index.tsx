@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { MessageSquare, CheckCircle, Mic, Loader2, Send } from "lucide-react";
+import { MessageSquare, CheckCircle, Mic, Loader2, Send, MoreHorizontal } from "lucide-react";
 import { SwipeableStories } from "@/components/SwipeableStories";
 import { NeuralMemoryEngine } from "@/components/NeuralMemoryEngine";
 import { TypingTestimonials } from "@/components/TypingTestimonials";
@@ -17,6 +17,8 @@ const Index = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [demoKey, setDemoKey] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  const [phoneGlow, setPhoneGlow] = useState(false);
 
   // WhatsApp demo messages with the new script
   const whatsappMessages = [
@@ -90,19 +92,46 @@ const Index = () => {
     }
   }, [messageIndex]);
 
-  // WhatsApp demo animation 
+  // Enhanced WhatsApp demo animation with visual effects
   useEffect(() => {
     if (messageIndex < whatsappMessages.length - 1) {
-      const timer = setTimeout(() => {
-        setMessageIndex(prev => prev + 1);
-      }, whatsappMessages[messageIndex].delay);
+      const currentMessage = whatsappMessages[messageIndex];
+      const nextMessage = whatsappMessages[messageIndex + 1];
       
-      return () => clearTimeout(timer);
+      // Show typing indicator for Asmi's messages
+      if (nextMessage?.type === 'asmi') {
+        setIsTyping(true);
+        setPhoneGlow(true);
+        
+        // Hide typing after a short delay, then show message
+        const typingTimer = setTimeout(() => {
+          setIsTyping(false);
+        }, Math.min(currentMessage.delay * 0.7, 2000));
+        
+        const messageTimer = setTimeout(() => {
+          setMessageIndex(prev => prev + 1);
+          setPhoneGlow(false);
+        }, currentMessage.delay);
+        
+        return () => {
+          clearTimeout(typingTimer);
+          clearTimeout(messageTimer);
+        };
+      } else {
+        // Regular timing for user messages
+        const timer = setTimeout(() => {
+          setMessageIndex(prev => prev + 1);
+        }, currentMessage.delay);
+        
+        return () => clearTimeout(timer);
+      }
     } else {
       // Loop back to beginning after all messages shown
       const resetTimer = setTimeout(() => {
         setMessageIndex(0);
         setDemoKey(prev => prev + 1);
+        setIsTyping(false);
+        setPhoneGlow(false);
       }, 4000);
       
       return () => clearTimeout(resetTimer);
@@ -204,8 +233,17 @@ const Index = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            {/* iPhone 15 Pro Frame - Mobile optimized */}
-            <div className="relative bg-gray-800 rounded-[2.5rem] p-1 shadow-2xl border border-gray-600/30 mx-auto w-full max-w-[320px]">
+            {/* iPhone 15 Pro Frame - Mobile optimized with dynamic glow */}
+            <motion.div 
+              className="relative bg-gray-800 rounded-[2.5rem] p-1 shadow-2xl border border-gray-600/30 mx-auto w-full max-w-[320px]"
+              animate={{
+                boxShadow: phoneGlow 
+                  ? "0 0 40px rgba(93, 255, 159, 0.3), 0 20px 60px -20px rgba(0, 0, 0, 0.8)"
+                  : "0 20px 60px -20px rgba(0, 0, 0, 0.8)",
+                scale: phoneGlow ? 1.02 : 1
+              }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
               {/* Dynamic Island */}
               <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-20 h-5 bg-black rounded-full z-10 flex items-center justify-center">
                 <div className="w-1 h-1 bg-gray-500 rounded-full" />
@@ -213,13 +251,23 @@ const Index = () => {
               
               {/* Screen - Mobile optimized */}
               <div className="bg-black rounded-[2.3rem] overflow-hidden relative h-[580px] w-full">
-                {/* Fixed Status Bar */}
+                {/* Fixed Status Bar with animated signal */}
                 <div className="absolute top-0 left-0 right-0 z-20 flex justify-between items-center px-6 pt-6 pb-2 text-white text-xs font-medium bg-black rounded-t-[2.3rem]">
                   <span>9:41</span>
                   <div className="flex items-center gap-1">
-                    <div className="w-3 h-1.5 border border-white rounded-sm">
-                      <div className="w-2 h-0.5 bg-green-500 rounded-sm m-0.5"></div>
-                    </div>
+                    <motion.div 
+                      className="w-3 h-1.5 border border-white rounded-sm"
+                      animate={{ opacity: phoneGlow ? [1, 0.5, 1] : 1 }}
+                      transition={{ duration: 1, repeat: phoneGlow ? Infinity : 0 }}
+                    >
+                      <motion.div 
+                        className="w-2 h-0.5 bg-green-500 rounded-sm m-0.5"
+                        animate={{ 
+                          backgroundColor: phoneGlow ? ["#10b981", "#5dff9f", "#10b981"] : "#10b981"
+                        }}
+                        transition={{ duration: 0.8, repeat: phoneGlow ? Infinity : 0 }}
+                      />
+                    </motion.div>
                   </div>
                 </div>
 
@@ -231,14 +279,62 @@ const Index = () => {
                   className="pt-14 pb-3 px-1 h-full"
                 >
                   <div className="bg-[#0B141A] h-full flex flex-col">
-                    {/* WhatsApp Header */}
+                    {/* WhatsApp Header with typing indicator */}
                     <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3 border-b border-gray-700/30">
-                      <div className="w-8 h-8 bg-[#5DFF9F] rounded-full flex items-center justify-center">
+                      <motion.div 
+                        className="w-8 h-8 bg-[#5DFF9F] rounded-full flex items-center justify-center"
+                        animate={{ 
+                          scale: isTyping ? [1, 1.1, 1] : 1,
+                          boxShadow: isTyping ? "0 0 15px rgba(93, 255, 159, 0.6)" : "none"
+                        }}
+                        transition={{ duration: 0.8, repeat: isTyping ? Infinity : 0 }}
+                      >
                         <span className="text-black text-xs font-bold">A</span>
-                      </div>
+                      </motion.div>
                       <div className="flex-1">
                         <h3 className="text-white text-sm font-medium">Asmi - Chief of staff</h3>
-                        <p className="text-gray-400 text-xs">online</p>
+                        <AnimatePresence mode="wait">
+                          {isTyping ? (
+                            <motion.div
+                              key="typing"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              className="flex items-center gap-1"
+                            >
+                              <span className="text-[#5DFF9F] text-xs">typing</span>
+                              <div className="flex gap-0.5">
+                                {[0, 1, 2].map((i) => (
+                                  <motion.div
+                                    key={i}
+                                    className="w-1 h-1 bg-[#5DFF9F] rounded-full"
+                                    animate={{ 
+                                      scale: [1, 1.3, 1],
+                                      opacity: [0.5, 1, 0.5]
+                                    }}
+                                    transition={{
+                                      duration: 0.6,
+                                      repeat: Infinity,
+                                      delay: i * 0.2
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                            </motion.div>
+                          ) : (
+                            <motion.p
+                              key="online"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              className="text-gray-400 text-xs"
+                            >
+                              online
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                      <div className="text-gray-400">
+                        <MoreHorizontal className="w-4 h-4" />
                       </div>
                     </div>
                     
@@ -247,21 +343,64 @@ const Index = () => {
                       {whatsappMessages.slice(0, messageIndex + 1).map((message, index) => (
                         <motion.div
                           key={`whatsapp-${index}-${demoKey}`}
-                          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                          initial={{ 
+                            opacity: 0, 
+                            scale: 0.7, 
+                            y: 30,
+                            rotateX: -15
+                          }}
+                          animate={{ 
+                            opacity: 1, 
+                            scale: 1, 
+                            y: 0,
+                            rotateX: 0
+                          }}
+                          transition={{ 
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 25,
+                            duration: 0.6,
+                            delay: 0.1 
+                          }}
+                          whileHover={{
+                            scale: 1.02,
+                            transition: { duration: 0.2 }
+                          }}
                           className={message.type === 'asmi' ? 
-                            "bg-[#202C33] rounded-xl rounded-tl-md p-2.5 max-w-[90%] shadow-lg" :
-                            "bg-[#005C4B] rounded-xl rounded-tr-md p-2.5 max-w-[90%] ml-auto shadow-lg"
+                            "bg-[#202C33] rounded-xl rounded-tl-md p-2.5 max-w-[90%] shadow-lg border border-gray-700/20" :
+                            "bg-[#005C4B] rounded-xl rounded-tr-md p-2.5 max-w-[90%] ml-auto shadow-lg border border-green-600/20"
                           }
+                          style={{
+                            boxShadow: message.type === 'asmi' 
+                              ? "0 4px 20px rgba(93, 255, 159, 0.1)" 
+                              : "0 4px 20px rgba(0, 92, 75, 0.3)"
+                          }}
                         >
-                          <p className="text-white text-xs whitespace-pre-line leading-relaxed">
+                          <motion.p 
+                            className="text-white text-xs whitespace-pre-line leading-relaxed"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                          >
                             {message.text}
-                          </p>
-                          <p className="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                          </motion.p>
+                          <motion.p 
+                            className="text-xs text-gray-400 mt-1.5 flex items-center gap-1"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                          >
                             <span className="text-[10px]">{message.timestamp}</span>
-                            {message.type === 'user' && <CheckCircle className="w-2.5 h-2.5 text-blue-400" />}
-                          </p>
+                            {message.type === 'user' && (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: 0.7, type: "spring", stiffness: 300 }}
+                              >
+                                <CheckCircle className="w-2.5 h-2.5 text-blue-400" />
+                              </motion.div>
+                            )}
+                          </motion.p>
                         </motion.div>
                       ))}
                       {/* Invisible element for autoscroll target */}
@@ -270,7 +409,7 @@ const Index = () => {
                   </div>
                 </motion.div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
