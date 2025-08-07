@@ -327,7 +327,7 @@ const Index = () => {
                   <div className="w-1 h-1 bg-gray-500 rounded-full" />
                 </div>
                 
-                {/* Screen - Mobile optimized */}
+                    {/* Screen - Mobile optimized with isolated scroll context */}
                 <div className="bg-black rounded-[2.3rem] overflow-hidden relative h-[580px] w-full">
                   {/* Fixed Status Bar with animated signal */}
                   <div className="absolute top-0 left-0 right-0 z-20 flex justify-between items-center px-6 pt-6 pb-2 text-white text-xs font-medium bg-black rounded-t-[2.3rem]">
@@ -349,16 +349,17 @@ const Index = () => {
                     </div>
                   </div>
 
-                  <motion.div
-                    key={`demo-${currentDemo}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="pt-14 pb-3 px-1 h-full"
-                  >
-                    <div className="bg-[#0B141A] h-full flex flex-col">
+                  {/* Container with overflow hidden to create scroll context */}
+                  <div className="pt-14 pb-3 px-1 h-full overflow-hidden">
+                    <motion.div
+                      key={`demo-${currentDemo}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                      className="bg-[#0B141A] h-full flex flex-col"
+                    >
                       {/* WhatsApp Header with typing indicator */}
-                      <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3 border-b border-gray-700/30">
+                      <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3 border-b border-gray-700/30 flex-shrink-0">
                         <motion.div 
                           className="w-8 h-8 bg-[#5DFF9F] rounded-full flex items-center justify-center"
                           animate={{ 
