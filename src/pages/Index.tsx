@@ -392,7 +392,7 @@ const Index = () => {
                                         opacity: [0.5, 1, 0.5]
                                       }}
                                       transition={{
-                                        duration: 0.6,
+                                        duration: 0.8,
                                         repeat: Infinity,
                                         delay: i * 0.2
                                       }}
@@ -401,24 +401,23 @@ const Index = () => {
                                 </div>
                               </motion.div>
                             ) : (
-                              <motion.p
+                              <motion.span 
                                 key="online"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="text-gray-400 text-xs"
+                                exit={{ opacity: 0 }}
+                                className="text-xs text-gray-400"
                               >
                                 online
-                              </motion.p>
+                              </motion.span>
                             )}
                           </AnimatePresence>
                         </div>
-                        <div className="text-gray-400">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </div>
+                        <MoreHorizontal className="text-gray-400 w-5 h-5" />
                       </div>
-                      
-                      {/* Messages with beautiful staggered animations */}
-                      <div className="p-3 space-y-2 bg-[#0B141A] flex-1 overflow-hidden">
+
+                      {/* Messages with isolated scroll - auto scroll only affects this container */}
+                      <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 space-y-2 bg-[#0B141A]">
                         {currentMessages.slice(0, messageIndex + 1).map((message, index) => (
                           <motion.div
                             key={`demo-${currentDemo}-msg-${index}`}
@@ -485,8 +484,8 @@ const Index = () => {
                         {/* Invisible element for autoscroll target */}
                         <div ref={messagesEndRef} />
                       </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
