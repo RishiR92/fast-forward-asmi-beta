@@ -15,34 +15,34 @@ interface TimelineMoment {
 
 const timelineMoments: TimelineMoment[] = [
   {
-    time: "7:00 AM",
-    title: "Morning Brief",
-    userInput: "Good morning",
-    asmiAction: "📅 Today: 3 meetings, 5 follow-ups\n🎯 Priority: Close Acme deal\n⚡️ Sarah's birthday - send note",
+    time: "8:30 AM",
+    title: "Task Intelligence",
+    userInput: "What should I focus on today?",
+    asmiAction: "Today's priority matrix:\nURGENT: VC presentation rehearsal (2 hours)\nIMPORTANT: Review Q4 budget proposals\nQUICK WINS: 3 client follow-ups pending\nHEADS UP: Maria's promotion announcement today",
     icon: Clock,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "10:30 AM", 
-    title: "Pre-Meeting Intel",
-    userInput: "Meeting with John in 10",
-    asmiAction: "👤 John Smith, CTO @ TechFlow\n💼 Last met: Q3 roadmap discussion\n🎯 How to win: Focus on ROI metrics",
+    time: "12:45 PM", 
+    title: "Profile Discovery",
+    userInput: "I'm meeting David Chen from Google Ventures next week. What should I know?",
+    asmiAction: "David Chen - Deep Dive\nPartner at GV, focuses on B2B SaaS (5+ years)\nFormer product manager at Stripe, Stanford CS\nLed investments in 12 companies, 3 unicorns\nSWEET SPOT: Fintech, AI tools, enterprise software\nPRO TIP: He's passionate about developer tools - mention your API strategy",
     icon: Eye,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "2:15 PM",
-    title: "Voice Note Capture",
-    userInput: "🎤 Follow up with investors about Series A timeline",
-    asmiAction: "✅ Action saved\n📅 Reminder set for Monday\n📧 Draft email ready to send",
+    time: "3:20 PM",
+    title: "Context Switching",
+    userInput: "Jumping from engineering standup to investor call in 5 minutes",
+    asmiAction: "Context Switch Ready\nSTANDUP RECAP: 2 blockers resolved, sprint on track\nINVESTOR CALL: Sarah Mitchell, Andreessen Horowitz\nKEY POINTS: Q3 growth (127%), new enterprise deals\nHAVE READY: User retention metrics, burn rate update",
     icon: Mic,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "6:00 PM",
-    title: "Follow-Up Reminders", 
-    userInput: "End of day",
-    asmiAction: "📬 3 pending follow-ups\n👤 Sarah: Thank you note sent\n💼 Acme: Proposal needs review",
+    time: "7:30 PM",
+    title: "Email Intelligence", 
+    userInput: "Catch me up on important emails",
+    asmiAction: "CRITICAL: VC wants term sheet meeting Friday\nURGENT: Client escalation - server downtime issue\nOPPORTUNITY: TechCorp interested in partnership\nHOUSEKEEPING: 12 other emails triaged, 3 need responses",
     icon: RotateCcw,
     color: "text-[#5DFF9F]"
   }
