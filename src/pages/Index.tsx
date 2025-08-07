@@ -130,21 +130,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] font-inter overflow-x-hidden">
-      {/* Floating Navigation */}
-      <nav className="fixed top-4 left-4 right-4 z-50 flex justify-between items-center bg-black/80 backdrop-blur-md rounded-2xl px-6 py-4 border border-white/10">
-        <motion.div 
-          className="text-xl font-bold text-white"
-          whileHover={{ scale: 1.05 }}
-        >
-          Asmi
-        </motion.div>
-        <div className="text-gray-400 text-sm">
-          Your AI Chief of Staff
-        </div>
-      </nav>
-
       {/* Hero Section */}
-      <section ref={heroRef} className="pt-32 pb-8 px-4 relative">
+      <section ref={heroRef} className="pt-16 pb-4 px-4 relative">
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -207,9 +194,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Dynamic iPhone Demo */}
-      <section className="py-8 px-4 relative">
-        <div className="max-w-sm mx-auto">
+      {/* Dynamic iPhone Demo - Mobile Optimized */}
+      <section className="py-4 px-2 relative">
+        <div className="w-full max-w-[320px] mx-auto">
           <motion.div
             key={demoKey}
             initial={{ opacity: 0, y: 50 }}
@@ -217,21 +204,21 @@ const Index = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            {/* iPhone 15 Pro Frame - Fixed width */}
-            <div className="relative bg-gray-800 rounded-[3rem] p-1 shadow-2xl border border-gray-600/30 mx-auto w-[340px]">
-              {/* Dynamic Island - No green blinking */}
-              <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full z-10 flex items-center justify-center">
-                <div className="w-1.5 h-1.5 bg-gray-500 rounded-full" />
+            {/* iPhone 15 Pro Frame - Mobile optimized */}
+            <div className="relative bg-gray-800 rounded-[2.5rem] p-1 shadow-2xl border border-gray-600/30 mx-auto w-full max-w-[320px]">
+              {/* Dynamic Island */}
+              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-20 h-5 bg-black rounded-full z-10 flex items-center justify-center">
+                <div className="w-1 h-1 bg-gray-500 rounded-full" />
               </div>
               
-              {/* Screen - Fixed dimensions */}
-              <div className="bg-black rounded-[2.8rem] overflow-hidden relative h-[650px] w-[338px]">
+              {/* Screen - Mobile optimized */}
+              <div className="bg-black rounded-[2.3rem] overflow-hidden relative h-[580px] w-full">
                 {/* Status Bar */}
-                <div className="flex justify-between items-center px-8 pt-8 pb-2 text-white text-sm font-medium">
+                <div className="flex justify-between items-center px-6 pt-6 pb-2 text-white text-xs font-medium">
                   <span>9:41</span>
                   <div className="flex items-center gap-1">
-                    <div className="w-4 h-2 border border-white rounded-sm">
-                      <div className="w-3 h-1 bg-green-500 rounded-sm m-0.5"></div>
+                    <div className="w-3 h-1.5 border border-white rounded-sm">
+                      <div className="w-2 h-0.5 bg-green-500 rounded-sm m-0.5"></div>
                     </div>
                   </div>
                 </div>
@@ -241,22 +228,11 @@ const Index = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="px-2 pb-4 h-full"
+                  className="px-1 pb-3 h-full"
                 >
-                  <div className="bg-[#0B141A] rounded-t-3xl h-full flex flex-col">
-                    {/* WhatsApp Header */}
-                    <div className="flex items-center gap-3 p-4 bg-[#202C33] text-white">
-                      <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center">
-                        <MessageSquare className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <span className="font-medium">Asmi AI</span>
-                        <p className="text-xs text-green-400">● online</p>
-                      </div>
-                    </div>
-                    
-                    {/* Messages with smooth autoscroll */}
-                    <div className="p-4 space-y-3 bg-[#0B141A] flex-1 overflow-y-auto scroll-smooth">
+                  <div className="bg-[#0B141A] rounded-t-2xl h-full flex flex-col">
+                    {/* Messages with autoscroll only - no manual scroll */}
+                    <div className="p-3 space-y-2 bg-[#0B141A] flex-1 overflow-hidden">
                       {whatsappMessages.slice(0, messageIndex + 1).map((message, index) => (
                         <motion.div
                           key={`whatsapp-${index}-${demoKey}`}
@@ -264,16 +240,16 @@ const Index = () => {
                           animate={{ opacity: 1, scale: 1, y: 0 }}
                           transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                           className={message.type === 'asmi' ? 
-                            "bg-[#202C33] rounded-2xl rounded-tl-lg p-3 max-w-[85%] shadow-lg" :
-                            "bg-[#005C4B] rounded-2xl rounded-tr-lg p-3 max-w-[85%] ml-auto shadow-lg"
+                            "bg-[#202C33] rounded-xl rounded-tl-md p-2.5 max-w-[90%] shadow-lg" :
+                            "bg-[#005C4B] rounded-xl rounded-tr-md p-2.5 max-w-[90%] ml-auto shadow-lg"
                           }
                         >
-                          <p className="text-white text-sm whitespace-pre-line leading-relaxed">
+                          <p className="text-white text-xs whitespace-pre-line leading-relaxed">
                             {message.text}
                           </p>
-                          <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
-                            <span>{message.timestamp}</span>
-                            {message.type === 'user' && <CheckCircle className="w-3 h-3 text-blue-400" />}
+                          <p className="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                            <span className="text-[10px]">{message.timestamp}</span>
+                            {message.type === 'user' && <CheckCircle className="w-2.5 h-2.5 text-blue-400" />}
                           </p>
                         </motion.div>
                       ))}
