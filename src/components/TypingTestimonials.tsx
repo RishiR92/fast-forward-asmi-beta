@@ -13,38 +13,38 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     quote: "Asmi runs my day in chat — condenses chaos into a one‑pager each morning, drafts follow‑ups, and remembers every promise across Slack, email, and meetings.",
-    name: "Aisha Kapoor",
-    role: "Founder, Seed-stage SaaS (fast‑growing startup)",
+    name: "Founder",
+    role: "Seed-stage SaaS",
     avatar: "🚀"
   },
   {
     quote: "Before every call, Asmi drops a 30‑sec brief: last touch, likely objections, and a tailored opener. My prep time went from 20 min to 2.",
-    name: "Jordan Blake",
-    role: "Senior AE — Enterprise Sales Team",
+    name: "Senior AE",
+    role: "Enterprise Sales Team",
     avatar: "🎯"
   },
   {
     quote: "Asmi tracks deliverables across threads, nudges me on invoices, and drafts scope replies. I review, tweak one line, and send.",
-    name: "Lena Ortiz",
-    role: "Freelance Product Designer",
+    name: "Freelancer",
+    role: "Product Designer",
     avatar: "✨"
   },
   {
     quote: "Weekly exec readouts write themselves — Asmi threads outcomes, risks, and next steps from notes and email. Clients think I never forget.",
-    name: "Noah Bennett",
-    role: "Independent Strategy Consultant",
+    name: "Consultant",
+    role: "Independent Strategy",
     avatar: "📊"
   },
   {
     quote: "Sourcing is faster. Asmi recalls past convos, suggests warm intros from our CRM, and drafts tailored outreach. Reply rates are up 28%.",
-    name: "Priya Narang",
-    role: "Tech Recruiter",
+    name: "Recruiter",
+    role: "Tech Talent",
     avatar: "🧲"
   },
   {
     quote: "Pipeline hygiene without dashboards — Asmi drafts updates, flags silent deals, and nudges reps on next steps. Our standups are 7 minutes.",
-    name: "Evan Mills",
-    role: "VP Sales, Mid‑market",
+    name: "VP Sales",
+    role: "Mid‑market",
     avatar: "⚡"
   }
 ];
