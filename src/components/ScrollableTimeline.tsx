@@ -15,34 +15,34 @@ interface TimelineMoment {
 
 const timelineMoments: TimelineMoment[] = [
   {
-    time: "7:45 AM",
-    title: "Focus Guard",
-    userInput: "Protect two deep‑work blocks this week and move anything low‑priority.",
-    asmiAction: "Deep Work Scheduled\nTUE 10:30–12:00 — moved 2 low‑priority 1:1s\nTHU 2:00–3:30 — rescheduled roadmap sync\nNOTIFIED: Attendees informed with context\nEXTRA: Slack status + calendar focus mode set",
+    time: "7:30 AM",
+    title: "Plan of Day",
+    userInput: "Give me a crisp plan for today—meetings, agenda, and what to prep.",
+    asmiAction: "Today at a glance\n9:00 Standup — Zoom — blockers + demo handoff [Prep]\n11:00 Sr PM Onsite (Priya N.) — In‑person — product sense, prioritization [Hiring Brief]\n2:30 Partner check‑in (Ananya Patel, Northstar) — In‑person SoMa — rollout, pricing — Commute 20m, leave 2:05 [Prep]\n5:30 Inbox focus — follow‑ups + approvals [Open drafts]",
     icon: Clock,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "10:15 AM",
-    title: "Travel Concierge",
-    userInput: "NYC day trip next Tuesday — earliest outbound, back by 9 PM. Aisle seat. Hotel walkable to SoHo office.",
-    asmiAction: "Trip Locked\nFLIGHTS: UA 1542 6:20 AM → 9:40 AM (aisle) | UA 2189 7:10 PM → 8:55 PM\nHOTEL: Arlo SoHo — 0.4 mi from office (early check‑in requested)\nRIDES: Uber Reserve to SFO 4:50 AM, return pickup 6:10 PM\nCALENDAR: Holds + buffers added, boarding passes in Wallet",
+    time: "9:30 AM",
+    title: "Relationship Brief",
+    userInput: "Quick background on Ananya Patel for the 2:30 check‑in — keep it tight.",
+    asmiAction: "Ananya Patel — Head of Ops, Northstar Logistics\nBackground: ex‑Amazon ops; led 3 DC rollouts; KPI‑driven\nLast call: phased rollout; pricing guardrails; success = on‑time departures\nRapport: Also an IIT Delhi alum — mention robotics club story\nDocs: account brief + last deck [Open]",
     icon: Eye,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "2:05 PM",
+    time: "11:00 AM",
     title: "Hiring Brief",
-    userInput: "Who’s strongest for Senior PM? Prep me for the onsite loop.",
-    asmiAction: "Top Candidates\n1) Priya N. — ex-Stripe, led 0→1 platform; Strengths: stakeholder mgmt, metrics; Risks: hardware exp.\n2) Marcus L. — Uber Eats growth; Strengths: exp. experiments; Risks: less enterprise.\nASKS: Validate roadmap thinking, dig on prioritization tradeoffs\nDOCS: Resumes + interview notes attached",
+    userInput: "Prep me for the Senior PM onsite loop — what to validate?",
+    asmiAction: "Top candidates (11:00 onsite)\n1) Priya N. — ex‑Stripe 0→1 platform; strengths: stakeholder mgmt, metrics; probe: hardware exp\n2) Marcus L. — Uber Eats growth; strengths: exp. experiments; probe: enterprise depth\nAsks: roadmap thinking, prioritization tradeoffs — exercises ready [Open packet]",
     icon: Mic,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "6:10 PM",
-    title: "Revenue Follow‑ups",
-    userInput: "Turn last week’s prospect threads into follow‑ups I can send in two taps.",
-    asmiAction: "Drafted for Review\nACME — ‘Looping back on pilot start next Monday — attaching success plan’\nNIMBUS — ‘Sending the SOC2 + redlines — Thursday 3 PM work?’\nORBITAL — ‘ROI model w/ your data — 14% lift projected; 20‑min skim?’\nREMINDERS: Nudges scheduled, CRM updated",
+    time: "5:30 PM",
+    title: "Important Emails",
+    userInput: "Surface important emails I haven’t replied to and draft replies.",
+    asmiAction: "Drafted for review\nACME — ‘Looping back on pilot start Monday — success plan attached’ [Send]\nNimbus — ‘Sharing SOC2 + redlines — Thu 3 PM work?’ [Send]\nOrbital — ‘ROI model w/ your data — 14% lift; 20‑min skim?’ [Send]\nCRM updated; nudges scheduled",
     icon: RotateCcw,
     color: "text-[#5DFF9F]"
   }
@@ -83,7 +83,7 @@ export const ScrollableTimeline = () => {
           {timelineMoments.map((moment, index) => (
             <motion.div
               key={index}
-              className="flex-none w-80"
+              className="flex-none w-72 md:w-80"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.2, duration: 0.8 }}
