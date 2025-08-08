@@ -226,7 +226,7 @@ export const ScrollableTimeline = () => {
               transition={{ delay: index * 0.2, duration: 0.8 }}
               whileHover={{ y: -8, scale: 1.02 }}
             >
-              <Card className="bg-gradient-to-br from-black/40 to-black/20 border border-white/5 hover:border-[#5DFF9F]/20 transition-all duration-300 backdrop-blur-xl shadow-2xl cursor-pointer"
+              <Card className="bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#5DFF9F]/30 transition-all duration-300 rounded-xl shadow-lg cursor-pointer"
                 onClick={() => toggleCard(index)}
                 role="button"
                 tabIndex={0}
