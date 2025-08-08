@@ -254,7 +254,7 @@ export const ScrollableTimeline = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.3 + 0.5 }}
                   >
-                    <p className="text-muted-foreground text-xs leading-relaxed">{moment.userInput}</p>
+                    <p className="text-gray-400 text-xs leading-relaxed">{moment.userInput}</p>
                     <div className="absolute top-2 -right-1 w-2 h-2 bg-muted/8 rotate-45 border-t border-r border-border/20" />
                   </motion.div>
 
@@ -266,17 +266,17 @@ export const ScrollableTimeline = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.3 + 1 }}
                     >
-                      <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="w-1.5 h-1.5 bg-primary/60 rounded-full"
-                      />
-                      <span className="text-muted-foreground text-xs">Tap to see Asmi's response</span>
+                       <motion.div
+                         animate={{ scale: [1, 1.1, 1] }}
+                         transition={{ duration: 2, repeat: Infinity }}
+                         className="w-1.5 h-1.5 bg-[#5DFF9F]/60 rounded-full"
+                       />
+                      <span className="text-gray-400 text-xs">Tap to see Asmi's response</span>
                       <motion.div
                         animate={{ y: [0, 3, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                       >
-                        <ChevronDown className="w-3 h-3 text-primary/60" />
+                        <ChevronDown className="w-3 h-3 text-[#5DFF9F]/60" />
                       </motion.div>
                     </motion.div>
                   )}
@@ -297,15 +297,15 @@ export const ScrollableTimeline = () => {
                       >
                         <div className="absolute top-2 -left-1 w-2 h-2 bg-card/80 rotate-45 border-l border-t border-border/50" />
                         
-                        {/* Response Title */}
-                        <motion.div 
-                          className="text-primary text-xs font-medium mb-2"
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.2 }}
-                        >
-                          {moment.response.title}
-                        </motion.div>
+                         {/* Response Title */}
+                         <motion.div 
+                           className="text-[#5DFF9F] text-xs font-medium mb-2"
+                           initial={{ opacity: 0, y: 10 }}
+                           animate={{ opacity: 1, y: 0 }}
+                           transition={{ delay: 0.2 }}
+                         >
+                           {moment.response.title}
+                         </motion.div>
                         
                         {/* Response Items */}
                         <motion.div 
@@ -323,192 +323,138 @@ export const ScrollableTimeline = () => {
                               transition={{ delay: 0.6 + itemIndex * 0.1 }}
                             >
                               <div className="flex items-start gap-2">
-                                {item.time && (
-                                  <span className="text-primary/90 text-xs font-mono bg-primary/8 px-1.5 py-0.5 rounded flex-shrink-0 border border-primary/15 shadow-sm shadow-primary/5">
-                                    {item.time}
-                                  </span>
-                                )}
-                                 <div className="flex-1 min-w-0">
-                                   <div className="flex items-center gap-1.5 mb-1">
-                                     <span className="text-foreground text-xs font-medium">{item.title}</span>
-                                     {item.type === 'zoom' && <div className="w-1.5 h-1.5 bg-primary/15 rounded-full shadow-sm shadow-primary/5 border border-primary/25"></div>}
-                                     {item.type === 'in-person' && <div className="w-1.5 h-1.5 bg-secondary/15 rounded-full shadow-sm shadow-secondary/5 border border-secondary/25"></div>}
-                                     {item.status && (
-                                       <Badge className={`text-[10px] px-1.5 py-0 h-4 border ${
-                                         item.status === 'Top choice' 
-                                           ? 'bg-primary/10 text-primary border-primary/25' 
-                                           : 'bg-secondary/10 text-secondary border-secondary/25'
-                                       }`}>
-                                         {item.status}
-                                       </Badge>
-                                     )}
-                                   </div>
-                                   
-                                   {item.subtitle && (
-                                     <div className="text-muted-foreground text-xs mb-1">{item.subtitle}</div>
-                                   )}
-                                   
-                                   {item.location && (
-                                     <div className="text-secondary text-xs flex items-center gap-1 mb-1 bg-secondary/8 px-1.5 py-0.5 rounded-md border border-secondary/20">
-                                       <MapPin className="w-3 h-3" />
-                                       {item.location}
-                                     </div>
-                                   )}
-                                   
-                                   {item.details && (
-                                     <div className="space-y-0.5">
-                                       {item.details.map((detail, detailIndex) => (
-                                         <div key={detailIndex} className="text-muted-foreground text-xs flex items-center gap-1.5">
-                                           <div className="w-1 h-1 bg-muted-foreground/40 rounded-full flex-shrink-0"></div>
-                                           {detail}
-                                         </div>
-                                       ))}
-                                     </div>
-                                   )}
-                                   
-                                   {item.tags && (
-                                     <div className="flex gap-1 mt-1 flex-wrap">
-                                       {item.tags.map((tag, tagIndex) => {
-                                         const isPersonal = tag === 'Personal';
-                                         const isOperational = ['Operations', 'Logistics'].includes(tag);
-                                         const isProbe = tag.startsWith('Probe:');
-                                         return (
-                                           <span 
-                                             key={tagIndex} 
-                                             className={`text-[10px] px-1.5 py-0.5 rounded-full border ${
-                                               isPersonal 
-                                                 ? 'text-secondary bg-secondary/10 border-secondary/25' 
-                                                 : isOperational
-                                                 ? 'text-primary bg-primary/10 border-primary/25'
-                                                 : isProbe
-                                                 ? 'text-foreground bg-muted/15 border-border/30'
-                                                 : 'text-muted-foreground bg-muted/10 border-border/25'
-                                             }`}
-                                           >
-                                             {tag}
-                                           </span>
-                                         );
-                                       })}
-                                     </div>
-                                   )}
-                                   
-                                   {item.actions && (
-                                     <div className="flex gap-1 mt-1.5 flex-wrap">
-                                       {item.actions.map((action, actionIndex) => {
-                                         const getActionStyles = () => {
-                                           switch (action.type) {
-                                             case 'send':
-                                               return 'text-primary bg-primary/8 hover:bg-primary/15 border-primary/25';
-                                             case 'view':
-                                               return 'text-secondary bg-secondary/8 hover:bg-secondary/15 border-secondary/25';
-                                             case 'prep':
-                                               return 'text-foreground bg-muted/10 hover:bg-muted/20 border-border/30';
-                                             case 'open':
-                                               return 'text-accent bg-accent/8 hover:bg-accent/15 border-accent/25';
-                                             default:
-                                               return 'text-foreground bg-muted/10 hover:bg-muted/20 border-border/30';
-                                           }
-                                        };
-                                        
-                                        return (
-                                          <motion.button
-                                            key={actionIndex}
-                                            className={`text-[10px] px-2 py-1 rounded-md border transition-colors ${getActionStyles()}`}
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            onClick={(e) => e.stopPropagation()}
-                                          >
-                                            {action.type === 'send' && <Send className="w-2.5 h-2.5 inline mr-1" />}
-                                            {action.type === 'open' && <FileText className="w-2.5 h-2.5 inline mr-1" />}
-                                            {action.type === 'view' && <Eye className="w-2.5 h-2.5 inline mr-1" />}
-                                            {action.type === 'prep' && <Target className="w-2.5 h-2.5 inline mr-1" />}
-                                            {action.label}
-                                          </motion.button>
-                                        );
-                                      })}
+                                 {item.time && (
+                                   <span className="bg-[#5DFF9F]/10 text-[#5DFF9F] text-xs font-mono px-1.5 py-0.5 rounded flex-shrink-0 border border-[#5DFF9F]/30">
+                                     {item.time}
+                                   </span>
+                                 )}
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-1.5 mb-1">
+                                      <span className="text-white text-xs font-medium">{item.title}</span>
+                                      {item.type === 'zoom' && <div className="w-1.5 h-1.5 bg-[#5DFF9F]/20 rounded-full border border-[#5DFF9F]/40"></div>}
+                                      {item.type === 'in-person' && <div className="w-1.5 h-1.5 bg-[#A07CFE]/20 rounded-full border border-[#A07CFE]/40"></div>}
+                                      {item.status && (
+                                        <Badge className="text-[10px] px-1.5 py-0 h-4 bg-[#5DFF9F]/10 text-[#5DFF9F] border border-[#5DFF9F]/30">
+                                          {item.status}
+                                        </Badge>
+                                      )}
                                     </div>
-                                  )}
+                                    
+                                    {item.subtitle && (
+                                      <div className="text-gray-400 text-xs mb-1">{item.subtitle}</div>
+                                    )}
+                                    
+                                    {item.location && (
+                                      <div className="text-[#A07CFE] text-xs flex items-center gap-1 mb-1 bg-[#A07CFE]/10 px-1.5 py-0.5 rounded-md border border-[#A07CFE]/30">
+                                        <MapPin className="w-3 h-3" />
+                                        {item.location}
+                                      </div>
+                                    )}
+                                    
+                                    {item.details && (
+                                      <div className="space-y-0.5">
+                                        {item.details.map((detail, detailIndex) => (
+                                          <div key={detailIndex} className="text-gray-400 text-xs flex items-center gap-1.5">
+                                            <div className="w-1 h-1 bg-gray-400/40 rounded-full flex-shrink-0"></div>
+                                            {detail}
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+                                    
+                                    {item.tags && (
+                                      <div className="flex gap-1 mt-1 flex-wrap">
+                                        {item.tags.map((tag, tagIndex) => {
+                                          const isPersonal = tag === 'Personal';
+                                          const isOperational = ['Operations', 'Logistics'].includes(tag);
+                                          return (
+                                            <span 
+                                              key={tagIndex} 
+                                              className={`text-[10px] px-1.5 py-0.5 rounded-full border ${
+                                                isPersonal 
+                                                  ? 'bg-[#A07CFE]/15 text-[#A07CFE] border-[#A07CFE]/30' 
+                                                  : isOperational
+                                                  ? 'bg-[#5DFF9F]/15 text-[#5DFF9F] border-[#5DFF9F]/30'
+                                                  : 'bg-[#5DFF9F]/15 text-[#5DFF9F] border-[#5DFF9F]/30'
+                                              }`}
+                                            >
+                                              {tag}
+                                            </span>
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                    
+                                     {item.actions && (
+                                       <div className="flex gap-1 mt-1.5 flex-wrap">
+                                         {item.actions.map((action, actionIndex) => (
+                                           <button 
+                                             key={actionIndex} 
+                                             className="text-[10px] px-2 py-1 rounded-md transition-all duration-200 border bg-[#5DFF9F]/10 text-[#5DFF9F] hover:bg-[#5DFF9F]/20 border-[#5DFF9F]/30 hover:scale-105 active:scale-95"
+                                           >
+                                             {action.label}
+                                           </button>
+                                         ))}
+                                       </div>
+                                     )}
                                 </div>
                               </div>
                             </motion.div>
                           ))}
                         </motion.div>
                         
-                        {/* Summary */}
-                        {moment.response.summary && (
-                          <motion.div 
-                            className="text-muted-foreground/80 text-xs mt-2 pt-2 border-t border-border/30"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.8 }}
-                          >
-                            {moment.response.summary}
-                          </motion.div>
-                        )}
-                        
-                        {/* Quick Actions */}
-                        {moment.response.quickActions && (
-                          <motion.div 
-                            className="flex gap-1 mt-2 flex-wrap"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1 }}
-                          >
-                            {moment.response.quickActions.map((action, actionIndex) => {
-                               const getActionStyles = () => {
-                                 switch (action.type) {
-                                   case 'send':
-                                     return 'text-primary bg-primary/8 hover:bg-primary/15 border-primary/25';
-                                   case 'view':
-                                     return 'text-secondary bg-secondary/8 hover:bg-secondary/15 border-secondary/25';
-                                   case 'prep':
-                                     return 'text-foreground bg-muted/10 hover:bg-muted/20 border-border/30';
-                                   case 'open':
-                                     return 'text-accent bg-accent/8 hover:bg-accent/15 border-accent/25';
-                                   default:
-                                     return 'text-foreground bg-muted/10 hover:bg-muted/20 border-border/30';
-                                 }
-                               };
-                              
-                              return (
-                                <motion.button
-                                  key={actionIndex}
-                                  className={`text-[10px] px-2 py-1 rounded-md border transition-colors ${getActionStyles()}`}
-                                  whileHover={{ scale: 1.05 }}
-                                  whileTap={{ scale: 0.95 }}
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  {action.type === 'send' && <Send className="w-2.5 h-2.5 inline mr-1" />}
-                                  {action.type === 'open' && <FileText className="w-2.5 h-2.5 inline mr-1" />}
-                                  {action.type === 'view' && <Eye className="w-2.5 h-2.5 inline mr-1" />}
-                                  {action.type === 'prep' && <Target className="w-2.5 h-2.5 inline mr-1" />}
-                                  {action.label}
-                                </motion.button>
-                              );
-                            })}
-                          </motion.div>
-                        )}
+                         {/* Summary */}
+                         {moment.response.summary && (
+                           <motion.div 
+                             className="text-gray-400 text-xs mt-2 pt-2 border-t border-border/30"
+                             initial={{ opacity: 0 }}
+                             animate={{ opacity: 1 }}
+                             transition={{ delay: 0.8 }}
+                           >
+                             {moment.response.summary}
+                           </motion.div>
+                         )}
+                         
+                         {/* Quick Actions */}
+                         {moment.response.quickActions && (
+                           <motion.div 
+                             className="flex gap-1 mt-2 flex-wrap"
+                             initial={{ opacity: 0, y: 10 }}
+                             animate={{ opacity: 1, y: 0 }}
+                             transition={{ delay: 1 }}
+                           >
+                             {moment.response.quickActions.map((action, actionIndex) => (
+                               <button
+                                 key={actionIndex}
+                                 className="text-[10px] px-2 py-1 rounded-md border bg-[#5DFF9F]/10 text-[#5DFF9F] hover:bg-[#5DFF9F]/20 border-[#5DFF9F]/30 transition-all duration-200 hover:scale-105 active:scale-95"
+                                 onClick={(e) => e.stopPropagation()}
+                               >
+                                 {action.label}
+                               </button>
+                             ))}
+                           </motion.div>
+                         )}
 
-                        {/* Collapse Button */}
-                        <motion.button
-                          className="flex items-center justify-center gap-1 w-full mt-3 pt-2 border-t border-border/30 text-muted-foreground/60 hover:text-muted-foreground text-xs transition-colors"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleCard(index);
-                          }}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.2 }}
-                          whileHover={{ scale: 1.02 }}
-                        >
-                          <motion.div
-                            animate={{ rotate: 180 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <ChevronDown className="w-3 h-3" />
-                          </motion.div>
-                          Hide response
-                        </motion.button>
+                         {/* Collapse Button */}
+                         <motion.button
+                           className="flex items-center justify-center gap-1 w-full mt-3 pt-2 border-t border-border/30 text-gray-400 hover:text-white text-xs transition-colors"
+                           onClick={(e) => {
+                             e.stopPropagation();
+                             toggleCard(index);
+                           }}
+                           initial={{ opacity: 0 }}
+                           animate={{ opacity: 1 }}
+                           transition={{ delay: 1.2 }}
+                           whileHover={{ scale: 1.02 }}
+                         >
+                           <motion.div
+                             animate={{ rotate: 180 }}
+                             transition={{ duration: 0.3 }}
+                           >
+                             <ChevronDown className="w-3 h-3" />
+                           </motion.div>
+                           Hide response
+                         </motion.button>
                       </motion.div>
                     )}
                   </AnimatePresence>
