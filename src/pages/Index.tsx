@@ -163,13 +163,19 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Function to reset all intro states for clean transitions
+  const resetIntroStates = () => {
+    setIntroPhase('logo');
+    setIntroTypewriterText("");
+    setShowIntroParticles(false);
+    setShowIntro(true);
+  };
+
   // Enhanced intro screen with sequential animations
   useEffect(() => {
     if (isIntroDemo) {
-      setShowIntro(true);
-      setIntroPhase('logo');
-      setIntroTypewriterText("");
-      setShowIntroParticles(false);
+      // Reset all intro states first
+      resetIntroStates();
       
       // Phase 1: Show logo for 1 second
       const logoTimer = setTimeout(() => {
@@ -209,11 +215,17 @@ const Index = () => {
     } else if (isEndDemo) {
       setEndScreenVisible(true);
       
-      // Show end screen for 4 seconds then move to intro
+      // Show end screen for 4 seconds then reset and move to intro
       const endTimer = setTimeout(() => {
-        setCurrentDemo(0); // Back to intro
-        setMessageIndex(0);
+        // Clean transition from end screen to intro
         setEndScreenVisible(false);
+        
+        // Add small delay to ensure clean state transition
+        setTimeout(() => {
+          setCurrentDemo(0); // Back to intro
+          setMessageIndex(0);
+          // Intro states will be reset in the intro useEffect
+        }, 100);
       }, 4000);
       
       return () => clearTimeout(endTimer);
