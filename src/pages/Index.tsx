@@ -425,16 +425,13 @@ const Index = () => {
                              }}
                              className="text-center"
                            >
-                             <motion.h1 
-                               className="font-playfair text-4xl text-primary font-bold mb-2"
-                               style={{
-                                 textShadow: "0 0 30px rgba(93, 255, 159, 0.5)"
-                               }}
+                             <motion.div
+                               className="mb-4"
                                animate={{
-                                 textShadow: [
-                                   "0 0 30px rgba(93, 255, 159, 0.3)",
-                                   "0 0 40px rgba(93, 255, 159, 0.6)",
-                                   "0 0 30px rgba(93, 255, 159, 0.3)"
+                                 filter: [
+                                   "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))",
+                                   "drop-shadow(0 0 30px rgba(160, 124, 254, 0.6))",
+                                   "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))"
                                  ]
                                }}
                                transition={{
@@ -443,8 +440,12 @@ const Index = () => {
                                  ease: "easeInOut"
                                }}
                              >
-                               Asmi
-                             </motion.h1>
+                               <img 
+                                 src="/lovable-uploads/686fb2f2-ecc3-4a81-ab4d-baa39d4aed0d.png" 
+                                 alt="Asmi Logo"
+                                 className="w-32 h-auto mx-auto"
+                               />
+                             </motion.div>
                              <motion.p 
                                initial={{ y: 20, opacity: 0 }}
                                animate={{ y: 0, opacity: 1 }}
