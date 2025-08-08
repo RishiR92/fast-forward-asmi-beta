@@ -16,11 +16,19 @@ const Index = () => {
   const [typingText, setTypingText] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [currentDemo, setCurrentDemo] = useState(4); // Start at intro (index 4)
+  const [currentDemo, setCurrentDemo] = useState(5); // Start at intro (index 5)
   const [isTyping, setIsTyping] = useState(false);
   const [phoneGlow, setPhoneGlow] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showIntro, setShowIntro] = useState(true); // Start with intro
+  
+  // Intro screen animation states
+  const [introPhase, setIntroPhase] = useState<'logo' | 'typing' | 'dispersing'>('logo');
+  const [introTypewriterText, setIntroTypewriterText] = useState("");
+  const [showIntroParticles, setShowIntroParticles] = useState(false);
+  
+  // End screen animation states
+  const [endScreenVisible, setEndScreenVisible] = useState(false);
 
   // Demo 1: Profile Discovery - Integration & Analysis
   const demo1Messages = [
@@ -60,10 +68,11 @@ const Index = () => {
   const demos = [demo1Messages, demo2Messages, demo3Messages, demo4Messages];
   const demoTitles = ["Profile Discovery", "Smart Scheduling", "Meeting Intelligence", "Executive Assistant"];
   
-  // Include intro as part of the demo cycle (intro = demo index 4)
-  const totalDemoCycles = 5; // intro + 4 demos  
-  const isIntroDemo = currentDemo === 4; // intro will be at index 4 (after the 4 regular demos)
-  const currentMessages = isIntroDemo ? [] : demos[currentDemo]; // Empty messages for intro demo
+  // Include intro and end screen as part of the demo cycle 
+  const totalDemoCycles = 6; // intro + 4 demos + end screen
+  const isIntroDemo = currentDemo === 5; // intro will be at index 5 
+  const isEndDemo = currentDemo === 4; // end screen will be at index 4 (after the 4 regular demos)
+  const currentMessages = (isIntroDemo || isEndDemo) ? [] : demos[currentDemo]; // Empty messages for intro/end demo
 
   // Typing animation for personality
   const personalityPhrases = [
@@ -153,26 +162,70 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Intro screen timer - shows for 3 seconds during intro demo cycle
+  // Enhanced intro screen with sequential animations
   useEffect(() => {
     if (isIntroDemo) {
       setShowIntro(true);
-      const introTimer = setTimeout(() => {
-        // Move to next demo (first actual demo)
-        setCurrentDemo(0);
+      setIntroPhase('logo');
+      setIntroTypewriterText("");
+      setShowIntroParticles(false);
+      
+      // Phase 1: Show logo for 1 second
+      const logoTimer = setTimeout(() => {
+        setIntroPhase('typing');
+        
+        // Phase 2: Typewriter effect for "AI Chief of Staff"
+        const text = "AI Chief of Staff";
+        let charIndex = 0;
+        
+        const typeInterval = setInterval(() => {
+          if (charIndex < text.length) {
+            setIntroTypewriterText(text.substring(0, charIndex + 1));
+            charIndex++;
+          } else {
+            clearInterval(typeInterval);
+            
+            // Phase 3: Dispersal effect after typing completes
+            setTimeout(() => {
+              setIntroPhase('dispersing');
+              setShowIntroParticles(true);
+              
+              // Move to next demo after dispersal
+              setTimeout(() => {
+                setCurrentDemo(0);
+                setMessageIndex(0);
+                setShowIntro(false);
+              }, 1200);
+            }, 800);
+          }
+        }, 60);
+        
+        return () => clearInterval(typeInterval);
+      }, 1000);
+      
+      return () => {
+        clearTimeout(logoTimer);
+      };
+    } else if (isEndDemo) {
+      setEndScreenVisible(true);
+      
+      // Show end screen for 3 seconds then move to intro
+      const endTimer = setTimeout(() => {
+        setCurrentDemo(5); // Back to intro
         setMessageIndex(0);
-        setShowIntro(false);
+        setEndScreenVisible(false);
       }, 3000);
       
-      return () => clearTimeout(introTimer);
+      return () => clearTimeout(endTimer);
     } else {
       setShowIntro(false);
+      setEndScreenVisible(false);
     }
-  }, [currentDemo, isIntroDemo]);
+  }, [currentDemo, isIntroDemo, isEndDemo]);
 
-  // Demo message timing - only runs for actual demos (not intro)
+  // Demo message timing - only runs for actual demos (not intro/end)
   useEffect(() => {
-    if (isIntroDemo || showIntro) return; // Skip timing for intro demo
+    if (isIntroDemo || isEndDemo || showIntro || endScreenVisible) return; // Skip timing for intro/end demo
     
     if (messageIndex < currentMessages.length - 1) {
       const currentMessage = currentMessages[messageIndex];
@@ -316,8 +369,8 @@ const Index = () => {
 
       {/* Dynamic iPhone Demo - 4 Beautiful Transitions */}
       <section className="py-4 px-2 relative">
-        {/* Demo Title Indicator - Only show for actual demos, not intro */}
-        {!showIntro && !isIntroDemo && (
+        {/* Demo Title Indicator - Only show for actual demos, not intro/end */}
+        {!showIntro && !isIntroDemo && !isEndDemo && !endScreenVisible && (
           <motion.div 
             className="text-center mb-6"
             initial={{ opacity: 0, y: 20 }}
@@ -411,62 +464,196 @@ const Index = () => {
                    {/* Container with overflow hidden to create scroll context */}
                    <div className="pt-14 pb-3 px-1 h-full overflow-hidden">
                      <AnimatePresence mode="wait">
-                       {showIntro || isIntroDemo ? (
-                         // Intro Screen
-                         <motion.div
-                           key="intro"
-                           initial={{ opacity: 0, scale: 0.8 }}
-                           animate={{ opacity: 1, scale: 1 }}
-                           exit={{ opacity: 0, scale: 0.9 }}
-                           transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                           className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6"
-                         >
-                           <motion.div
-                             initial={{ scale: 0.5, opacity: 0 }}
-                             animate={{ scale: 1, opacity: 1 }}
-                             transition={{ 
-                               delay: 0.3,
-                               duration: 0.8,
-                               ease: [0.4, 0, 0.2, 1] 
-                             }}
-                             className="text-center"
-                           >
-                             <motion.div
-                               className="mb-4"
-                               animate={{
-                                 filter: [
-                                   "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))",
-                                   "drop-shadow(0 0 30px rgba(160, 124, 254, 0.6))",
-                                   "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))"
-                                 ]
-                               }}
-                               transition={{
-                                 duration: 2,
-                                 repeat: Infinity,
-                                 ease: "easeInOut"
-                               }}
-                             >
-                               <img 
-                                 src="/lovable-uploads/415ce8dc-7e61-4e4d-be9e-1a76104eafab.png" 
-                                 alt="Asmi Logo"
-                                 className="w-32 h-auto mx-auto"
-                               />
-                             </motion.div>
-                             <motion.p 
-                               initial={{ y: 20, opacity: 0 }}
-                               animate={{ y: 0, opacity: 1 }}
-                               transition={{ 
-                                 delay: 0.7,
-                                 duration: 0.6,
-                                 ease: "easeOut" 
-                               }}
-                               className="font-inter text-sm text-white"
-                             >
-                               AI Chief of Staff
-                             </motion.p>
-                           </motion.div>
-                         </motion.div>
-                       ) : (
+                        {showIntro || isIntroDemo ? (
+                          // Enhanced Intro Screen with Sequential Animations
+                          <motion.div
+                            key="intro"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                            className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6 relative overflow-hidden"
+                          >
+                            {/* Particle System for Dispersal Effect */}
+                            <AnimatePresence>
+                              {showIntroParticles && (
+                                <>
+                                  {Array.from({ length: 20 }).map((_, i) => (
+                                    <motion.div
+                                      key={`particle-${i}`}
+                                      initial={{ 
+                                        opacity: 1,
+                                        scale: 1,
+                                        x: 0,
+                                        y: 0
+                                      }}
+                                      animate={{
+                                        opacity: 0,
+                                        scale: [1, 0.8, 0],
+                                        x: (Math.random() - 0.5) * 400,
+                                        y: (Math.random() - 0.5) * 400,
+                                        rotate: Math.random() * 360
+                                      }}
+                                      transition={{
+                                        duration: 1.2,
+                                        delay: Math.random() * 0.3,
+                                        ease: "easeOut"
+                                      }}
+                                      className="absolute w-2 h-2 bg-white rounded-full"
+                                      style={{
+                                        left: `${50 + (Math.random() - 0.5) * 10}%`,
+                                        top: `${50 + (Math.random() - 0.5) * 10}%`
+                                      }}
+                                    />
+                                  ))}
+                                </>
+                              )}
+                            </AnimatePresence>
+
+                            {/* Main Content */}
+                            <AnimatePresence>
+                              {introPhase !== 'dispersing' && (
+                                <motion.div
+                                  exit={{ opacity: 0, scale: 0.8 }}
+                                  transition={{ duration: 0.4 }}
+                                  className="text-center"
+                                >
+                                  {/* Asmi Logo - Always shown first */}
+                                  <motion.div
+                                    initial={{ scale: 0.5, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ 
+                                      delay: 0.3,
+                                      duration: 0.8,
+                                      ease: [0.4, 0, 0.2, 1] 
+                                    }}
+                                    className="mb-6"
+                                  >
+                                    <motion.div
+                                      animate={{
+                                        filter: [
+                                          "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))",
+                                          "drop-shadow(0 0 30px rgba(160, 124, 254, 0.6))",
+                                          "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))"
+                                        ]
+                                      }}
+                                      transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                      }}
+                                    >
+                                      <img 
+                                        src="/lovable-uploads/415ce8dc-7e61-4e4d-be9e-1a76104eafab.png" 
+                                        alt="Asmi Logo"
+                                        className="w-32 h-auto mx-auto"
+                                      />
+                                    </motion.div>
+                                  </motion.div>
+
+                                  {/* Typewriter Text - Shown after logo */}
+                                  <AnimatePresence>
+                                    {introPhase === 'typing' && (
+                                      <motion.div
+                                        initial={{ y: 20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        exit={{ y: -20, opacity: 0 }}
+                                        transition={{ duration: 0.4 }}
+                                        className="font-inter text-lg text-white flex items-center justify-center"
+                                      >
+                                        <span>{introTypewriterText}</span>
+                                        <motion.span
+                                          animate={{ opacity: [1, 0] }}
+                                          transition={{ duration: 0.8, repeat: Infinity }}
+                                          className="ml-1 text-[#5DFF9F]"
+                                        >
+                                          |
+                                        </motion.span>
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        ) : endScreenVisible || isEndDemo ? (
+                          // Exciting End Screen
+                          <motion.div
+                            key="end"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                            className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6"
+                          >
+                            <motion.div
+                              className="text-center"
+                              initial={{ scale: 0.5, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ duration: 0.6, ease: "easeOut" }}
+                            >
+                              <motion.h1
+                                className="text-2xl font-bold mb-2"
+                                style={{ color: '#5DFF9F' }}
+                                animate={{
+                                  scale: [1, 1.05, 1],
+                                  textShadow: [
+                                    '0 0 20px rgba(93, 255, 159, 0.5)',
+                                    '0 0 30px rgba(93, 255, 159, 0.8)',
+                                    '0 0 20px rgba(93, 255, 159, 0.5)'
+                                  ]
+                                }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Infinity,
+                                  ease: "easeInOut"
+                                }}
+                              >
+                                {"Ready to Move Fast?".split("").map((char, i) => (
+                                  <motion.span
+                                    key={i}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{
+                                      delay: i * 0.05,
+                                      duration: 0.4,
+                                      ease: "easeOut"
+                                    }}
+                                    style={{
+                                      display: char === " " ? "inline" : "inline-block"
+                                    }}
+                                  >
+                                    {char === " " ? "\u00A0" : char}
+                                  </motion.span>
+                                ))}
+                              </motion.h1>
+                              
+                              {/* Pulsing excitement elements */}
+                              <motion.div
+                                className="flex justify-center gap-2 mt-4"
+                                animate={{ scale: [1, 1.1, 1] }}
+                                transition={{ duration: 1, repeat: Infinity }}
+                              >
+                                {[0, 1, 2].map((i) => (
+                                  <motion.div
+                                    key={i}
+                                    className="w-2 h-2 rounded-full"
+                                    style={{ backgroundColor: '#5DFF9F' }}
+                                    animate={{
+                                      scale: [1, 1.5, 1],
+                                      opacity: [0.5, 1, 0.5]
+                                    }}
+                                    transition={{
+                                      duration: 0.8,
+                                      repeat: Infinity,
+                                      delay: i * 0.2
+                                    }}
+                                  />
+                                ))}
+                              </motion.div>
+                            </motion.div>
+                          </motion.div>
+                        ) : (
                          // Demo Content
                          <motion.div
                            key={`demo-${currentDemo}`}
