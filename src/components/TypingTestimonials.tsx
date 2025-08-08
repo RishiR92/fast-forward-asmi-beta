@@ -12,22 +12,40 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    quote: "I live in iMessage. Asmi preps my investor calls, tracks follow-ups, and remembers promises I'd otherwise forget.",
-    name: "Alex Chen",
-    role: "Series A Founder",
+    quote: "Asmi runs my day in chat — condenses chaos into a one‑pager each morning, drafts follow‑ups, and remembers every promise across Slack, email, and meetings.",
+    name: "Aisha Kapoor",
+    role: "Founder, Seed-stage SaaS (fast‑growing startup)",
     avatar: "🚀"
   },
   {
-    quote: "Our GTM team operates via chat. Asmi keeps us synced on prospects, deals, and next steps without the dashboard bloat.",
-    name: "Sarah Park",
-    role: "VP Growth @ Scale Co",
-    avatar: "⚡"
+    quote: "Before every call, Asmi drops a 30‑sec brief: last touch, likely objections, and a tailored opener. My prep time went from 20 min to 2.",
+    name: "Jordan Blake",
+    role: "Senior AE — Enterprise Sales Team",
+    avatar: "🎯"
   },
   {
-    quote: "50 founder meetings a week. Asmi remembers every conversation, preps context, and drafts perfect follow-ups.",
-    name: "Marcus Rodriguez", 
-    role: "Partner @ Velocity VC",
-    avatar: "💰"
+    quote: "Asmi tracks deliverables across threads, nudges me on invoices, and drafts scope replies. I review, tweak one line, and send.",
+    name: "Lena Ortiz",
+    role: "Freelance Product Designer",
+    avatar: "✨"
+  },
+  {
+    quote: "Weekly exec readouts write themselves — Asmi threads outcomes, risks, and next steps from notes and email. Clients think I never forget.",
+    name: "Noah Bennett",
+    role: "Independent Strategy Consultant",
+    avatar: "📊"
+  },
+  {
+    quote: "Sourcing is faster. Asmi recalls past convos, suggests warm intros from our CRM, and drafts tailored outreach. Reply rates are up 28%.",
+    name: "Priya Narang",
+    role: "Tech Recruiter",
+    avatar: "🧲"
+  },
+  {
+    quote: "Pipeline hygiene without dashboards — Asmi drafts updates, flags silent deals, and nudges reps on next steps. Our standups are 7 minutes.",
+    name: "Evan Mills",
+    role: "VP Sales, Mid‑market",
+    avatar: "⚡"
   }
 ];
 
@@ -78,7 +96,7 @@ export const TypingTestimonials = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
           >
-            <Card className="bg-white/[0.02] border-white/10 hover:border-white/20 transition-all duration-300">
+            <Card className="bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#5DFF9F]/30 rounded-xl shadow-lg transition-all duration-300">
               <CardContent className="p-6 space-y-4">
                 {/* Typing Indicator */}
                 <div className="flex items-center gap-2 mb-2">
