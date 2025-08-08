@@ -593,7 +593,7 @@ const Index = () => {
                              >
                                {/* Enhanced Typography with Gradient and Effects */}
                                <motion.h1
-                                 className="text-4xl font-semibold mb-4 relative"
+                                 className="text-3xl font-semibold mb-4 relative"
                                  style={{ 
                                    background: 'linear-gradient(135deg, #5DFF9F 0%, #ffffff 50%, #5DFF9F 100%)',
                                    backgroundClip: 'text',
@@ -718,56 +718,12 @@ const Index = () => {
                             <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3 border-b border-gray-700/30 flex-shrink-0">
                               <motion.div 
                                 className="w-8 h-8 bg-[#5DFF9F] rounded-full flex items-center justify-center"
-                                animate={{ 
-                                  scale: isTyping ? [1, 1.1, 1] : 1,
-                                  boxShadow: isTyping ? "0 0 15px rgba(93, 255, 159, 0.6)" : "none"
-                                }}
-                                transition={{ duration: 0.8, repeat: isTyping ? Infinity : 0 }}
                               >
                                 <span className="text-black text-xs font-bold">A</span>
                               </motion.div>
                               <div className="flex-1">
                                 <h3 className="text-white text-sm font-medium">Asmi - Chief of staff</h3>
-                                <AnimatePresence mode="wait">
-                                  {isTyping ? (
-                                    <motion.div
-                                      key="typing"
-                                      initial={{ opacity: 0 }}
-                                      animate={{ opacity: 1 }}
-                                      exit={{ opacity: 0 }}
-                                      className="flex items-center gap-1"
-                                    >
-                                      <span className="text-[#5DFF9F] text-xs">typing</span>
-                                      <div className="flex gap-0.5">
-                                        {[0, 1, 2].map((i) => (
-                                          <motion.div
-                                            key={i}
-                                            className="w-1 h-1 bg-[#5DFF9F] rounded-full"
-                                            animate={{ 
-                                              scale: [1, 1.3, 1],
-                                              opacity: [0.5, 1, 0.5]
-                                            }}
-                                            transition={{
-                                              duration: 0.8,
-                                              repeat: Infinity,
-                                              delay: i * 0.2
-                                            }}
-                                          />
-                                        ))}
-                                      </div>
-                                    </motion.div>
-                                  ) : (
-                                    <motion.span 
-                                      key="online"
-                                      initial={{ opacity: 0 }}
-                                      animate={{ opacity: 1 }}
-                                      exit={{ opacity: 0 }}
-                                      className="text-xs text-gray-400"
-                                    >
-                                      online
-                                    </motion.span>
-                                  )}
-                                </AnimatePresence>
+                                <span className="text-xs text-gray-400">online</span>
                               </div>
                               <MoreHorizontal className="text-gray-400 w-5 h-5" />
                             </div>
