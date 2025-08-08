@@ -15,34 +15,34 @@ interface TimelineMoment {
 
 const timelineMoments: TimelineMoment[] = [
   {
-    time: "8:30 AM",
-    title: "Task Intelligence",
-    userInput: "What should I focus on today?",
-    asmiAction: "Today's priority matrix:\nURGENT: VC presentation rehearsal (2 hours)\nIMPORTANT: Review Q4 budget proposals\nQUICK WINS: 3 client follow-ups pending\nHEADS UP: Maria's promotion announcement today",
+    time: "7:45 AM",
+    title: "Focus Guard",
+    userInput: "Protect two deep‑work blocks this week and move anything low‑priority.",
+    asmiAction: "Deep Work Scheduled\nTUE 10:30–12:00 — moved 2 low‑priority 1:1s\nTHU 2:00–3:30 — rescheduled roadmap sync\nNOTIFIED: Attendees informed with context\nEXTRA: Slack status + calendar focus mode set",
     icon: Clock,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "12:45 PM", 
-    title: "Profile Discovery",
-    userInput: "I'm meeting David Chen from Google Ventures next week. What should I know?",
-    asmiAction: "David Chen - Deep Dive\nPartner at GV, focuses on B2B SaaS (5+ years)\nFormer product manager at Stripe, Stanford CS\nLed investments in 12 companies, 3 unicorns\nSWEET SPOT: Fintech, AI tools, enterprise software\nPRO TIP: He's passionate about developer tools - mention your API strategy",
+    time: "10:15 AM",
+    title: "Travel Concierge",
+    userInput: "NYC day trip next Tuesday — earliest outbound, back by 9 PM. Aisle seat. Hotel walkable to SoHo office.",
+    asmiAction: "Trip Locked\nFLIGHTS: UA 1542 6:20 AM → 9:40 AM (aisle) | UA 2189 7:10 PM → 8:55 PM\nHOTEL: Arlo SoHo — 0.4 mi from office (early check‑in requested)\nRIDES: Uber Reserve to SFO 4:50 AM, return pickup 6:10 PM\nCALENDAR: Holds + buffers added, boarding passes in Wallet",
     icon: Eye,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "3:20 PM",
-    title: "Context Switching",
-    userInput: "Jumping from engineering standup to investor call in 5 minutes",
-    asmiAction: "Context Switch Ready\nSTANDUP RECAP: 2 blockers resolved, sprint on track\nINVESTOR CALL: Sarah Mitchell, Andreessen Horowitz\nKEY POINTS: Q3 growth (127%), new enterprise deals\nHAVE READY: User retention metrics, burn rate update",
+    time: "2:05 PM",
+    title: "Hiring Brief",
+    userInput: "Who’s strongest for Senior PM? Prep me for the onsite loop.",
+    asmiAction: "Top Candidates\n1) Priya N. — ex-Stripe, led 0→1 platform; Strengths: stakeholder mgmt, metrics; Risks: hardware exp.\n2) Marcus L. — Uber Eats growth; Strengths: exp. experiments; Risks: less enterprise.\nASKS: Validate roadmap thinking, dig on prioritization tradeoffs\nDOCS: Resumes + interview notes attached",
     icon: Mic,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "7:30 PM",
-    title: "Email Intelligence", 
-    userInput: "Catch me up on important emails",
-    asmiAction: "CRITICAL: VC wants term sheet meeting Friday\nURGENT: Client escalation - server downtime issue\nOPPORTUNITY: TechCorp interested in partnership\nHOUSEKEEPING: 12 other emails triaged, 3 need responses",
+    time: "6:10 PM",
+    title: "Revenue Follow‑ups",
+    userInput: "Turn last week’s prospect threads into follow‑ups I can send in two taps.",
+    asmiAction: "Drafted for Review\nACME — ‘Looping back on pilot start next Monday — attaching success plan’\nNIMBUS — ‘Sending the SOC2 + redlines — Thursday 3 PM work?’\nORBITAL — ‘ROI model w/ your data — 14% lift projected; 20‑min skim?’\nREMINDERS: Nudges scheduled, CRM updated",
     icon: RotateCcw,
     color: "text-[#5DFF9F]"
   }
