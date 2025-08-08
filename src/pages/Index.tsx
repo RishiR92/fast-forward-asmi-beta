@@ -190,7 +190,7 @@ const Index = () => {
             setTimeout(() => {
               setIntroPhase('dispersing');
               
-              // Move to next demo after fade-out
+              // Move to next demo after fade-out (standardized timing)
               setTimeout(() => {
                 setCurrentDemo(1);
                 setMessageIndex(0);
@@ -209,12 +209,12 @@ const Index = () => {
     } else if (isEndDemo) {
       setEndScreenVisible(true);
       
-      // Show end screen for 3 seconds then move to intro
+      // Show end screen for 4 seconds then move to intro
       const endTimer = setTimeout(() => {
         setCurrentDemo(0); // Back to intro
         setMessageIndex(0);
         setEndScreenVisible(false);
-      }, 3000);
+      }, 4000);
       
       return () => clearTimeout(endTimer);
     } else {
