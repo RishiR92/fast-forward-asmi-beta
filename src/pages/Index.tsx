@@ -16,11 +16,11 @@ const Index = () => {
   const [typingText, setTypingText] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [currentDemo, setCurrentDemo] = useState(0);
+  const [currentDemo, setCurrentDemo] = useState(4); // Start at intro (index 4)
   const [isTyping, setIsTyping] = useState(false);
   const [phoneGlow, setPhoneGlow] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(true); // Start with intro
 
   // Demo 1: Profile Discovery - Integration & Analysis
   const demo1Messages = [
@@ -58,14 +58,12 @@ const Index = () => {
   ];
 
   const demos = [demo1Messages, demo2Messages, demo3Messages, demo4Messages];
-  const demoTitles = [
-    "Profile Discovery",
-    "Smart Scheduling", 
-    "Meeting Intelligence",
-    "Executive Assistant"
-  ];
+  const demoTitles = ["Profile Discovery", "Smart Scheduling", "Meeting Intelligence", "Executive Assistant"];
   
-  const currentMessages = demos[currentDemo];
+  // Include intro as part of the demo cycle (intro = demo index 4)
+  const totalDemoCycles = 5; // intro + 4 demos  
+  const isIntroDemo = currentDemo === 4; // intro will be at index 4 (after the 4 regular demos)
+  const currentMessages = isIntroDemo ? [] : demos[currentDemo]; // Empty messages for intro demo
 
   // Typing animation for personality
   const personalityPhrases = [
@@ -155,20 +153,26 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Intro screen timer - shows for 3 seconds then starts demo
+  // Intro screen timer - shows for 3 seconds during intro demo cycle
   useEffect(() => {
-    if (showIntro) {
+    if (isIntroDemo) {
+      setShowIntro(true);
       const introTimer = setTimeout(() => {
+        // Move to next demo (first actual demo)
+        setCurrentDemo(0);
+        setMessageIndex(0);
         setShowIntro(false);
       }, 3000);
       
       return () => clearTimeout(introTimer);
+    } else {
+      setShowIntro(false);
     }
-  }, [showIntro]);
+  }, [currentDemo, isIntroDemo]);
 
-  // Demo message timing - only starts after intro is done
+  // Demo message timing - only runs for actual demos (not intro)
   useEffect(() => {
-    if (showIntro) return; // Don't start demo while intro is showing
+    if (isIntroDemo || showIntro) return; // Skip timing for intro demo
     
     if (messageIndex < currentMessages.length - 1) {
       const currentMessage = currentMessages[messageIndex];
@@ -210,7 +214,7 @@ const Index = () => {
         
         // After transition animation, switch demo
         setTimeout(() => {
-          setCurrentDemo(prev => (prev + 1) % demos.length);
+          setCurrentDemo(prev => (prev + 1) % totalDemoCycles); // Cycle through 0,1,2,3,4 (4 = intro)
           setMessageIndex(0);
           setIsTransitioning(false);
         }, 800); // Transition duration
@@ -218,7 +222,7 @@ const Index = () => {
       
       return () => clearTimeout(transitionTimer);
     }
-  }, [messageIndex, currentDemo, showIntro]);
+  }, [messageIndex, currentDemo, showIntro, isIntroDemo]);
 
   // Reset message index when demo changes
   useEffect(() => {
@@ -312,8 +316,8 @@ const Index = () => {
 
       {/* Dynamic iPhone Demo - 4 Beautiful Transitions */}
       <section className="py-4 px-2 relative">
-        {/* Demo Title Indicator - Only show after intro */}
-        {!showIntro && (
+        {/* Demo Title Indicator - Only show for actual demos, not intro */}
+        {!showIntro && !isIntroDemo && (
           <motion.div 
             className="text-center mb-6"
             initial={{ opacity: 0, y: 20 }}
@@ -407,7 +411,7 @@ const Index = () => {
                    {/* Container with overflow hidden to create scroll context */}
                    <div className="pt-14 pb-3 px-1 h-full overflow-hidden">
                      <AnimatePresence mode="wait">
-                       {showIntro ? (
+                       {showIntro || isIntroDemo ? (
                          // Intro Screen
                          <motion.div
                            key="intro"
