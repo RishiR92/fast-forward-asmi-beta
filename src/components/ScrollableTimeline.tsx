@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Eye, Mic, RotateCcw, ChevronLeft, ChevronRight, MapPin, Calendar, Send, FileText, Users, Target, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 interface ActionItem {
   label: string;
@@ -171,17 +171,17 @@ const timelineMoments: TimelineMoment[] = [
 ];
 
 export const ScrollableTimeline = () => {
-  const [revealedCards, setRevealedCards] = useState<Set<number>>(new Set());
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   const toggleCard = (index: number) => {
-    setRevealedCards(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
+    setOpenIndex(prev => {
+      const next = prev === index ? null : index;
+      if (next === index) {
+        const el = cardRefs.current[index];
+        el?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
-      return newSet;
+      return next;
     });
   };
 
@@ -214,19 +214,31 @@ export const ScrollableTimeline = () => {
       </div>
 
       {/* Scrollable Timeline */}
-      <div className="overflow-x-auto pb-6 scrollbar-hide">
-        <div className="flex gap-4 min-w-max px-4 md:justify-center">
+      <div className="overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
+        <div className="flex gap-4 min-w-max px-4 md:justify-center items-start">
           {timelineMoments.map((moment, index) => (
             <motion.div
               key={index}
-              className="flex-none w-[300px] md:w-[320px]"
+              ref={(el) => (cardRefs.current[index] = el)}
+              className="flex-none w-[300px] md:w-[320px] snap-center"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.2, duration: 0.8 }}
               whileHover={{ y: -8, scale: 1.02 }}
             >
-              <Card className="bg-gradient-to-br from-black/40 to-black/20 border border-white/5 hover:border-[#5DFF9F]/20 transition-all duration-300 h-full backdrop-blur-xl shadow-2xl cursor-pointer"
-                onClick={() => toggleCard(index)}>
+              <Card className="bg-gradient-to-br from-black/40 to-black/20 border border-white/5 hover:border-[#5DFF9F]/20 transition-all duration-300 backdrop-blur-xl shadow-2xl cursor-pointer"
+                onClick={() => toggleCard(index)}
+                role="button"
+                tabIndex={0}
+                aria-expanded={openIndex === index}
+                aria-controls={`response-${index}`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleCard(index);
+                  }
+                }}
+              >
                 <CardContent className="p-5 space-y-4">
                   {/* Header */}
                   <div className="flex items-center justify-between">
@@ -259,7 +271,7 @@ export const ScrollableTimeline = () => {
                   </motion.div>
 
                   {/* Reveal Hint */}
-                  {!revealedCards.has(index) && (
+                  {openIndex !== index && (
                     <motion.div
                       className="flex items-center justify-center gap-2 py-3"
                       initial={{ opacity: 0, y: 10 }}
@@ -283,8 +295,9 @@ export const ScrollableTimeline = () => {
 
                   {/* Asmi Response */}
                   <AnimatePresence>
-                    {revealedCards.has(index) && (
+                    {openIndex === index && (
                       <motion.div
+                        id={`response-${index}`}
                         className="bg-card/80 rounded-xl rounded-tl-md p-3 mr-6 relative shadow-lg border border-border/50 backdrop-blur-sm"
                         initial={{ opacity: 0, height: 0, x: -20 }}
                         animate={{ opacity: 1, height: "auto", x: 0 }}
@@ -391,6 +404,7 @@ export const ScrollableTimeline = () => {
                                            <button 
                                              key={actionIndex} 
                                              className="text-[10px] px-2 py-1 rounded-md transition-all duration-200 border bg-[#5DFF9F]/10 text-[#5DFF9F] hover:bg-[#5DFF9F]/20 border-[#5DFF9F]/30 hover:scale-105 active:scale-95"
+                                             onClick={(e) => e.stopPropagation()}
                                            >
                                              {action.label}
                                            </button>
