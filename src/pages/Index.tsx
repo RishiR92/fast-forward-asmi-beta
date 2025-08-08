@@ -72,7 +72,7 @@ const Index = () => {
   const totalDemoCycles = 6; // intro + 4 demos + end screen
   const isIntroDemo = currentDemo === 5; // intro will be at index 5 
   const isEndDemo = currentDemo === 4; // end screen will be at index 4 (after the 4 regular demos)
-  const currentMessages = (isIntroDemo || isEndDemo) ? [] : demos[currentDemo]; // Empty messages for intro/end demo
+  const currentMessages = (isIntroDemo || isEndDemo) ? [] : (demos[currentDemo] || []); // Always ensure we have a valid array
 
   // Typing animation for personality
   const personalityPhrases = [
