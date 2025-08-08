@@ -441,7 +441,7 @@ const Index = () => {
                                }}
                              >
                                <img 
-                                 src="/lovable-uploads/686fb2f2-ecc3-4a81-ab4d-baa39d4aed0d.png" 
+                                 src="/lovable-uploads/415ce8dc-7e61-4e4d-be9e-1a76104eafab.png" 
                                  alt="Asmi Logo"
                                  className="w-32 h-auto mx-auto"
                                />
@@ -454,7 +454,7 @@ const Index = () => {
                                  duration: 0.6,
                                  ease: "easeOut" 
                                }}
-                               className="font-inter text-sm text-muted-foreground"
+                               className="font-inter text-sm text-white"
                              >
                                AI Chief of Staff
                              </motion.p>
