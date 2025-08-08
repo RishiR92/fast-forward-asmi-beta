@@ -312,32 +312,34 @@ const Index = () => {
 
       {/* Dynamic iPhone Demo - 4 Beautiful Transitions */}
       <section className="py-4 px-2 relative">
-        {/* Demo Title Indicator */}
-        <motion.div 
-          className="text-center mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentDemo}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.4 }}
-            >
-              <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20 text-sm px-4 py-2">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="w-2 h-2 bg-[#5DFF9F] rounded-full mr-2"
-                />
-                {demoTitles[currentDemo]}
-              </Badge>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
+        {/* Demo Title Indicator - Only show after intro */}
+        {!showIntro && (
+          <motion.div 
+            className="text-center mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentDemo}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Badge className="bg-[#5DFF9F]/10 text-[#5DFF9F] border-[#5DFF9F]/20 text-sm px-4 py-2">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    className="w-2 h-2 bg-[#5DFF9F] rounded-full mr-2"
+                  />
+                  {demoTitles[currentDemo]}
+                </Badge>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        )}
 
         <div className="w-full max-w-[320px] mx-auto">
           <AnimatePresence mode="wait">
