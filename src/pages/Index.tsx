@@ -20,6 +20,7 @@ const Index = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [phoneGlow, setPhoneGlow] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
 
   // Demo 1: Profile Discovery - Integration & Analysis
   const demo1Messages = [
@@ -135,8 +136,40 @@ const Index = () => {
     }
   }, [messageIndex, currentDemo, currentMessages]);
 
-  // Enhanced demo controller with beautiful transitions
+  // Typing animation for personality - cycles every 3 seconds
   useEffect(() => {
+    const personalities = [
+      "Remembers everything...",
+      "Schedules smartly...",
+      "Preps you perfectly...",
+      "Works behind the scenes...",
+      "Always one step ahead..."
+    ];
+    
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      setTypingText(personalities[currentIndex]);
+      currentIndex = (currentIndex + 1) % personalities.length;
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Intro screen timer - shows for 3 seconds then starts demo
+  useEffect(() => {
+    if (showIntro) {
+      const introTimer = setTimeout(() => {
+        setShowIntro(false);
+      }, 3000);
+      
+      return () => clearTimeout(introTimer);
+    }
+  }, [showIntro]);
+
+  // Demo message timing - only starts after intro is done
+  useEffect(() => {
+    if (showIntro) return; // Don't start demo while intro is showing
+    
     if (messageIndex < currentMessages.length - 1) {
       const currentMessage = currentMessages[messageIndex];
       const nextMessage = currentMessages[messageIndex + 1];
@@ -185,7 +218,7 @@ const Index = () => {
       
       return () => clearTimeout(transitionTimer);
     }
-  }, [messageIndex, currentDemo]);
+  }, [messageIndex, currentDemo, showIntro]);
 
   // Reset message index when demo changes
   useEffect(() => {
@@ -369,141 +402,200 @@ const Index = () => {
                     </div>
                   </div>
 
-                  {/* Container with overflow hidden to create scroll context */}
-                  <div className="pt-14 pb-3 px-1 h-full overflow-hidden">
-                    <motion.div
-                      key={`demo-${currentDemo}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, ease: "easeOut" }}
-                      className="bg-[#0B141A] h-full flex flex-col"
-                    >
-                      {/* WhatsApp Header with typing indicator */}
-                      <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3 border-b border-gray-700/30 flex-shrink-0">
-                        <motion.div 
-                          className="w-8 h-8 bg-[#5DFF9F] rounded-full flex items-center justify-center"
-                          animate={{ 
-                            scale: isTyping ? [1, 1.1, 1] : 1,
-                            boxShadow: isTyping ? "0 0 15px rgba(93, 255, 159, 0.6)" : "none"
-                          }}
-                          transition={{ duration: 0.8, repeat: isTyping ? Infinity : 0 }}
-                        >
-                          <span className="text-black text-xs font-bold">A</span>
-                        </motion.div>
-                        <div className="flex-1">
-                          <h3 className="text-white text-sm font-medium">Asmi - Chief of staff</h3>
-                          <AnimatePresence mode="wait">
-                            {isTyping ? (
-                              <motion.div
-                                key="typing"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="flex items-center gap-1"
+                   {/* Container with overflow hidden to create scroll context */}
+                   <div className="pt-14 pb-3 px-1 h-full overflow-hidden">
+                     <AnimatePresence mode="wait">
+                       {showIntro ? (
+                         // Intro Screen
+                         <motion.div
+                           key="intro"
+                           initial={{ opacity: 0, scale: 0.8 }}
+                           animate={{ opacity: 1, scale: 1 }}
+                           exit={{ opacity: 0, scale: 0.9 }}
+                           transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                           className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6"
+                         >
+                           <motion.div
+                             initial={{ scale: 0.5, opacity: 0 }}
+                             animate={{ scale: 1, opacity: 1 }}
+                             transition={{ 
+                               delay: 0.3,
+                               duration: 0.8,
+                               ease: [0.4, 0, 0.2, 1] 
+                             }}
+                             className="text-center"
+                           >
+                             <motion.h1 
+                               className="font-playfair text-4xl text-primary font-bold mb-2"
+                               style={{
+                                 textShadow: "0 0 30px rgba(93, 255, 159, 0.5)"
+                               }}
+                               animate={{
+                                 textShadow: [
+                                   "0 0 30px rgba(93, 255, 159, 0.3)",
+                                   "0 0 40px rgba(93, 255, 159, 0.6)",
+                                   "0 0 30px rgba(93, 255, 159, 0.3)"
+                                 ]
+                               }}
+                               transition={{
+                                 duration: 2,
+                                 repeat: Infinity,
+                                 ease: "easeInOut"
+                               }}
+                             >
+                               Asmi
+                             </motion.h1>
+                             <motion.p 
+                               initial={{ y: 20, opacity: 0 }}
+                               animate={{ y: 0, opacity: 1 }}
+                               transition={{ 
+                                 delay: 0.7,
+                                 duration: 0.6,
+                                 ease: "easeOut" 
+                               }}
+                               className="font-inter text-sm text-muted-foreground"
+                             >
+                               AI Chief of Staff
+                             </motion.p>
+                           </motion.div>
+                         </motion.div>
+                       ) : (
+                         // Demo Content
+                         <motion.div
+                           key={`demo-${currentDemo}`}
+                           initial={{ opacity: 0, y: 20 }}
+                           animate={{ opacity: 1, y: 0 }}
+                           transition={{ duration: 0.6, ease: "easeOut" }}
+                           className="bg-[#0B141A] h-full flex flex-col"
+                         >
+                            {/* WhatsApp Header with typing indicator */}
+                            <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3 border-b border-gray-700/30 flex-shrink-0">
+                              <motion.div 
+                                className="w-8 h-8 bg-[#5DFF9F] rounded-full flex items-center justify-center"
+                                animate={{ 
+                                  scale: isTyping ? [1, 1.1, 1] : 1,
+                                  boxShadow: isTyping ? "0 0 15px rgba(93, 255, 159, 0.6)" : "none"
+                                }}
+                                transition={{ duration: 0.8, repeat: isTyping ? Infinity : 0 }}
                               >
-                                <span className="text-[#5DFF9F] text-xs">typing</span>
-                                <div className="flex gap-0.5">
-                                  {[0, 1, 2].map((i) => (
-                                    <motion.div
-                                      key={i}
-                                      className="w-1 h-1 bg-[#5DFF9F] rounded-full"
-                                      animate={{ 
-                                        scale: [1, 1.3, 1],
-                                        opacity: [0.5, 1, 0.5]
-                                      }}
-                                      transition={{
-                                        duration: 0.8,
-                                        repeat: Infinity,
-                                        delay: i * 0.2
-                                      }}
-                                    />
-                                  ))}
-                                </div>
+                                <span className="text-black text-xs font-bold">A</span>
                               </motion.div>
-                            ) : (
-                              <motion.span 
-                                key="online"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="text-xs text-gray-400"
-                              >
-                                online
-                              </motion.span>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                        <MoreHorizontal className="text-gray-400 w-5 h-5" />
-                      </div>
+                              <div className="flex-1">
+                                <h3 className="text-white text-sm font-medium">Asmi - Chief of staff</h3>
+                                <AnimatePresence mode="wait">
+                                  {isTyping ? (
+                                    <motion.div
+                                      key="typing"
+                                      initial={{ opacity: 0 }}
+                                      animate={{ opacity: 1 }}
+                                      exit={{ opacity: 0 }}
+                                      className="flex items-center gap-1"
+                                    >
+                                      <span className="text-[#5DFF9F] text-xs">typing</span>
+                                      <div className="flex gap-0.5">
+                                        {[0, 1, 2].map((i) => (
+                                          <motion.div
+                                            key={i}
+                                            className="w-1 h-1 bg-[#5DFF9F] rounded-full"
+                                            animate={{ 
+                                              scale: [1, 1.3, 1],
+                                              opacity: [0.5, 1, 0.5]
+                                            }}
+                                            transition={{
+                                              duration: 0.8,
+                                              repeat: Infinity,
+                                              delay: i * 0.2
+                                            }}
+                                          />
+                                        ))}
+                                      </div>
+                                    </motion.div>
+                                  ) : (
+                                    <motion.span 
+                                      key="online"
+                                      initial={{ opacity: 0 }}
+                                      animate={{ opacity: 1 }}
+                                      exit={{ opacity: 0 }}
+                                      className="text-xs text-gray-400"
+                                    >
+                                      online
+                                    </motion.span>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                              <MoreHorizontal className="text-gray-400 w-5 h-5" />
+                            </div>
 
-                      {/* Messages with isolated scroll - auto scroll only affects this container */}
-                      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain p-3 space-y-2 bg-[#0B141A]">
-                        {currentMessages.slice(0, messageIndex + 1).map((message, index) => (
-                          <motion.div
-                            key={`demo-${currentDemo}-msg-${index}`}
-                            initial={{ 
-                              opacity: 0, 
-                              scale: 0.7, 
-                              y: 30,
-                              rotateX: -15
-                            }}
-                            animate={{ 
-                              opacity: 1, 
-                              scale: 1, 
-                              y: 0,
-                              rotateX: 0
-                            }}
-                            transition={{ 
-                              type: "spring",
-                              stiffness: 400,
-                              damping: 25,
-                              duration: 0.6,
-                              delay: index * 0.1 
-                            }}
-                            whileHover={{
-                              scale: 1.02,
-                              transition: { duration: 0.2 }
-                            }}
-                            className={message.type === 'asmi' ? 
-                              "bg-[#202C33] rounded-xl rounded-tl-md p-2.5 max-w-[90%] shadow-lg border border-gray-700/20" :
-                              "bg-[#005C4B] rounded-xl rounded-tr-md p-2.5 max-w-[90%] ml-auto shadow-lg border border-green-600/20"
-                            }
-                            style={{
-                              boxShadow: message.type === 'asmi' 
-                                ? "0 4px 20px rgba(93, 255, 159, 0.1)" 
-                                : "0 4px 20px rgba(0, 92, 75, 0.3)"
-                            }}
-                          >
-                            <motion.p 
-                              className="text-white text-xs whitespace-pre-line leading-relaxed"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 0.3 }}
-                            >
-                              {message.text}
-                            </motion.p>
-                            <motion.p 
-                              className="text-xs text-gray-400 mt-1.5 flex items-center gap-1"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 0.5 }}
-                            >
-                              <span className="text-[10px]">{message.timestamp}</span>
-                              {message.type === 'user' && (
+                            {/* Messages with isolated scroll - auto scroll only affects this container */}
+                            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain p-3 space-y-2 bg-[#0B141A]">
+                              {currentMessages.slice(0, messageIndex + 1).map((message, index) => (
                                 <motion.div
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  transition={{ delay: 0.7, type: "spring", stiffness: 300 }}
+                                  key={`demo-${currentDemo}-msg-${index}`}
+                                  initial={{ 
+                                    opacity: 0, 
+                                    scale: 0.7, 
+                                    y: 30,
+                                    rotateX: -15
+                                  }}
+                                  animate={{ 
+                                    opacity: 1, 
+                                    scale: 1, 
+                                    y: 0,
+                                    rotateX: 0
+                                  }}
+                                  transition={{ 
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 25,
+                                    duration: 0.6,
+                                    delay: index * 0.1 
+                                  }}
+                                  whileHover={{
+                                    scale: 1.02,
+                                    transition: { duration: 0.2 }
+                                  }}
+                                  className={message.type === 'asmi' ? 
+                                    "bg-[#202C33] rounded-xl rounded-tl-md p-2.5 max-w-[90%] shadow-lg border border-gray-700/20" :
+                                    "bg-[#005C4B] rounded-xl rounded-tr-md p-2.5 max-w-[90%] ml-auto shadow-lg border border-green-600/20"
+                                  }
+                                  style={{
+                                    boxShadow: message.type === 'asmi' 
+                                      ? "0 4px 20px rgba(93, 255, 159, 0.1)" 
+                                      : "0 4px 20px rgba(0, 92, 75, 0.3)"
+                                  }}
                                 >
-                                  <CheckCircle className="w-2.5 h-2.5 text-blue-400" />
+                                  <motion.p 
+                                    className="text-white text-xs whitespace-pre-line leading-relaxed"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.3 }}
+                                  >
+                                    {message.text}
+                                  </motion.p>
+                                  <motion.p 
+                                    className="text-xs text-gray-400 mt-1.5 flex items-center gap-1"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.5 }}
+                                  >
+                                    <span className="text-[10px]">{message.timestamp}</span>
+                                    {message.type === 'user' && (
+                                      <motion.div
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ delay: 0.7, type: "spring", stiffness: 300 }}
+                                      >
+                                        <CheckCircle className="w-2.5 h-2.5 text-blue-400" />
+                                      </motion.div>
+                                    )}
+                                  </motion.p>
                                 </motion.div>
-                              )}
-                            </motion.p>
+                              ))}
+                            </div>
                           </motion.div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  </div>
+                        )}
+                      </AnimatePresence>
+                   </div>
                 </div>
               </motion.div>
             </motion.div>
