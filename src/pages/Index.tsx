@@ -23,44 +23,44 @@ const Index = () => {
 
   // Demo 1: Profile Discovery - Integration & Analysis
   const demo1Messages = [
-    { type: "user", text: "Asmi, you look intriguing! What can you do for me?", delay: 2000, timestamp: "9:15 AM" },
-    { type: "asmi", text: "Hi Alex. Asmi is your smart chief of staff. To get started, first integrate your calendar and mail here and see the magic!", delay: 2500, timestamp: "9:15 AM" },
-    { type: "asmi", text: "Gmail linked ✅\nCalendar linked ✅", delay: 2000, timestamp: "9:16 AM" },
-    { type: "asmi", text: "Well well Alex, you are absolutely crushing it\n\n• Serial entrepreneur & CEO at TechFlow\n• Boston Marathon finisher (3:12 best time)\n• 5× founder with 2 successful exits\n• Stanford MBA, former McKinsey consultant\n• Angel investor in 15+ startups\n• Lives in Palo Alto, originally from Boston", delay: 3000, timestamp: "9:16 AM" },
-    { type: "asmi", text: "Key insights from your emails & calendar\n\n📧 Q3 roadmap due Friday (board pressure)\n📧 Steve Johnson - Acme Corp partnership opportunity\n📅 3 investor calls next week\n📧 Pat (Sequoia) - Series B intro", delay: 2500, timestamp: "9:17 AM" }
+    { type: "user", text: "Morning Asmi — what's my day look like?", delay: 2000, timestamp: "7:45 AM" },
+    { type: "asmi", text: "Morning Brief\n\n• 9:30 AM Eng stand-up\n• 11:00 AM Acme renewal prep\n• 1:00 PM Product review\n• 4:30 PM Investor sync\n\nTravel: 18 min to office (rain adds ~5 min)", delay: 2500, timestamp: "7:45 AM" },
+    { type: "asmi", text: "Inbox highlights\n\n• CFO: burn report sign-off due today\n• Legal: MSA redlines from Acme\n• Candidate: reschedule request\n• 3 approvals pending", delay: 2200, timestamp: "7:46 AM" },
+    { type: "user", text: "Prioritize CFO + Acme. Park the candidate for tomorrow.", delay: 1700, timestamp: "7:46 AM" },
+    { type: "asmi", text: "Got it. I’ll draft a CFO reply, prep your renewal talk track, and pause the candidate thread.", delay: 2000, timestamp: "7:47 AM" }
   ];
 
   // Demo 2: Smart Scheduling - Meeting coordination
   const demo2Messages = [
-    { type: "user", text: "Schedule a call with Steve for 3 PM tomorrow.", delay: 2000, timestamp: "9:18 AM" },
-    { type: "asmi", text: "Call with Steve\n\n🕒 03:00 PM, Aug 8, 2025\n👤 Steve Johnson\n📋 Agenda: Catch up + next steps\n🔗 meet.google.com/xyz-1234", delay: 2500, timestamp: "9:18 AM" },
-    { type: "user", text: "Confirmed", delay: 1500, timestamp: "9:19 AM" },
-    { type: "asmi", text: "Meeting scheduled ✅", delay: 1500, timestamp: "9:19 AM" }
+    { type: "user", text: "Find 25 minutes with Priya this week after 2 PM, Tue–Thu.", delay: 2000, timestamp: "9:18 AM" },
+    { type: "asmi", text: "Suggested slots sent to Priya\n\n• Tue 3:30 PM\n• Wed 2:15 PM\n• Thu 4:00 PM\n\nWill confirm and add Zoom.", delay: 2500, timestamp: "9:18 AM" },
+    { type: "user", text: "Lock Wed 2:15.", delay: 1500, timestamp: "9:19 AM" },
+    { type: "asmi", text: "Meeting scheduled ✅\n\nWed 2:15 PM with Priya\nAgenda: Q3 launch blockers\nLink: zoom.us/j/123-456", delay: 1500, timestamp: "9:19 AM" }
   ];
 
   // Demo 3: Meeting Intelligence - Deep research & prep
   const demo3Messages = [
-    { type: "user", text: "Help me prep for this meeting.", delay: 2000, timestamp: "9:20 AM" },
-    { type: "asmi", text: "Meeting Prep: Steve Johnson\n\nObjective: Align on Q3 roadmap & secure Acme Corp partnership\n\nProfile:\n• VP Sales at Acme Corp (3 years)\n• Former director at Oracle, strong enterprise sales background\n• MIT Sloan MBA, lives in Austin\n• Key decision maker for vendor partnerships ($500K+ deals)", delay: 3000, timestamp: "9:20 AM" },
-    { type: "asmi", text: "Context:\n• Last spoke July 15 about contract terms and pricing structure\n• Steve expressed concerns about implementation timeline\n• His team is evaluating 3 vendors, decision due end of August\n• Acme Corp expanding West Coast operations - good timing", delay: 3500, timestamp: "9:21 AM" }
+    { type: "user", text: "Prep me for the Acme renewal at 11.", delay: 2000, timestamp: "9:20 AM" },
+    { type: "asmi", text: "Acme Renewal Brief\n\nGoal: Upsell to annual + add support tier\nStakeholders: Steve (VP Sales), Nina (Procurement)\nContext: Pushed back on implementation timeline and price\nRisk: Competing bid from NovaSoft", delay: 3000, timestamp: "9:20 AM" },
+    { type: "asmi", text: "Talk track\n\n• Lead with 22% faster rollout case study (Orion)\n• Offer phased milestones; drop-in success team wk 1\n• Annual discount + support tier bundled\n• Close with pilot success metrics", delay: 3500, timestamp: "9:21 AM" }
   ];
 
   // Demo 4: Executive Assistant - Advanced task management
   const demo4Messages = [
-    { type: "user", text: "Book 1 hr dinner with Sophia to run me through marketing plan. Pick a quiet downtown SF spot.", delay: 2000, timestamp: "9:22 AM" },
-    { type: "asmi", text: "Dinner with Sophia\n\n🕗 07:00 PM, Aug 8, 2025\n👤 Sophia Lee, BrightWave\n📍 The Rotunda at Neiman Marcus\n📋 Agenda: Marketing plan walkthrough", delay: 2500, timestamp: "9:22 AM" },
-    { type: "user", text: "Confirmed", delay: 1500, timestamp: "9:23 AM" },
-    { type: "asmi", text: "Dinner scheduled ✅", delay: 1500, timestamp: "9:23 AM" },
-    { type: "asmi", text: "Pat (Sequoia) reached out 2 days ago about an investment chat. Want me to draft a reply?", delay: 3000, timestamp: "9:24 AM" },
-    { type: "user", text: "Yes", delay: 1500, timestamp: "9:24 AM" },
-    { type: "asmi", text: "Draft Reply to Pat\n\n\"Hi Pat, thanks for reaching out. I'd love to explore this further. How about we schedule a call for next week? I'm available Tuesday-Thursday afternoons. Looking forward to connecting.\"", delay: 2500, timestamp: "9:25 AM" }
+    { type: "user", text: "Rebook SFO→SEA to arrive by 2 PM tomorrow. Aisle seat, under $400.", delay: 2000, timestamp: "9:22 AM" },
+    { type: "asmi", text: "Best option\n\nAlaska 10:30 AM → 12:45 PM ($368)\nAisle 8C held for 10 min\nCalendar + TSA time adjusted", delay: 2500, timestamp: "9:22 AM" },
+    { type: "user", text: "Book it.", delay: 1500, timestamp: "9:23 AM" },
+    { type: "asmi", text: "Flight booked ✅\n\nReceipt saved to Expenses/Travel\nLyft scheduled 8:50 AM", delay: 1500, timestamp: "9:23 AM" },
+    { type: "asmi", text: "Maya pinged about dinner next week. Want me to pick a quiet spot in Palo Alto?", delay: 3000, timestamp: "9:24 AM" },
+    { type: "user", text: "Yes, Thursday around 7:30 PM. Quiet, good for strategy chat.", delay: 1500, timestamp: "9:24 AM" },
+    { type: "asmi", text: "Reserved at Evvia, Thu 7:30 PM\nTable in back, low noise\nCalendar invite sent; reminder set.", delay: 2500, timestamp: "9:25 AM" }
   ];
 
   const demos = [demo1Messages, demo2Messages, demo3Messages, demo4Messages];
   const demoTitles = [
-    "Profile Discovery",
+    "Morning Brief",
     "Smart Scheduling", 
-    "Meeting Intelligence",
+    "Meeting Prep",
     "Executive Assistant"
   ];
   
