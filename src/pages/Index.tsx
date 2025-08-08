@@ -105,15 +105,19 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Demo animation with autoscroll and message refs
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  
-  // Auto-scroll to bottom when new message appears
+  // Demo messages container ref for isolated auto-scroll
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll only when near bottom to avoid fighting user scroll
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    const el = messagesContainerRef.current;
+    if (!el) return;
+    const distanceToBottom = el.scrollHeight - el.clientHeight - el.scrollTop;
+    const threshold = 80; // px
+    if (distanceToBottom < threshold) {
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
     }
-  }, [messageIndex]);
+  }, [messageIndex, currentDemo]);
 
   // Enhanced demo controller with beautiful transitions
   useEffect(() => {
@@ -417,7 +421,7 @@ const Index = () => {
                       </div>
 
                       {/* Messages with isolated scroll - auto scroll only affects this container */}
-                      <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 space-y-2 bg-[#0B141A]">
+                      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain p-3 space-y-2 bg-[#0B141A]">
                         {currentMessages.slice(0, messageIndex + 1).map((message, index) => (
                           <motion.div
                             key={`demo-${currentDemo}-msg-${index}`}
@@ -481,8 +485,6 @@ const Index = () => {
                             </motion.p>
                           </motion.div>
                         ))}
-                        {/* Invisible element for autoscroll target */}
-                        <div ref={messagesEndRef} />
                       </div>
                     </motion.div>
                   </div>
