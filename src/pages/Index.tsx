@@ -185,17 +185,16 @@ const Index = () => {
           } else {
             clearInterval(typeInterval);
             
-            // Phase 3: Dispersal effect after typing completes
+            // Phase 3: Elegant fade-out effect after typing completes
             setTimeout(() => {
               setIntroPhase('dispersing');
-              setShowIntroParticles(true);
               
-              // Move to next demo after dispersal
+              // Move to next demo after fade-out
               setTimeout(() => {
                 setCurrentDemo(0);
                 setMessageIndex(0);
                 setShowIntro(false);
-              }, 1200);
+              }, 800);
             }, 800);
           }
         }, 60);
@@ -464,195 +463,248 @@ const Index = () => {
                    {/* Container with overflow hidden to create scroll context */}
                    <div className="pt-14 pb-3 px-1 h-full overflow-hidden">
                      <AnimatePresence mode="wait">
-                        {showIntro || isIntroDemo ? (
-                          // Enhanced Intro Screen with Sequential Animations
-                          <motion.div
-                            key="intro"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                            className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6 relative overflow-hidden"
-                          >
-                            {/* Particle System for Dispersal Effect */}
-                            <AnimatePresence>
-                              {showIntroParticles && (
-                                <>
-                                  {Array.from({ length: 20 }).map((_, i) => (
-                                    <motion.div
-                                      key={`particle-${i}`}
-                                      initial={{ 
-                                        opacity: 1,
-                                        scale: 1,
-                                        x: 0,
-                                        y: 0
-                                      }}
-                                      animate={{
-                                        opacity: 0,
-                                        scale: [1, 0.8, 0],
-                                        x: (Math.random() - 0.5) * 400,
-                                        y: (Math.random() - 0.5) * 400,
-                                        rotate: Math.random() * 360
-                                      }}
-                                      transition={{
-                                        duration: 1.2,
-                                        delay: Math.random() * 0.3,
-                                        ease: "easeOut"
-                                      }}
-                                      className="absolute w-2 h-2 bg-white rounded-full"
-                                      style={{
-                                        left: `${50 + (Math.random() - 0.5) * 10}%`,
-                                        top: `${50 + (Math.random() - 0.5) * 10}%`
-                                      }}
-                                    />
-                                  ))}
-                                </>
-                              )}
-                            </AnimatePresence>
+                          {showIntro || isIntroDemo ? (
+                           // Enhanced Intro Screen with Elegant Fade-Out
+                           <motion.div
+                             key="intro"
+                             initial={{ opacity: 0, scale: 0.8 }}
+                             animate={{ opacity: 1, scale: 1 }}
+                             exit={{ opacity: 0, scale: 0.9 }}
+                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                             className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6 relative overflow-hidden"
+                           >
+                             {/* Main Content with Elegant Fade-Out */}
+                             <motion.div
+                               className="text-center"
+                               animate={
+                                 introPhase === 'dispersing'
+                                   ? {
+                                       opacity: 0,
+                                       scale: 0.95,
+                                       y: -20,
+                                       filter: "blur(2px)"
+                                     }
+                                   : {
+                                       opacity: 1,
+                                       scale: 1,
+                                       y: 0,
+                                       filter: "blur(0px)"
+                                     }
+                               }
+                               transition={{
+                                 duration: 0.8,
+                                 ease: [0.25, 0.46, 0.45, 0.94]
+                               }}
+                             >
+                               {/* Asmi Logo - Always shown first */}
+                               <motion.div
+                                 initial={{ scale: 0.5, opacity: 0 }}
+                                 animate={{ scale: 1, opacity: 1 }}
+                                 transition={{ 
+                                   delay: 0.3,
+                                   duration: 0.8,
+                                   ease: [0.4, 0, 0.2, 1] 
+                                 }}
+                                 className="mb-6"
+                               >
+                                 <motion.div
+                                   animate={{
+                                     filter: [
+                                       "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))",
+                                       "drop-shadow(0 0 30px rgba(160, 124, 254, 0.6))",
+                                       "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))"
+                                     ]
+                                   }}
+                                   transition={{
+                                     duration: 2,
+                                     repeat: Infinity,
+                                     ease: "easeInOut"
+                                   }}
+                                 >
+                                   <img 
+                                     src="/lovable-uploads/415ce8dc-7e61-4e4d-be9e-1a76104eafab.png" 
+                                     alt="Asmi Logo"
+                                     className="w-32 h-auto mx-auto"
+                                   />
+                                 </motion.div>
+                               </motion.div>
 
-                            {/* Main Content */}
-                            <AnimatePresence>
-                              {introPhase !== 'dispersing' && (
-                                <motion.div
-                                  exit={{ opacity: 0, scale: 0.8 }}
-                                  transition={{ duration: 0.4 }}
-                                  className="text-center"
-                                >
-                                  {/* Asmi Logo - Always shown first */}
-                                  <motion.div
-                                    initial={{ scale: 0.5, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    transition={{ 
-                                      delay: 0.3,
-                                      duration: 0.8,
-                                      ease: [0.4, 0, 0.2, 1] 
-                                    }}
-                                    className="mb-6"
-                                  >
-                                    <motion.div
-                                      animate={{
-                                        filter: [
-                                          "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))",
-                                          "drop-shadow(0 0 30px rgba(160, 124, 254, 0.6))",
-                                          "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))"
-                                        ]
-                                      }}
-                                      transition={{
-                                        duration: 2,
-                                        repeat: Infinity,
-                                        ease: "easeInOut"
-                                      }}
-                                    >
-                                      <img 
-                                        src="/lovable-uploads/415ce8dc-7e61-4e4d-be9e-1a76104eafab.png" 
-                                        alt="Asmi Logo"
-                                        className="w-32 h-auto mx-auto"
-                                      />
-                                    </motion.div>
-                                  </motion.div>
-
-                                  {/* Typewriter Text - Shown after logo */}
-                                  <AnimatePresence>
-                                    {introPhase === 'typing' && (
-                                      <motion.div
-                                        initial={{ y: 20, opacity: 0 }}
-                                        animate={{ y: 0, opacity: 1 }}
-                                        exit={{ y: -20, opacity: 0 }}
-                                        transition={{ duration: 0.4 }}
-                                        className="font-inter text-lg text-white flex items-center justify-center"
-                                      >
-                                        <span>{introTypewriterText}</span>
-                                        <motion.span
-                                          animate={{ opacity: [1, 0] }}
-                                          transition={{ duration: 0.8, repeat: Infinity }}
-                                          className="ml-1 text-[#5DFF9F]"
-                                        >
-                                          |
-                                        </motion.span>
-                                      </motion.div>
-                                    )}
-                                  </AnimatePresence>
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </motion.div>
+                               {/* Typewriter Text - Shown after logo */}
+                               <AnimatePresence>
+                                 {introPhase === 'typing' && (
+                                   <motion.div
+                                     initial={{ y: 20, opacity: 0 }}
+                                     animate={{ y: 0, opacity: 1 }}
+                                     exit={{ y: -20, opacity: 0 }}
+                                     transition={{ duration: 0.4 }}
+                                     className="font-inter text-lg text-white flex items-center justify-center"
+                                   >
+                                     <span>{introTypewriterText}</span>
+                                     <motion.span
+                                       animate={{ opacity: [1, 0] }}
+                                       transition={{ duration: 0.8, repeat: Infinity }}
+                                       className="ml-1 text-[#5DFF9F]"
+                                     >
+                                       |
+                                     </motion.span>
+                                   </motion.div>
+                                 )}
+                               </AnimatePresence>
+                             </motion.div>
+                           </motion.div>
                         ) : endScreenVisible || isEndDemo ? (
-                          // Exciting End Screen
-                          <motion.div
-                            key="end"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                            className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6"
-                          >
-                            <motion.div
-                              className="text-center"
-                              initial={{ scale: 0.5, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              transition={{ duration: 0.6, ease: "easeOut" }}
-                            >
-                              <motion.h1
-                                className="text-2xl font-bold mb-2"
-                                style={{ color: '#5DFF9F' }}
-                                animate={{
-                                  scale: [1, 1.05, 1],
-                                  textShadow: [
-                                    '0 0 20px rgba(93, 255, 159, 0.5)',
-                                    '0 0 30px rgba(93, 255, 159, 0.8)',
-                                    '0 0 20px rgba(93, 255, 159, 0.5)'
-                                  ]
-                                }}
-                                transition={{
-                                  duration: 1.5,
-                                  repeat: Infinity,
-                                  ease: "easeInOut"
-                                }}
-                              >
-                                {"Ready to Move Fast?".split("").map((char, i) => (
-                                  <motion.span
-                                    key={i}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                      delay: i * 0.05,
-                                      duration: 0.4,
-                                      ease: "easeOut"
-                                    }}
-                                    style={{
-                                      display: char === " " ? "inline" : "inline-block"
-                                    }}
-                                  >
-                                    {char === " " ? "\u00A0" : char}
-                                  </motion.span>
-                                ))}
-                              </motion.h1>
-                              
-                              {/* Pulsing excitement elements */}
-                              <motion.div
-                                className="flex justify-center gap-2 mt-4"
-                                animate={{ scale: [1, 1.1, 1] }}
-                                transition={{ duration: 1, repeat: Infinity }}
-                              >
-                                {[0, 1, 2].map((i) => (
-                                  <motion.div
-                                    key={i}
-                                    className="w-2 h-2 rounded-full"
-                                    style={{ backgroundColor: '#5DFF9F' }}
-                                    animate={{
-                                      scale: [1, 1.5, 1],
-                                      opacity: [0.5, 1, 0.5]
-                                    }}
-                                    transition={{
-                                      duration: 0.8,
-                                      repeat: Infinity,
-                                      delay: i * 0.2
-                                    }}
-                                  />
-                                ))}
-                              </motion.div>
-                            </motion.div>
-                          </motion.div>
+                           // Elegant End Screen with Enhanced Typography
+                           <motion.div
+                             key="end"
+                             initial={{ opacity: 0, scale: 0.8 }}
+                             animate={{ opacity: 1, scale: 1 }}
+                             exit={{ opacity: 0, scale: 0.9 }}
+                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                             className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6 relative overflow-hidden"
+                           >
+                             {/* Elegant Background Particles */}
+                             {Array.from({ length: 8 }).map((_, i) => (
+                               <motion.div
+                                 key={`bg-particle-${i}`}
+                                 className="absolute w-1 h-1 bg-[#5DFF9F]/20 rounded-full"
+                                 style={{
+                                   left: `${20 + (i * 10)}%`,
+                                   top: `${30 + (i % 3) * 20}%`
+                                 }}
+                                 animate={{
+                                   y: [-20, 20, -20],
+                                   opacity: [0.2, 0.8, 0.2],
+                                   scale: [1, 1.5, 1]
+                                 }}
+                                 transition={{
+                                   duration: 3 + i * 0.5,
+                                   repeat: Infinity,
+                                   ease: "easeInOut",
+                                   delay: i * 0.3
+                                 }}
+                               />
+                             ))}
+
+                             <motion.div
+                               className="text-center relative z-10"
+                               initial={{ scale: 0.5, opacity: 0 }}
+                               animate={{ scale: 1, opacity: 1 }}
+                               transition={{ duration: 0.6, ease: "easeOut" }}
+                             >
+                               {/* Enhanced Typography with Gradient and Effects */}
+                               <motion.h1
+                                 className="text-4xl font-semibold mb-4 relative"
+                                 style={{ 
+                                   background: 'linear-gradient(135deg, #5DFF9F 0%, #ffffff 50%, #5DFF9F 100%)',
+                                   backgroundClip: 'text',
+                                   WebkitBackgroundClip: 'text',
+                                   WebkitTextFillColor: 'transparent',
+                                   letterSpacing: '0.02em'
+                                 }}
+                                 animate={{
+                                   scale: [1, 1.02, 1],
+                                   filter: [
+                                     "drop-shadow(0 0 30px rgba(93, 255, 159, 0.4))",
+                                     "drop-shadow(0 0 40px rgba(93, 255, 159, 0.6))",
+                                     "drop-shadow(0 0 30px rgba(93, 255, 159, 0.4))"
+                                   ]
+                                 }}
+                                 transition={{
+                                   duration: 2,
+                                   repeat: Infinity,
+                                   ease: "easeInOut"
+                                 }}
+                               >
+                                 {"Ready to Move Fast?".split("").map((char, i) => (
+                                   <motion.span
+                                     key={i}
+                                     initial={{ 
+                                       opacity: 0, 
+                                       y: 30,
+                                       rotateX: -90
+                                     }}
+                                     animate={{ 
+                                       opacity: 1, 
+                                       y: 0,
+                                       rotateX: 0
+                                     }}
+                                     transition={{
+                                       delay: i * 0.08,
+                                       duration: 0.6,
+                                       type: "spring",
+                                       stiffness: 200,
+                                       damping: 15
+                                     }}
+                                     style={{
+                                       display: char === " " ? "inline" : "inline-block"
+                                     }}
+                                   >
+                                     {char === " " ? "\u00A0" : char}
+                                   </motion.span>
+                                 ))}
+                                 
+                                 {/* Shimmer Effect */}
+                                 <motion.div
+                                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                                   style={{
+                                     transform: 'skewX(-20deg)',
+                                     width: '30%'
+                                   }}
+                                   animate={{
+                                     x: ['-200%', '300%']
+                                   }}
+                                   transition={{
+                                     duration: 3,
+                                     repeat: Infinity,
+                                     ease: "easeInOut",
+                                     repeatDelay: 2
+                                   }}
+                                 />
+                               </motion.h1>
+                               
+                               {/* Enhanced Animated Elements */}
+                               <motion.div
+                                 className="flex justify-center gap-3 mt-6"
+                                 initial={{ opacity: 0, scale: 0.5 }}
+                                 animate={{ opacity: 1, scale: 1 }}
+                                 transition={{ delay: 1.5, duration: 0.6 }}
+                               >
+                                 {[0, 1, 2].map((i) => (
+                                   <motion.div
+                                     key={i}
+                                     className="relative"
+                                   >
+                                     <motion.div
+                                       className="w-3 h-3 rounded-full bg-[#5DFF9F]"
+                                       animate={{
+                                         scale: [1, 1.8, 1],
+                                         opacity: [0.7, 1, 0.7]
+                                       }}
+                                       transition={{
+                                         duration: 1.2,
+                                         repeat: Infinity,
+                                         delay: i * 0.3,
+                                         ease: "easeInOut"
+                                       }}
+                                     />
+                                     <motion.div
+                                       className="absolute inset-0 w-3 h-3 rounded-full bg-[#5DFF9F]/30"
+                                       animate={{
+                                         scale: [1, 2.5, 1],
+                                         opacity: [0.3, 0, 0.3]
+                                       }}
+                                       transition={{
+                                         duration: 1.2,
+                                         repeat: Infinity,
+                                         delay: i * 0.3,
+                                         ease: "easeInOut"
+                                       }}
+                                     />
+                                   </motion.div>
+                                 ))}
+                               </motion.div>
+                             </motion.div>
+                           </motion.div>
                         ) : (
                          // Demo Content
                          <motion.div
