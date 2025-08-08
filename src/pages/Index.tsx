@@ -108,16 +108,32 @@ const Index = () => {
   // Demo messages container ref for isolated auto-scroll
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll only when near bottom to avoid fighting user scroll
+  // Enhanced auto-scroll that always follows new messages smoothly
   useEffect(() => {
     const el = messagesContainerRef.current;
     if (!el) return;
-    const distanceToBottom = el.scrollHeight - el.clientHeight - el.scrollTop;
-    const threshold = 80; // px
-    if (distanceToBottom < threshold) {
-      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+    
+    // Always scroll to bottom when new messages appear
+    const scrollToBottom = () => {
+      requestAnimationFrame(() => {
+        el.scrollTo({ 
+          top: el.scrollHeight, 
+          behavior: 'smooth' 
+        });
+      });
+    };
+    
+    // Immediate scroll for message appearance
+    scrollToBottom();
+    
+    // Additional scroll with reading pace delay for longer messages
+    const currentMessage = currentMessages[messageIndex];
+    if (currentMessage) {
+      const readingDelay = Math.max(500, Math.min(currentMessage.text.length * 20, 1500));
+      const delayedScroll = setTimeout(scrollToBottom, readingDelay);
+      return () => clearTimeout(delayedScroll);
     }
-  }, [messageIndex, currentDemo]);
+  }, [messageIndex, currentDemo, currentMessages]);
 
   // Enhanced demo controller with beautiful transitions
   useEffect(() => {
