@@ -30,6 +30,36 @@ const Index = () => {
   // End screen animation states
   const [endScreenVisible, setEndScreenVisible] = useState(false);
 
+  // Intro timing constants
+  const INTRO_TIMINGS = {
+    LOGO_MS: 1000,
+    TYPE_INTERVAL_MS: 60,
+    FADE_DELAY_MS: 800,
+    DISPERSE_DELAY_MS: 800,
+    END_TO_INTRO_DELAY_MS: 120
+  };
+
+  // Force fresh mount of intro on each loop
+  const [introCycleId, setIntroCycleId] = useState(0);
+
+  // Centralized timer management for intro
+  const introTimers = useRef<{ timeouts: number[]; intervals: number[] }>({ timeouts: [], intervals: [] });
+  const clearAllIntroTimers = () => {
+    introTimers.current.timeouts.forEach(clearTimeout);
+    introTimers.current.intervals.forEach(clearInterval);
+    introTimers.current = { timeouts: [], intervals: [] };
+  };
+  const setIntroTimeout = (fn: () => void, ms: number) => {
+    const id = window.setTimeout(fn, ms);
+    introTimers.current.timeouts.push(id);
+    return id;
+  };
+  const setIntroInterval = (fn: () => void, ms: number) => {
+    const id = window.setInterval(fn, ms);
+    introTimers.current.intervals.push(id);
+    return id;
+  };
+
   // Demo 1: Profile Discovery - Integration & Analysis
   const demo1Messages = [
     { type: "user", text: "Asmi, you look intriguing! What can you do for me?", delay: 2000, timestamp: "9:15 AM" },
@@ -165,6 +195,7 @@ const Index = () => {
 
   // Function to reset all intro states for clean transitions
   const resetIntroStates = () => {
+    clearAllIntroTimers();
     setIntroPhase('logo');
     setIntroTypewriterText("");
     setShowIntroParticles(false);
@@ -176,59 +207,57 @@ const Index = () => {
     if (isIntroDemo) {
       // Reset all intro states first
       resetIntroStates();
-      
-      // Phase 1: Show logo for 1 second
-      const logoTimer = setTimeout(() => {
+
+      // Phase 1: Show logo
+      setIntroTimeout(() => {
         setIntroPhase('typing');
-        
+
         // Phase 2: Typewriter effect for "AI Chief of Staff"
         const text = "AI Chief of Staff";
         let charIndex = 0;
-        
-        const typeInterval = setInterval(() => {
+
+        setIntroInterval(() => {
           if (charIndex < text.length) {
             setIntroTypewriterText(text.substring(0, charIndex + 1));
             charIndex++;
           } else {
-            clearInterval(typeInterval);
-            
+            // Stop any previous timers before dispersing
+            clearAllIntroTimers();
+
             // Phase 3: Elegant fade-out effect after typing completes
-            setTimeout(() => {
+            setIntroTimeout(() => {
               setIntroPhase('dispersing');
-              
-              // Move to next demo after fade-out (standardized timing)
-              setTimeout(() => {
+
+              // Move to next demo after fade-out
+              setIntroTimeout(() => {
                 setCurrentDemo(1);
                 setMessageIndex(0);
                 setShowIntro(false);
-              }, 800);
-            }, 800);
+              }, INTRO_TIMINGS.DISPERSE_DELAY_MS);
+            }, INTRO_TIMINGS.FADE_DELAY_MS);
           }
-        }, 60);
-        
-        return () => clearInterval(typeInterval);
-      }, 1000);
-      
+        }, INTRO_TIMINGS.TYPE_INTERVAL_MS);
+      }, INTRO_TIMINGS.LOGO_MS);
+
       return () => {
-        clearTimeout(logoTimer);
+        clearAllIntroTimers();
       };
     } else if (isEndDemo) {
       setEndScreenVisible(true);
-      
-      // Show end screen for 4 seconds then reset and move to intro
-      const endTimer = setTimeout(() => {
+
+      // Show end screen then reset and move to intro
+      setIntroTimeout(() => {
         // Clean transition from end screen to intro
         setEndScreenVisible(false);
-        
-        // Add small delay to ensure clean state transition
-        setTimeout(() => {
+
+        setIntroTimeout(() => {
+          setIntroCycleId(prev => prev + 1);
           setCurrentDemo(0); // Back to intro
           setMessageIndex(0);
-          // Intro states will be reset in the intro useEffect
-        }, 100);
+        }, INTRO_TIMINGS.END_TO_INTRO_DELAY_MS);
       }, 4000);
-      
-      return () => clearTimeout(endTimer);
+
+      return () => clearAllIntroTimers();
     } else {
       setShowIntro(false);
       setEndScreenVisible(false);
@@ -478,9 +507,9 @@ const Index = () => {
                      <AnimatePresence mode="wait">
                           {showIntro || isIntroDemo ? (
                            // Enhanced Intro Screen with Elegant Fade-Out
-                           <motion.div
-                             key="intro"
-                             initial={{ opacity: 0, scale: 0.8 }}
+                             <motion.div
+                               key={`intro-${introCycleId}`}
+                               initial={{ opacity: 0, scale: 0.8 }}
                              animate={{ opacity: 1, scale: 1 }}
                              exit={{ opacity: 0, scale: 0.9 }}
                              transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
@@ -542,7 +571,7 @@ const Index = () => {
 
                               {/* Word-by-Word Sand Dispersion Text */}
                               <AnimatePresence>
-                                {(introPhase === 'typing' || introPhase === 'dispersing') && (
+                                {((introPhase === 'typing' && introTypewriterText.length > 0) || introPhase === 'dispersing') && (
                                   <motion.div
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
