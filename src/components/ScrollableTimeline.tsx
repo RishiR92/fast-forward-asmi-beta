@@ -249,13 +249,13 @@ export const ScrollableTimeline = () => {
 
                   {/* User Input */}
                   <motion.div
-                    className="bg-muted/20 rounded-xl rounded-tr-md p-3 ml-6 relative shadow-lg border border-primary/10"
+                    className="bg-muted/8 rounded-xl rounded-tr-md p-3 ml-6 relative shadow-lg border border-border/20 backdrop-blur-sm"
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.3 + 0.5 }}
                   >
-                    <p className="text-muted-foreground text-xs leading-relaxed">{moment.userInput}</p>
-                    <div className="absolute top-2 -right-1 w-2 h-2 bg-muted/20 rotate-45 border-t border-r border-primary/10" />
+                    <p className="text-muted-foreground/90 text-xs leading-relaxed">{moment.userInput}</p>
+                    <div className="absolute top-2 -right-1 w-2 h-2 bg-muted/8 rotate-45 border-t border-r border-border/20" />
                   </motion.div>
 
                   {/* Reveal Hint */}
@@ -324,28 +324,32 @@ export const ScrollableTimeline = () => {
                             >
                               <div className="flex items-start gap-2">
                                 {item.time && (
-                                  <span className="text-primary text-xs font-mono bg-primary/5 px-1.5 py-0.5 rounded flex-shrink-0 border border-primary/10">
+                                  <span className="text-primary/90 text-xs font-mono bg-primary/8 px-1.5 py-0.5 rounded flex-shrink-0 border border-primary/15 shadow-sm shadow-primary/5">
                                     {item.time}
                                   </span>
                                 )}
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center gap-1.5 mb-1">
                                     <span className="text-foreground text-xs font-medium">{item.title}</span>
-                                    {item.type === 'zoom' && <div className="w-1.5 h-1.5 bg-primary/60 rounded-full shadow-sm shadow-primary/20"></div>}
-                                    {item.type === 'in-person' && <MapPin className="w-3 h-3 text-secondary/80" />}
+                                    {item.type === 'zoom' && <div className="w-1.5 h-1.5 bg-primary/20 rounded-full shadow-sm shadow-primary/10 border border-primary/30"></div>}
+                                    {item.type === 'in-person' && <div className="w-1.5 h-1.5 bg-secondary/20 rounded-full shadow-sm shadow-secondary/10 border border-secondary/30"></div>}
                                     {item.status && (
-                                      <Badge className="bg-primary/5 text-primary text-[10px] px-1 py-0 h-4 border border-primary/20">
+                                      <Badge className={`text-[10px] px-1.5 py-0 h-4 border ${
+                                        item.status === 'Top choice' 
+                                          ? 'bg-primary/8 text-primary/90 border-primary/20' 
+                                          : 'bg-secondary/8 text-secondary/90 border-secondary/20'
+                                      }`}>
                                         {item.status}
                                       </Badge>
                                     )}
                                   </div>
                                   
                                   {item.subtitle && (
-                                    <div className="text-muted-foreground text-xs mb-1">{item.subtitle}</div>
+                                    <div className="text-muted-foreground/90 text-xs mb-1">{item.subtitle}</div>
                                   )}
                                   
                                   {item.location && (
-                                    <div className="text-secondary/80 text-xs flex items-center gap-1 mb-1">
+                                    <div className="text-secondary/70 text-xs flex items-center gap-1 mb-1 bg-secondary/5 px-1.5 py-0.5 rounded-md border border-secondary/10">
                                       <MapPin className="w-3 h-3" />
                                       {item.location}
                                     </div>
@@ -354,8 +358,8 @@ export const ScrollableTimeline = () => {
                                   {item.details && (
                                     <div className="space-y-0.5">
                                       {item.details.map((detail, detailIndex) => (
-                                        <div key={detailIndex} className="text-muted-foreground/80 text-xs flex items-center gap-1">
-                                          <div className="w-1 h-1 bg-muted-foreground/40 rounded-full flex-shrink-0"></div>
+                                        <div key={detailIndex} className="text-muted-foreground/80 text-xs flex items-center gap-1.5">
+                                          <div className="w-1 h-1 bg-muted-foreground/30 rounded-full flex-shrink-0"></div>
                                           {detail}
                                         </div>
                                       ))}
@@ -364,31 +368,61 @@ export const ScrollableTimeline = () => {
                                   
                                   {item.tags && (
                                     <div className="flex gap-1 mt-1 flex-wrap">
-                                      {item.tags.map((tag, tagIndex) => (
-                                        <span key={tagIndex} className="text-[10px] text-muted-foreground/70 bg-muted/30 px-1.5 py-0.5 rounded-full border border-border/30">
-                                          {tag}
-                                        </span>
-                                      ))}
+                                      {item.tags.map((tag, tagIndex) => {
+                                        const isPersonal = tag === 'Personal';
+                                        const isOperational = ['Operations', 'Logistics'].includes(tag);
+                                        return (
+                                          <span 
+                                            key={tagIndex} 
+                                            className={`text-[10px] px-1.5 py-0.5 rounded-full border ${
+                                              isPersonal 
+                                                ? 'text-secondary/80 bg-secondary/5 border-secondary/15' 
+                                                : isOperational
+                                                ? 'text-primary/80 bg-primary/5 border-primary/15'
+                                                : 'text-muted-foreground/70 bg-muted/8 border-border/20'
+                                            }`}
+                                          >
+                                            {tag}
+                                          </span>
+                                        );
+                                      })}
                                     </div>
                                   )}
                                   
                                   {item.actions && (
                                     <div className="flex gap-1 mt-1.5 flex-wrap">
-                                      {item.actions.map((action, actionIndex) => (
-                                        <motion.button
-                                          key={actionIndex}
-                                          className="text-[10px] text-primary bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md border border-primary/20 transition-colors"
-                                          whileHover={{ scale: 1.05 }}
-                                          whileTap={{ scale: 0.95 }}
-                                          onClick={(e) => e.stopPropagation()}
-                                        >
-                                          {action.type === 'send' && <Send className="w-2.5 h-2.5 inline mr-1" />}
-                                          {action.type === 'open' && <FileText className="w-2.5 h-2.5 inline mr-1" />}
-                                          {action.type === 'view' && <Eye className="w-2.5 h-2.5 inline mr-1" />}
-                                          {action.type === 'prep' && <Target className="w-2.5 h-2.5 inline mr-1" />}
-                                          {action.label}
-                                        </motion.button>
-                                      ))}
+                                      {item.actions.map((action, actionIndex) => {
+                                        const getActionStyles = () => {
+                                          switch (action.type) {
+                                            case 'send':
+                                              return 'text-primary/90 bg-primary/5 hover:bg-primary/8 border-primary/15 shadow-sm shadow-primary/5';
+                                            case 'view':
+                                              return 'text-secondary/90 bg-secondary/5 hover:bg-secondary/8 border-secondary/15 shadow-sm shadow-secondary/5';
+                                            case 'prep':
+                                              return 'text-muted-foreground/80 bg-muted/8 hover:bg-muted/12 border-border/20';
+                                            case 'open':
+                                              return 'text-accent/90 bg-accent/5 hover:bg-accent/8 border-accent/15';
+                                            default:
+                                              return 'text-muted-foreground/80 bg-muted/8 hover:bg-muted/12 border-border/20';
+                                          }
+                                        };
+                                        
+                                        return (
+                                          <motion.button
+                                            key={actionIndex}
+                                            className={`text-[10px] px-2 py-1 rounded-md border transition-colors ${getActionStyles()}`}
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={(e) => e.stopPropagation()}
+                                          >
+                                            {action.type === 'send' && <Send className="w-2.5 h-2.5 inline mr-1" />}
+                                            {action.type === 'open' && <FileText className="w-2.5 h-2.5 inline mr-1" />}
+                                            {action.type === 'view' && <Eye className="w-2.5 h-2.5 inline mr-1" />}
+                                            {action.type === 'prep' && <Target className="w-2.5 h-2.5 inline mr-1" />}
+                                            {action.label}
+                                          </motion.button>
+                                        );
+                                      })}
                                     </div>
                                   )}
                                 </div>
@@ -417,21 +451,38 @@ export const ScrollableTimeline = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 1 }}
                           >
-                            {moment.response.quickActions.map((action, actionIndex) => (
-                              <motion.button
-                                key={actionIndex}
-                                className="text-[10px] text-primary bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md border border-primary/20 transition-colors"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                {action.type === 'send' && <Send className="w-2.5 h-2.5 inline mr-1" />}
-                                {action.type === 'open' && <FileText className="w-2.5 h-2.5 inline mr-1" />}
-                                {action.type === 'view' && <Eye className="w-2.5 h-2.5 inline mr-1" />}
-                                {action.type === 'prep' && <Target className="w-2.5 h-2.5 inline mr-1" />}
-                                {action.label}
-                              </motion.button>
-                            ))}
+                            {moment.response.quickActions.map((action, actionIndex) => {
+                              const getActionStyles = () => {
+                                switch (action.type) {
+                                  case 'send':
+                                    return 'text-primary/90 bg-primary/5 hover:bg-primary/8 border-primary/15 shadow-sm shadow-primary/5';
+                                  case 'view':
+                                    return 'text-secondary/90 bg-secondary/5 hover:bg-secondary/8 border-secondary/15 shadow-sm shadow-secondary/5';
+                                  case 'prep':
+                                    return 'text-muted-foreground/80 bg-muted/8 hover:bg-muted/12 border-border/20';
+                                  case 'open':
+                                    return 'text-accent/90 bg-accent/5 hover:bg-accent/8 border-accent/15';
+                                  default:
+                                    return 'text-muted-foreground/80 bg-muted/8 hover:bg-muted/12 border-border/20';
+                                }
+                              };
+                              
+                              return (
+                                <motion.button
+                                  key={actionIndex}
+                                  className={`text-[10px] px-2 py-1 rounded-md border transition-colors ${getActionStyles()}`}
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {action.type === 'send' && <Send className="w-2.5 h-2.5 inline mr-1" />}
+                                  {action.type === 'open' && <FileText className="w-2.5 h-2.5 inline mr-1" />}
+                                  {action.type === 'view' && <Eye className="w-2.5 h-2.5 inline mr-1" />}
+                                  {action.type === 'prep' && <Target className="w-2.5 h-2.5 inline mr-1" />}
+                                  {action.label}
+                                </motion.button>
+                              );
+                            })}
                           </motion.div>
                         )}
 
