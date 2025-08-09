@@ -584,46 +584,76 @@ const Index = () => {
                                         }
                                   }
                                 >
-                                  <img 
-                                    src="/lovable-uploads/415ce8dc-7e61-4e4d-be9e-1a76104eafab.png" 
-                                    alt="Asmi Logo"
-                                    className="w-32 h-auto mx-auto"
-                                  />
+                                  <h1 className="text-7xl lg:text-8xl font-bold tracking-tight">
+                                    <span 
+                                      className="bg-gradient-to-r from-[#5DFF9F] to-[#A07CFE] bg-clip-text text-transparent"
+                                      style={{ 
+                                        fontFamily: 'Inter, sans-serif',
+                                        letterSpacing: '-0.02em',
+                                        textShadow: '0 0 40px rgba(93, 255, 159, 0.3), 0 0 80px rgba(160, 124, 254, 0.2)'
+                                      }}
+                                    >
+                                      {"Asmi".split('').map((char, index) => (
+                                        <motion.span
+                                          key={index}
+                                          initial={{ opacity: 0, y: 20 }}
+                                          animate={{ opacity: 1, y: 0 }}
+                                          transition={{
+                                            delay: index * 0.1,
+                                            duration: 0.6,
+                                            ease: "easeOut"
+                                          }}
+                                        >
+                                          {char}
+                                        </motion.span>
+                                      ))}
+                                    </span>
+                                  </h1>
                                 </motion.div>
                               </motion.div>
 
-                              {/* Word-by-Word Sand Dispersion Text */}
+                              {/* Crossfade AI Chief of Staff Text */}
                               <AnimatePresence>
                                 {((introPhase === 'typing' && introTypewriterText.length > 0) || introPhase === 'dispersing') && (
                                   <motion.div
-                                    initial={{ y: 20, opacity: 0 }}
+                                    key={`subtitle-${introCycleId}`}
+                                    initial={{ y: 30, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
-                                    exit={{ y: -20, opacity: 0 }}
-                                    transition={{ duration: 0.4 }}
-                                    className="font-inter text-lg text-white flex items-center justify-center flex-wrap gap-1"
+                                    exit={{ 
+                                      y: -40, 
+                                      opacity: 0,
+                                      transition: { duration: 1.2, ease: "easeInOut" }
+                                    }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    className="font-inter text-2xl lg:text-3xl text-white/90 flex items-center justify-center flex-wrap gap-1 mt-4"
                                   >
                                     {["AI", "Chief", "of", "Staff"].map((word, index) => (
                                       <motion.span
-                                        key={word}
-                                        animate={
-                                          introPhase === 'dispersing'
-                                            ? {
-                                                scale: [1, 0.3, 0],
-                                                opacity: [1, 0.7, 0],
-                                                y: [0, -30, -60],
-                                                rotateX: [0, 180, 360],
-                                                filter: ["blur(0px)", "blur(2px)", "blur(4px)"]
-                                              }
-                                            : {}
-                                        }
-                                        transition={{
-                                          delay: introPhase === 'dispersing' ? index * 0.15 : 0,
-                                          duration: 0.8,
-                                          ease: "easeOut"
+                                        key={`${word}-${introCycleId}`}
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ 
+                                          opacity: introPhase === 'dispersing' ? [1, 0.6, 0] : 1,
+                                          y: introPhase === 'dispersing' ? [0, -20, -50] : 0,
+                                          scale: introPhase === 'dispersing' ? [1, 0.5, 0] : 1,
+                                          rotateX: introPhase === 'dispersing' ? [0, 90, 180] : 0,
+                                          filter: introPhase === 'dispersing' ? ["blur(0px)", "blur(1px)", "blur(3px)"] : "blur(0px)"
                                         }}
-                                      >
-                                        {introTypewriterText.includes(word) ? word : ""}
-                                      </motion.span>
+                                         transition={{
+                                           delay: introPhase === 'dispersing' ? index * 0.2 : index * 0.15,
+                                           duration: introPhase === 'dispersing' ? 1.5 : 0.6,
+                                           ease: "easeOut"
+                                         }}
+                                         className={`inline-block font-light tracking-wide ${
+                                           introTypewriterText.includes(word) || introPhase === 'dispersing'
+                                             ? 'opacity-100' 
+                                             : 'opacity-0'
+                                         }`}
+                                         style={{
+                                           textShadow: '0 2px 20px rgba(255, 255, 255, 0.1)'
+                                         }}
+                                       >
+                                         {word}
+                                       </motion.span>
                                     ))}
                                     {introPhase === 'typing' && (
                                       <motion.span
