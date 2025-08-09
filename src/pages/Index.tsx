@@ -84,7 +84,7 @@ const Index = () => {
     { type: "asmi", text: "Context:\n• Last spoke July 15 about contract terms and pricing structure\n• Steve expressed concerns about implementation timeline\n• His team is evaluating 3 vendors, decision due end of August\n• Acme Corp expanding West Coast operations - good timing", delay: 3500, timestamp: "9:21 AM" }
   ];
 
-  // Demo 4: Executive Assistant - Advanced task management
+  // Demo 4: Blink, It's Done - Advanced task management
   const demo4Messages = [
     { type: "user", text: "Book 1 hr dinner with Sophia to run me through marketing plan. Pick a quiet downtown SF spot.", delay: 2000, timestamp: "9:22 AM" },
     { type: "asmi", text: "Dinner with Sophia\n\n🕗 07:00 PM, Aug 8, 2025\n👤 Sophia Lee, BrightWave\n📍 The Rotunda at Neiman Marcus\n📋 Agenda: Marketing plan walkthrough", delay: 2500, timestamp: "9:22 AM" },
@@ -96,7 +96,7 @@ const Index = () => {
   ];
 
   const demos = [demo1Messages, demo2Messages, demo3Messages, demo4Messages];
-  const demoTitles = ["Profile Discovery", "Smart Scheduling", "Meeting Intelligence", "Executive Assistant"];
+  const demoTitles = ["Profile Discovery", "Smart Scheduling", "Meeting Intelligence", "Blink, It's Done"];
   
   // Reorganized demo cycle: intro(0) → demo1(1) → demo2(2) → demo3(3) → demo4(4) → end(5)
   const totalDemoCycles = 6;
@@ -213,32 +213,15 @@ const Index = () => {
     setIntroTimeout(() => {
       setIntroPhase('typing');
 
-      // Phase 2: Fade-through upward typewriter effect
+      // Phase 2: Modern fast-paced AI app effect for "AI Chief of Staff"
       const text = "AI Chief of Staff";
-      const words = text.split(" ");
-      let wordIndex = 0;
-      let isTransitioning = false;
-
-      const showNextWord = () => {
-        if (wordIndex < words.length && !isTransitioning) {
-          isTransitioning = true;
-          
-          // Fade out current text with upward slide
-          if (introTypewriterText) {
-            // Current text slides up and fades out
-            setTimeout(() => {
-              setIntroTypewriterText(words.slice(0, wordIndex + 1).join(" "));
-              wordIndex++;
-              isTransitioning = false;
-            }, 400); // Crossfade duration
-          } else {
-            // First word appears
-            setIntroTypewriterText(words[0]);
-            wordIndex++;
-            isTransitioning = false;
-          }
-        } else if (wordIndex >= words.length) {
-          // All words shown, prepare to disperse
+      let charIndex = 0;
+      
+      const typewriter = setIntroInterval(() => {
+        if (charIndex <= text.length) {
+          setIntroTypewriterText(text.slice(0, charIndex));
+          charIndex++;
+        } else {
           clearAllIntroTimers();
           
           setIntroTimeout(() => {
@@ -251,10 +234,7 @@ const Index = () => {
             }, INTRO_TIMINGS.DISPERSE_DELAY_MS);
           }, INTRO_TIMINGS.FADE_DELAY_MS);
         }
-      };
-
-      // Start the word-by-word animation
-      setIntroInterval(showNextWord, 600); // Slower, more elegant timing
+      }, 100); // Fast-paced typing
     }, INTRO_TIMINGS.LOGO_MS);
 
     return () => {
@@ -629,23 +609,29 @@ const Index = () => {
                                 animate={{ scale: 1, opacity: 1 }}
                                 transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                               >
-                                <motion.h1
-                                  className="text-2xl sm:text-3xl font-medium text-white/90 tracking-wide mb-3"
-                                  initial={{ opacity: 0, y: 20 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ delay: 0.1, duration: 0.5 }}
-                                >
-                                  It's that simple.
-                                </motion.h1>
-                                
-                                <motion.p 
-                                  className="text-lg sm:text-xl text-white/70 font-light leading-relaxed"
-                                  initial={{ opacity: 0, y: 20 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ delay: 0.2, duration: 0.5 }}
-                                >
-                                  Your AI chief of staff that just gets it done.
-                                </motion.p>
+                                 <motion.h1
+                                   className="text-xl sm:text-2xl font-medium text-white/90 tracking-wide mb-2"
+                                   initial={{ opacity: 0, y: 20 }}
+                                   animate={{ opacity: 1, y: 0 }}
+                                   transition={{ delay: 0.1, duration: 0.5 }}
+                                 >
+                                   <motion.span
+                                     className="inline-block bg-gradient-to-r from-white via-white to-gray-200 bg-clip-text text-transparent"
+                                     animate={{
+                                       backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                                     }}
+                                     transition={{
+                                       duration: 2,
+                                       repeat: Infinity,
+                                       ease: "easeInOut"
+                                     }}
+                                     style={{
+                                       backgroundSize: "200% 200%"
+                                     }}
+                                   >
+                                     Ready to Move Fast
+                                   </motion.span>
+                                 </motion.h1>
                               </motion.div>
                             </motion.div>
                         ) : (
