@@ -202,45 +202,45 @@ const Index = () => {
     setShowIntro(true);
   };
 
-  // Intro screen logic - separated for clean state management
+  // Simplified intro screen logic with better state management
   useEffect(() => {
     if (!isIntroDemo) return;
     
-    // Reset all intro states first
-    resetIntroStates();
+    // Reset states
+    clearAllIntroTimers();
+    setIntroPhase('logo');
+    setIntroTypewriterText("");
+    setShowIntroParticles(false);
 
-    // Phase 1: Show logo
-    setIntroTimeout(() => {
+    // Phase 1: Show "Asmi" logo for 1.5s
+    const logoTimer = setIntroTimeout(() => {
       setIntroPhase('typing');
 
-      // Phase 2: Modern fast-paced AI app effect for "AI Chief of Staff"
+      // Phase 2: Fast-paced typewriter for "AI Chief of Staff"
       const text = "AI Chief of Staff";
       let charIndex = 0;
       
-      const typewriter = setIntroInterval(() => {
+      const typewriterInterval = setIntroInterval(() => {
         if (charIndex <= text.length) {
           setIntroTypewriterText(text.slice(0, charIndex));
           charIndex++;
         } else {
           clearAllIntroTimers();
           
-          setIntroTimeout(() => {
-            setIntroPhase('dispersing');
-            
-            setIntroTimeout(() => {
-              setCurrentDemo(1);
-              setMessageIndex(0);
-              setShowIntro(false);
-            }, INTRO_TIMINGS.DISPERSE_DELAY_MS);
-          }, INTRO_TIMINGS.FADE_DELAY_MS);
+          // Brief pause then transition to demo
+          const fadeTimer = setIntroTimeout(() => {
+            setShowIntro(false);
+            setCurrentDemo(1);
+            setMessageIndex(0);
+          }, 800);
         }
-      }, 100); // Fast-paced typing
-    }, INTRO_TIMINGS.LOGO_MS);
+      }, 80); // Fast modern typing
+    }, 1500);
 
     return () => {
       clearAllIntroTimers();
     };
-  }, [currentDemo, introCycleId]); // Depend on introCycleId to force fresh mount
+  }, [currentDemo, introCycleId]);
 
   // End screen logic - separated for clean state management
   useEffect(() => {
@@ -520,79 +520,50 @@ const Index = () => {
                    {/* Container with overflow hidden to create scroll context */}
                    <div className="pt-14 pb-3 px-1 h-full overflow-hidden">
                      <AnimatePresence mode="wait">
-                           {showIntro || isIntroDemo ? (
-                            // Elegant Intro Screen - Mobile First
-                              <motion.div
-                                key={`intro-${introCycleId}`}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1.05 }}
-                                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                                className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-4 relative overflow-hidden"
-                              >
-                                {/* Asmi Logo - Clean & Elegant */}
-                                <motion.div
-                                  initial={{ scale: 0.8, opacity: 0 }}
-                                  animate={{ scale: 1, opacity: 1 }}
-                                  transition={{ 
-                                    delay: 0.2,
-                                    duration: 0.6,
-                                    ease: [0.4, 0, 0.2, 1] 
-                                  }}
-                                  className="mb-4"
-                                >
-                                  <motion.div
-                                    animate={
-                                      introPhase === 'dispersing'
-                                        ? {
-                                            scale: 0.9,
-                                            opacity: 0,
-                                            y: -30,
-                                          }
-                                        : {
-                                            scale: 1,
-                                            opacity: 1,
-                                            y: 0,
-                                          }
-                                    }
-                                    transition={{
-                                      duration: 0.4,
-                                      ease: [0.4, 0, 0.2, 1]
-                                    }}
-                                  >
-                                    <h1 className="text-4xl sm:text-5xl font-medium tracking-wide text-white/90">
-                                      Asmi
-                                    </h1>
-                                  </motion.div>
-                                </motion.div>
-
-                                {/* Fade-Through Upward Text Animation */}
-                                <AnimatePresence mode="wait">
-                                  {introPhase === 'typing' && (
-                                    <motion.div
-                                      key={`subtitle-${introTypewriterText}-${introCycleId}`}
-                                      initial={{ y: 20, opacity: 0 }}
-                                      animate={{ y: 0, opacity: 1 }}
-                                      exit={{ 
-                                        y: -20, 
-                                        opacity: 0,
-                                        transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
-                                      }}
-                                      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                                      className="text-lg sm:text-xl text-white/70 font-light tracking-wide text-center"
-                                    >
-                                      {introTypewriterText}
-                                      <motion.span
-                                        animate={{ opacity: [1, 0] }}
-                                        transition={{ duration: 0.8, repeat: Infinity }}
-                                        className="ml-1 text-white/50"
-                                      >
-                                        |
-                                      </motion.span>
-                                    </motion.div>
-                                  )}
-                                </AnimatePresence>
-                              </motion.div>
+                        {showIntro || isIntroDemo ? (
+                         // Modern Intro Screen - Fast-Paced AI App Effect
+                           <motion.div
+                             key={`intro-${introCycleId}`}
+                             initial={{ opacity: 0 }}
+                             animate={{ opacity: 1 }}
+                             exit={{ opacity: 0 }}
+                             transition={{ duration: 0.5 }}
+                             className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6 relative overflow-hidden"
+                           >
+                             {/* Asmi Title */}
+                             <motion.div
+                               initial={{ scale: 0.9, opacity: 0 }}
+                               animate={{ scale: 1, opacity: 1 }}
+                               transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                               className="text-center"
+                             >
+                               <div className="text-4xl sm:text-5xl font-medium tracking-wide text-white/90 mb-3">
+                                 Asmi
+                               </div>
+                               
+                               {/* AI Chief of Staff - Fast Typewriter */}
+                               <AnimatePresence>
+                                 {introPhase === 'typing' && (
+                                   <motion.div
+                                     initial={{ y: 15, opacity: 0 }}
+                                     animate={{ y: 0, opacity: 1 }}
+                                     exit={{ y: -15, opacity: 0 }}
+                                     transition={{ duration: 0.4 }}
+                                     className="text-lg sm:text-xl text-white/70 font-light tracking-wide"
+                                   >
+                                     {introTypewriterText}
+                                     <motion.span
+                                       animate={{ opacity: [1, 0] }}
+                                       transition={{ duration: 0.6, repeat: Infinity }}
+                                       className="ml-1 text-[#5DFF9F]"
+                                     >
+                                       |
+                                     </motion.span>
+                                   </motion.div>
+                                 )}
+                               </AnimatePresence>
+                             </motion.div>
+                           </motion.div>
                          ) : endScreenVisible || isEndDemo ? (
                             // Elegant End Screen - Mobile First
                             <motion.div
