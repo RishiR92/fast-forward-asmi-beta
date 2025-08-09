@@ -600,7 +600,7 @@ const Index = () => {
                                        backgroundSize: "200% 200%"
                                      }}
                                    >
-                                     Ready to Move Fast
+                                     Ready to Move Fast?
                                    </motion.span>
                                  </motion.h1>
                               </motion.div>
