@@ -202,63 +202,86 @@ const Index = () => {
     setShowIntro(true);
   };
 
-  // Enhanced intro screen with sequential animations
+  // Intro screen logic - separated for clean state management
   useEffect(() => {
-    if (isIntroDemo) {
-      // Reset all intro states first
-      resetIntroStates();
+    if (!isIntroDemo) return;
+    
+    // Reset all intro states first
+    resetIntroStates();
 
-      // Phase 1: Show logo
-      setIntroTimeout(() => {
-        setIntroPhase('typing');
+    // Phase 1: Show logo
+    setIntroTimeout(() => {
+      setIntroPhase('typing');
 
-        // Phase 2: Typewriter effect for "AI Chief of Staff"
-        const text = "AI Chief of Staff";
-        let charIndex = 0;
+      // Phase 2: Typewriter effect for "AI Chief of Staff"
+      const text = "AI Chief of Staff";
+      let charIndex = 0;
 
-        setIntroInterval(() => {
-          if (charIndex < text.length) {
-            setIntroTypewriterText(text.substring(0, charIndex + 1));
-            charIndex++;
-          } else {
-            // Stop any previous timers before dispersing
-            clearAllIntroTimers();
+      setIntroInterval(() => {
+        if (charIndex < text.length) {
+          setIntroTypewriterText(text.substring(0, charIndex + 1));
+          charIndex++;
+        } else {
+          // Stop any previous timers before dispersing
+          clearAllIntroTimers();
 
-            // Phase 3: Elegant fade-out effect after typing completes
+          // Phase 3: Elegant fade-out effect after typing completes
+          setIntroTimeout(() => {
+            setIntroPhase('dispersing');
+
+            // Move to next demo after fade-out
             setIntroTimeout(() => {
-              setIntroPhase('dispersing');
+              setCurrentDemo(1);
+              setMessageIndex(0);
+              setShowIntro(false);
+            }, INTRO_TIMINGS.DISPERSE_DELAY_MS);
+          }, INTRO_TIMINGS.FADE_DELAY_MS);
+        }
+      }, INTRO_TIMINGS.TYPE_INTERVAL_MS);
+    }, INTRO_TIMINGS.LOGO_MS);
 
-              // Move to next demo after fade-out
-              setIntroTimeout(() => {
-                setCurrentDemo(1);
-                setMessageIndex(0);
-                setShowIntro(false);
-              }, INTRO_TIMINGS.DISPERSE_DELAY_MS);
-            }, INTRO_TIMINGS.FADE_DELAY_MS);
-          }
-        }, INTRO_TIMINGS.TYPE_INTERVAL_MS);
-      }, INTRO_TIMINGS.LOGO_MS);
+    return () => {
+      clearAllIntroTimers();
+    };
+  }, [currentDemo, introCycleId]); // Depend on introCycleId to force fresh mount
 
-      return () => {
-        clearAllIntroTimers();
-      };
-    } else if (isEndDemo) {
-      setEndScreenVisible(true);
+  // End screen logic - separated for clean state management
+  useEffect(() => {
+    if (!isEndDemo) return;
+    
+    // Clear any remaining intro timers
+    clearAllIntroTimers();
+    setEndScreenVisible(true);
 
-      // Show end screen then reset and move to intro
-      setIntroTimeout(() => {
-        // Clean transition from end screen to intro
-        setEndScreenVisible(false);
+    // Show end screen then transition back to intro
+    const endTimer = setTimeout(() => {
+      // First hide the end screen
+      setEndScreenVisible(false);
+      
+      // Then prepare for intro transition
+      setTimeout(() => {
+        // Reset all states for clean intro
+        setShowIntro(true);
+        setIntroPhase('logo');
+        setIntroTypewriterText("");
+        setShowIntroParticles(false);
+        
+        // Force fresh intro mount and navigate to intro
+        setIntroCycleId(prev => prev + 1);
+        setCurrentDemo(0);
+        setMessageIndex(0);
+      }, INTRO_TIMINGS.END_TO_INTRO_DELAY_MS);
+    }, 4000);
 
-        setIntroTimeout(() => {
-          setIntroCycleId(prev => prev + 1);
-          setCurrentDemo(0); // Back to intro
-          setMessageIndex(0);
-        }, INTRO_TIMINGS.END_TO_INTRO_DELAY_MS);
-      }, 4000);
+    return () => {
+      clearTimeout(endTimer);
+      clearAllIntroTimers();
+    };
+  }, [currentDemo]);
 
-      return () => clearAllIntroTimers();
-    } else {
+  // Clean up non-intro/end states
+  useEffect(() => {
+    if (!isIntroDemo && !isEndDemo) {
       setShowIntro(false);
       setEndScreenVisible(false);
     }
