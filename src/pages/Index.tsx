@@ -30,13 +30,13 @@ const Index = () => {
   // End screen animation states
   const [endScreenVisible, setEndScreenVisible] = useState(false);
 
-  // Intro timing constants
+  // Unified timing constants for consistent transitions
   const INTRO_TIMINGS = {
-    LOGO_MS: 1000,
-    TYPE_INTERVAL_MS: 60,
-    FADE_DELAY_MS: 800,
-    DISPERSE_DELAY_MS: 800,
-    END_TO_INTRO_DELAY_MS: 120
+    LOGO_MS: 1500,
+    TYPE_INTERVAL_MS: 80,
+    FADE_DELAY_MS: 500,
+    DISPERSE_DELAY_MS: 500,
+    END_TO_INTRO_DELAY_MS: 500
   };
 
   // Force fresh mount of intro on each loop
@@ -213,23 +213,37 @@ const Index = () => {
     setIntroTimeout(() => {
       setIntroPhase('typing');
 
-      // Phase 2: Typewriter effect for "AI Chief of Staff"
+      // Phase 2: Fade-through upward typewriter effect
       const text = "AI Chief of Staff";
-      let charIndex = 0;
+      const words = text.split(" ");
+      let wordIndex = 0;
+      let isTransitioning = false;
 
-      setIntroInterval(() => {
-        if (charIndex < text.length) {
-          setIntroTypewriterText(text.substring(0, charIndex + 1));
-          charIndex++;
-        } else {
-          // Stop any previous timers before dispersing
+      const showNextWord = () => {
+        if (wordIndex < words.length && !isTransitioning) {
+          isTransitioning = true;
+          
+          // Fade out current text with upward slide
+          if (introTypewriterText) {
+            // Current text slides up and fades out
+            setTimeout(() => {
+              setIntroTypewriterText(words.slice(0, wordIndex + 1).join(" "));
+              wordIndex++;
+              isTransitioning = false;
+            }, 400); // Crossfade duration
+          } else {
+            // First word appears
+            setIntroTypewriterText(words[0]);
+            wordIndex++;
+            isTransitioning = false;
+          }
+        } else if (wordIndex >= words.length) {
+          // All words shown, prepare to disperse
           clearAllIntroTimers();
-
-          // Phase 3: Elegant fade-out effect after typing completes
+          
           setIntroTimeout(() => {
             setIntroPhase('dispersing');
-
-            // Move to next demo after fade-out
+            
             setIntroTimeout(() => {
               setCurrentDemo(1);
               setMessageIndex(0);
@@ -237,7 +251,10 @@ const Index = () => {
             }, INTRO_TIMINGS.DISPERSE_DELAY_MS);
           }, INTRO_TIMINGS.FADE_DELAY_MS);
         }
-      }, INTRO_TIMINGS.TYPE_INTERVAL_MS);
+      };
+
+      // Start the word-by-word animation
+      setIntroInterval(showNextWord, 600); // Slower, more elegant timing
     }, INTRO_TIMINGS.LOGO_MS);
 
     return () => {
@@ -253,25 +270,21 @@ const Index = () => {
     clearAllIntroTimers();
     setEndScreenVisible(true);
 
-    // Show end screen then transition back to intro
+    // Show end screen then transition back to intro with consistent timing
     const endTimer = setTimeout(() => {
-      // First hide the end screen
       setEndScreenVisible(false);
       
-      // Then prepare for intro transition
       setTimeout(() => {
-        // Reset all states for clean intro
         setShowIntro(true);
         setIntroPhase('logo');
         setIntroTypewriterText("");
         setShowIntroParticles(false);
         
-        // Force fresh intro mount and navigate to intro
         setIntroCycleId(prev => prev + 1);
         setCurrentDemo(0);
         setMessageIndex(0);
       }, INTRO_TIMINGS.END_TO_INTRO_DELAY_MS);
-    }, 4000);
+    }, 3000); // Consistent 3s display time
 
     return () => {
       clearTimeout(endTimer);
@@ -323,19 +336,18 @@ const Index = () => {
         return () => clearTimeout(timer);
       }
     } else {
-      // Transition to next demo or loop back to first
+      // Transition to next demo with consistent timing
       const transitionTimer = setTimeout(() => {
         setIsTransitioning(true);
         setIsTyping(false);
         setPhoneGlow(false);
         
-        // After transition animation, switch demo
         setTimeout(() => {
-          setCurrentDemo(prev => (prev + 1) % totalDemoCycles); // Cycle through 0,1,2,3,4 (4 = intro)
+          setCurrentDemo(prev => (prev + 1) % totalDemoCycles);
           setMessageIndex(0);
           setIsTransitioning(false);
-        }, 800); // Transition duration
-      }, 3000); // Pause before transition
+        }, 500); // Faster, smoother transition
+      }, 2000); // Consistent demo pause timing
       
       return () => clearTimeout(transitionTimer);
     }
@@ -528,257 +540,114 @@ const Index = () => {
                    {/* Container with overflow hidden to create scroll context */}
                    <div className="pt-14 pb-3 px-1 h-full overflow-hidden">
                      <AnimatePresence mode="wait">
-                          {showIntro || isIntroDemo ? (
-                           // Enhanced Intro Screen with Elegant Fade-Out
-                             <motion.div
-                               key={`intro-${introCycleId}`}
-                               initial={{ opacity: 0, scale: 0.8 }}
-                             animate={{ opacity: 1, scale: 1 }}
-                             exit={{ opacity: 0, scale: 0.9 }}
-                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                             className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6 relative overflow-hidden"
-                           >
-                              {/* Asmi Logo - Always shown first */}
+                           {showIntro || isIntroDemo ? (
+                            // Elegant Intro Screen - Mobile First
                               <motion.div
-                                initial={{ scale: 0.5, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ 
-                                  delay: 0.3,
-                                  duration: 0.8,
-                                  ease: [0.4, 0, 0.2, 1] 
-                                }}
-                                className="mb-6"
+                                key={`intro-${introCycleId}`}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 1.05 }}
+                                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                                className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-4 relative overflow-hidden"
                               >
+                                {/* Asmi Logo - Clean & Elegant */}
                                 <motion.div
-                                  animate={
-                                    introPhase === 'dispersing'
-                                      ? {
-                                          scale: 0.3,
-                                          opacity: 0,
-                                          y: -60,
-                                          rotateX: 180,
-                                          filter: "blur(4px)"
-                                        }
-                                      : {
-                                          scale: 1,
-                                          opacity: 1,
-                                          y: 0,
-                                          rotateX: 0,
-                                          filter: [
-                                            "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))",
-                                            "drop-shadow(0 0 30px rgba(160, 124, 254, 0.6))",
-                                            "drop-shadow(0 0 20px rgba(160, 124, 254, 0.3))"
-                                          ]
-                                        }
-                                  }
-                                  transition={
-                                    introPhase === 'dispersing'
-                                      ? {
-                                          duration: 0.8,
-                                          ease: "easeOut"
-                                        }
-                                      : {
-                                          duration: 2,
-                                          repeat: Infinity,
-                                          ease: "easeInOut"
-                                        }
-                                  }
+                                  initial={{ scale: 0.8, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  transition={{ 
+                                    delay: 0.2,
+                                    duration: 0.6,
+                                    ease: [0.4, 0, 0.2, 1] 
+                                  }}
+                                  className="mb-4"
                                 >
-                                  <h1 className="text-7xl lg:text-8xl font-bold tracking-tight">
-                                    <span 
-                                      className="bg-gradient-to-r from-[#5DFF9F] to-[#A07CFE] bg-clip-text text-transparent"
-                                      style={{ 
-                                        fontFamily: 'Inter, sans-serif',
-                                        letterSpacing: '-0.02em',
-                                        textShadow: '0 0 40px rgba(93, 255, 159, 0.3), 0 0 80px rgba(160, 124, 254, 0.2)'
-                                      }}
-                                    >
-                                      {"Asmi".split('').map((char, index) => (
-                                        <motion.span
-                                          key={index}
-                                          initial={{ opacity: 0, y: 20 }}
-                                          animate={{ opacity: 1, y: 0 }}
-                                          transition={{
-                                            delay: index * 0.1,
-                                            duration: 0.6,
-                                            ease: "easeOut"
-                                          }}
-                                        >
-                                          {char}
-                                        </motion.span>
-                                      ))}
-                                    </span>
-                                  </h1>
-                                </motion.div>
-                              </motion.div>
-
-                              {/* Crossfade AI Chief of Staff Text */}
-                              <AnimatePresence>
-                                {((introPhase === 'typing' && introTypewriterText.length > 0) || introPhase === 'dispersing') && (
                                   <motion.div
-                                    key={`subtitle-${introCycleId}`}
-                                    initial={{ y: 30, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    exit={{ 
-                                      y: -40, 
-                                      opacity: 0,
-                                      transition: { duration: 1.2, ease: "easeInOut" }
+                                    animate={
+                                      introPhase === 'dispersing'
+                                        ? {
+                                            scale: 0.9,
+                                            opacity: 0,
+                                            y: -30,
+                                          }
+                                        : {
+                                            scale: 1,
+                                            opacity: 1,
+                                            y: 0,
+                                          }
+                                    }
+                                    transition={{
+                                      duration: 0.4,
+                                      ease: [0.4, 0, 0.2, 1]
                                     }}
-                                    transition={{ duration: 0.8, ease: "easeOut" }}
-                                    className="font-inter text-2xl lg:text-3xl text-white/90 flex items-center justify-center flex-wrap gap-1 mt-4"
                                   >
-                                    {["AI", "Chief", "of", "Staff"].map((word, index) => (
-                                      <motion.span
-                                        key={`${word}-${introCycleId}`}
-                                        initial={{ opacity: 0, y: 15 }}
-                                        animate={{ 
-                                          opacity: introPhase === 'dispersing' ? [1, 0.6, 0] : 1,
-                                          y: introPhase === 'dispersing' ? [0, -20, -50] : 0,
-                                          scale: introPhase === 'dispersing' ? [1, 0.5, 0] : 1,
-                                          rotateX: introPhase === 'dispersing' ? [0, 90, 180] : 0,
-                                          filter: introPhase === 'dispersing' ? ["blur(0px)", "blur(1px)", "blur(3px)"] : "blur(0px)"
-                                        }}
-                                         transition={{
-                                           delay: introPhase === 'dispersing' ? index * 0.2 : index * 0.15,
-                                           duration: introPhase === 'dispersing' ? 1.5 : 0.6,
-                                           ease: "easeOut"
-                                         }}
-                                         className={`inline-block font-light tracking-wide ${
-                                           introTypewriterText.includes(word) || introPhase === 'dispersing'
-                                             ? 'opacity-100' 
-                                             : 'opacity-0'
-                                         }`}
-                                         style={{
-                                           textShadow: '0 2px 20px rgba(255, 255, 255, 0.1)'
-                                         }}
-                                       >
-                                         {word}
-                                       </motion.span>
-                                    ))}
-                                    {introPhase === 'typing' && (
+                                    <h1 className="text-4xl sm:text-5xl font-medium tracking-wide text-white/90">
+                                      Asmi
+                                    </h1>
+                                  </motion.div>
+                                </motion.div>
+
+                                {/* Fade-Through Upward Text Animation */}
+                                <AnimatePresence mode="wait">
+                                  {introPhase === 'typing' && (
+                                    <motion.div
+                                      key={`subtitle-${introTypewriterText}-${introCycleId}`}
+                                      initial={{ y: 20, opacity: 0 }}
+                                      animate={{ y: 0, opacity: 1 }}
+                                      exit={{ 
+                                        y: -20, 
+                                        opacity: 0,
+                                        transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
+                                      }}
+                                      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                                      className="text-lg sm:text-xl text-white/70 font-light tracking-wide text-center"
+                                    >
+                                      {introTypewriterText}
                                       <motion.span
                                         animate={{ opacity: [1, 0] }}
                                         transition={{ duration: 0.8, repeat: Infinity }}
-                                        className="ml-1 text-[#5DFF9F]"
+                                        className="ml-1 text-white/50"
                                       >
                                         |
                                       </motion.span>
-                                    )}
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
-                           </motion.div>
-                        ) : endScreenVisible || isEndDemo ? (
-                           // Elegant End Screen with Enhanced Typography
-                           <motion.div
-                             key="end"
-                             initial={{ opacity: 0, scale: 0.8 }}
-                             animate={{ opacity: 1, scale: 1 }}
-                             exit={{ opacity: 0, scale: 0.9 }}
-                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-                             className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-6 relative overflow-hidden"
-                           >
-                             {/* Elegant Background Particles */}
-                             {Array.from({ length: 8 }).map((_, i) => (
-                               <motion.div
-                                 key={`bg-particle-${i}`}
-                                 className="absolute w-1 h-1 bg-[#5DFF9F]/20 rounded-full"
-                                 style={{
-                                   left: `${20 + (i * 10)}%`,
-                                   top: `${30 + (i % 3) * 20}%`
-                                 }}
-                                 animate={{
-                                   y: [-20, 20, -20],
-                                   opacity: [0.2, 0.8, 0.2],
-                                   scale: [1, 1.5, 1]
-                                 }}
-                                 transition={{
-                                   duration: 3 + i * 0.5,
-                                   repeat: Infinity,
-                                   ease: "easeInOut",
-                                   delay: i * 0.3
-                                 }}
-                               />
-                             ))}
-
-                             <motion.div
-                               className="text-center relative z-10"
-                               initial={{ scale: 0.5, opacity: 0 }}
-                               animate={{ scale: 1, opacity: 1 }}
-                               transition={{ duration: 0.6, ease: "easeOut" }}
-                             >
-                                {/* Enhanced Typography with Gradient and Effects */}
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              </motion.div>
+                         ) : endScreenVisible || isEndDemo ? (
+                            // Elegant End Screen - Mobile First
+                            <motion.div
+                              key="end"
+                              initial={{ opacity: 0, scale: 0.95 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 1.05 }}
+                              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                              className="bg-[#0B141A] h-full flex flex-col items-center justify-center px-4 relative overflow-hidden"
+                            >
+                              <motion.div
+                                className="text-center relative z-10"
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                              >
                                 <motion.h1
-                                  className="text-xl sm:text-2xl font-semibold whitespace-nowrap relative"
-                                  style={{ 
-                                    background: 'linear-gradient(135deg, #5DFF9F 0%, #ffffff 50%, #5DFF9F 100%)',
-                                    backgroundClip: 'text',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    letterSpacing: '0.05em'
-                                  }}
-                                  animate={{
-                                    scale: [1, 1.02, 1],
-                                    filter: [
-                                      "drop-shadow(0 0 30px rgba(93, 255, 159, 0.4))",
-                                      "drop-shadow(0 0 40px rgba(93, 255, 159, 0.6))",
-                                      "drop-shadow(0 0 30px rgba(93, 255, 159, 0.4))"
-                                    ]
-                                  }}
-                                  transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                  }}
+                                  className="text-2xl sm:text-3xl font-medium text-white/90 tracking-wide mb-3"
+                                  initial={{ opacity: 0, y: 20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: 0.1, duration: 0.5 }}
                                 >
-                                  {"Ready to Move Fast?".split("").map((char, i) => (
-                                    <motion.span
-                                      key={i}
-                                      initial={{ 
-                                        opacity: 0, 
-                                        y: 30,
-                                        rotateX: -90
-                                      }}
-                                      animate={{ 
-                                        opacity: 1, 
-                                        y: 0,
-                                        rotateX: 0
-                                      }}
-                                      transition={{
-                                        delay: i * 0.08,
-                                        duration: 0.6,
-                                        type: "spring",
-                                        stiffness: 200,
-                                        damping: 15
-                                      }}
-                                      style={{
-                                        display: char === " " ? "inline" : "inline-block"
-                                      }}
-                                    >
-                                      {char === " " ? "\u00A0" : char}
-                                    </motion.span>
-                                  ))}
-                                  
-                                  {/* Shimmer Effect */}
-                                  <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                                    style={{
-                                      transform: 'skewX(-20deg)',
-                                      width: '30%'
-                                    }}
-                                    animate={{
-                                      x: ['-200%', '300%']
-                                    }}
-                                    transition={{
-                                      duration: 3,
-                                      repeat: Infinity,
-                                      ease: "easeInOut",
-                                      repeatDelay: 2
-                                    }}
-                                  />
+                                  It's that simple.
                                 </motion.h1>
-                             </motion.div>
-                           </motion.div>
+                                
+                                <motion.p 
+                                  className="text-lg sm:text-xl text-white/70 font-light leading-relaxed"
+                                  initial={{ opacity: 0, y: 20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: 0.2, duration: 0.5 }}
+                                >
+                                  Your AI chief of staff that just gets it done.
+                                </motion.p>
+                              </motion.div>
+                            </motion.div>
                         ) : (
                          // Demo Content
                          <motion.div
