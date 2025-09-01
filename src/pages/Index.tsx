@@ -71,10 +71,10 @@ const Index = () => {
 
   // Demo 2: Smart Scheduling - Meeting coordination
   const demo2Messages = [
-    { type: "user", text: "Schedule a call with Steve for 3 PM tomorrow.", delay: 2000, timestamp: "9:18 AM" },
-    { type: "asmi", text: "Call with Steve\n\n🕒 03:00 PM, Aug 8, 2025\n👤 Steve Johnson\n📋 Agenda: Catch up + next steps\n🔗 meet.google.com/xyz-1234", delay: 2500, timestamp: "9:18 AM" },
-    { type: "user", text: "Confirmed", delay: 1500, timestamp: "9:19 AM" },
-    { type: "asmi", text: "Meeting scheduled ✅", delay: 1500, timestamp: "9:19 AM" }
+    { type: "user", text: "Hey Asmi, block dinner with Sam this Sunday. Pick a good pizza place", delay: 2000, timestamp: "9:18 AM" },
+    { type: "asmi", text: "Dinner with Sam booked ✅\n\n🕒 8:00 PM - 9:00 PM, Sunday\n👤 Sam Rodriguez\n🍕 Top pizza spots in San Francisco:\n\n• Tony's Little Star Pizza (North Beach)\n• Arizmendi Bakery (Mission)\n• Delfina Pizzeria (Castro)\n\nReservation confirmed at Tony's ⭐", delay: 3000, timestamp: "9:18 AM" },
+    { type: "user", text: "Perfect!", delay: 1500, timestamp: "9:19 AM" },
+    { type: "asmi", text: "Calendar updated & reservation set 🎉", delay: 1500, timestamp: "9:19 AM" }
   ];
 
   // Demo 3: Meeting Intelligence - Deep research & prep
