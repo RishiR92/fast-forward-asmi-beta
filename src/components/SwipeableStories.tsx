@@ -15,22 +15,22 @@ interface Story {
 const stories: Story[] = [
   {
     id: "family-dinner",
-    before: "🎤 Block dinner with Sam this Sunday. Pick a good pizza place",
-    after: "✅ Dinner time blocked: Sunday 8-9 PM\n\n👤 Sam Rodriguez confirmed via text\n\n🍕 Top pizza spots near you:\n\n• Tony's Little Star Pizza (North Beach) ⭐ 4.8\n• Arizmendi Bakery (Mission) 🌱 vegan options\n• Delfina Pizzeria (Castro) 🔥 wood-fired\n\n🔗 Reservation links ready",
+    before: "Block dinner with Sam Sunday. Good pizza place?",
+    after: "✅ Sunday 8 PM blocked\n👤 Sam confirmed\n\n🍕 Top spots:\n• Tony's Little Star ⭐ 4.8\n• Arizmendi 🌱 vegan\n• Delfina 🔥 wood-fired\n\n🔗 Links ready",
     icon: Mic,
     color: "text-blue-400"
   },
   {
     id: "work-meeting", 
-    before: "Meeting with Steve tomorrow at 3 PM needs prep",
-    after: "👤 Steve Johnson, VP Sales @ Acme Corp\n\n💼 Background: Enterprise sales leader, 3 years at Acme, former Oracle director\n\n🎯 Talking points:\n\n• Address timeline concerns\n• Share ROI case studies\n• Close pilot by month-end\n\n📊 Deal value: $500K+",
+    before: "Prep for Steve meeting tomorrow 3 PM",
+    after: "👤 Steve Johnson\nVP Sales @ Acme\n\n🎯 Focus:\n• Timeline concerns\n• ROI case studies\n• Close $500K pilot\n\n💼 Former Oracle director",
     icon: Calendar,
     color: "text-green-400"
   },
   {
     id: "weekly-errands",
-    before: "🎤 Remind me to pick up prescriptions and groceries this week",
-    after: "📝 Recurring tasks scheduled:\n\n💊 Pharmacy pickup: Tuesday 11 AM (Rx #4782 ready)\n\n🛒 Grocery run: Wednesday 6 PM\n• Milk, eggs, bread\n• Fresh produce (spinach, tomatoes)\n• Emma's school snacks\n\n⏰ Calendar reminders set\n📍 Optimized route saved",
+    before: "Remind me prescriptions & groceries this week",
+    after: "📝 Scheduled:\n\n💊 Tue 11 AM: Pharmacy\n(Rx #4782 ready)\n\n🛒 Wed 6 PM: Groceries\nMilk, eggs, produce\n\n⏰ Reminders set",
     icon: CheckCircle,
     color: "text-purple-400"
   }
@@ -114,13 +114,13 @@ export const SwipeableStories = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: -10 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className={`rounded-2xl p-4 max-w-xs mx-auto relative shadow-lg transition-all duration-300 ${
+                className={`rounded-2xl p-3 max-w-[85%] mx-auto relative shadow-lg transition-all duration-300 ${
                   step === 'before' 
                     ? 'bg-[#007AFF] text-white ml-auto rounded-tr-md' 
                     : 'bg-[#1F2937] text-white mr-auto rounded-tl-md border border-white/5'
                 }`}
               >
-                <p className="text-sm whitespace-pre-line leading-relaxed">
+                <p className="text-xs sm:text-sm whitespace-pre-line leading-relaxed">
                   {step === 'before' ? stories[currentStory].before : stories[currentStory].after}
                 </p>
                 
@@ -147,13 +147,13 @@ export const SwipeableStories = () => {
 
             {/* Dynamic hint text */}
             <motion.p 
-              className="text-center text-gray-400 text-xs mt-4"
+              className="text-center text-gray-400 text-[10px] sm:text-xs mt-4"
               key={step}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              Tap for next task
+              Tap for next
             </motion.p>
           </Card>
         </motion.div>

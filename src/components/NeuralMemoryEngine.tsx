@@ -20,7 +20,7 @@ const memoryNodes: MemoryNode[] = [
     label: "Calendar",
     position: { x: 50, y: 20 },
     mobilePosition: { x: 50, y: 25 },
-    data: ["Meeting with Sarah @ 3pm", "Investor call @ 5pm", "Emma's soccer practice @ 4pm"]
+    data: ["Sarah meeting 3pm", "Investor call 5pm", "Emma's soccer 4pm"]
   },
   {
     id: "mail",
@@ -28,7 +28,7 @@ const memoryNodes: MemoryNode[] = [
     label: "Mails",
     position: { x: 80, y: 50 },
     mobilePosition: { x: 75, y: 50 },
-    data: ["Follow-up from Acme Corp", "School newsletter - science fair", "Dentist appointment confirmation"]
+    data: ["Acme Corp follow-up", "School science fair", "Dentist confirmation"]
   },
   {
     id: "conversations",
@@ -36,7 +36,7 @@ const memoryNodes: MemoryNode[] = [
     label: "Conversations",
     position: { x: 50, y: 80 },
     mobilePosition: { x: 50, y: 75 },
-    data: ["Plan weekend trip to Tahoe", "Emma's school project help", "Client pricing discussion"]
+    data: ["Tahoe trip planning", "Emma's project help", "Client pricing talk"]
   },
   {
     id: "internet",
@@ -44,7 +44,7 @@ const memoryNodes: MemoryNode[] = [
     label: "Internet",
     position: { x: 20, y: 50 },
     mobilePosition: { x: 25, y: 50 },
-    data: ["Steve's LinkedIn updated", "Tahoe weather forecast", "Pizza places SF reviews"]
+    data: ["Steve's LinkedIn", "Tahoe weather", "SF pizza reviews"]
   }
 ];
 
@@ -63,7 +63,7 @@ export const NeuralMemoryEngine = () => {
             Asmi Memory Engine
           </h2>
           <p className="text-lg text-gray-400 mb-12 max-w-3xl mx-auto">
-            Every mail, meeting, and voice note connects in real-time
+            Every mail, meeting, and conversation connects in real-time
           </p>
 
           {/* Neural Network Visualization - Responsive */}

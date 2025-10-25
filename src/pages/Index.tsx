@@ -62,18 +62,18 @@ const Index = () => {
 
   // Demo 1: Kids School Management (Personal)
   const demo1Messages = [
-    { type: "user", text: "Asmi, Emma has a science project due Friday and soccer practice conflicting with piano. Help me sort this out", delay: 2000, timestamp: "9:15 AM" },
-    { type: "asmi", text: "Science project timeline breakdown ✅\n\n📚 Research phase: Wednesday evening\n🔨 Build phase: Thursday evening\n🎤 Practice presentation: Friday morning\n\n⏰ Reminders set for Wed & Thu at 6 PM", delay: 2500, timestamp: "9:15 AM" },
-    { type: "asmi", text: "Schedule conflicts resolved 🎹\n\n• Piano lesson rescheduled to Saturday 10 AM (Ms. Rodriguez confirmed)\n• Soccer practice stays Tuesday 4-5 PM\n• Carpool arranged with Sarah M. for pickup", delay: 2500, timestamp: "9:16 AM" },
-    { type: "asmi", text: "Supply list for science project:\n\n✓ Poster board (tri-fold)\n✓ Markers & colored pencils\n✓ Glue sticks\n✓ Scissors\n✓ Printed photos (volcano stages)\n\n🔗 Amazon cart link ready", delay: 3000, timestamp: "9:17 AM" }
+    { type: "user", text: "Emma has science project Friday & soccer conflicts with piano", delay: 2000, timestamp: "9:15 AM" },
+    { type: "asmi", text: "✅ Project timeline\n📚 Research Wed eve\n🔨 Build Thu eve\n🎤 Practice Fri AM", delay: 2500, timestamp: "9:15 AM" },
+    { type: "asmi", text: "🎹 Piano → Sat 10 AM\n⚽ Soccer stays Tue 4 PM\n🚗 Carpool with Sarah", delay: 2500, timestamp: "9:16 AM" },
+    { type: "asmi", text: "Supply list:\nPoster board, markers, glue\n\n🔗 Amazon cart ready", delay: 2500, timestamp: "9:17 AM" }
   ];
 
   // Demo 2: Travel Management (Personal)
   const demo2Messages = [
-    { type: "user", text: "Planning weekend trip to Tahoe with family next month. Handle the basics", delay: 2000, timestamp: "9:18 AM" },
-    { type: "asmi", text: "Tahoe Trip Planning - Dec 15-17 🏔️\n\n🏨 Best hotels for families:\n• Resort at Squaw Creek (ski-in/ski-out, kids program)\n• Hyatt Regency Lake Tahoe (pet-friendly, beach access)\n• Basecamp Hotel (budget-friendly, cozy)\n\n🔗 Booking links ready", delay: 3000, timestamp: "9:18 AM" },
-    { type: "asmi", text: "Flight price tracking activated ✅\n\n✈️ SFO → Reno: $180-240/person\n📊 Price drop alerts ON\n💡 Tip: Prices lowest on Tuesdays\n\nDrive option: 3.5 hours (leave 6 AM, avoid traffic)", delay: 2500, timestamp: "9:19 AM" },
-    { type: "asmi", text: "Must-visit spots & packing:\n\n📍 Places:\n• Emerald Bay scenic point\n• Tahoe City winter village\n• Donner Lake (less crowded)\n\n🎒 Pack for Emma (age 8):\n• Snow boots (size 2, she grew!)\n• Thermal layers × 3\n• Swim suit (hotel pool)\n• iPad + charger (car ride)\n\n☀️ Weather: 20-35°F, light snow expected", delay: 3500, timestamp: "9:20 AM" }
+    { type: "user", text: "Weekend Tahoe trip next month with family", delay: 2000, timestamp: "9:18 AM" },
+    { type: "asmi", text: "🏔️ Dec 15-17 hotels:\n• Squaw Creek (ski-in)\n• Hyatt (pet-friendly)\n• Basecamp (budget)\n\n🔗 Links ready", delay: 2500, timestamp: "9:18 AM" },
+    { type: "asmi", text: "✈️ Flight tracking ON\nSFO-Reno: $180-240\n📊 Price alerts active\n\n🚗 Drive: 3.5hrs (6 AM)", delay: 2500, timestamp: "9:19 AM" },
+    { type: "asmi", text: "📍 Must-see: Emerald Bay\n\n🎒 Emma pack:\nSnow boots, thermals, swimsuit\n\n☀️ 20-35°F, light snow", delay: 2500, timestamp: "9:20 AM" }
   ];
 
   // Demo 3: Meeting Intelligence - Deep research & prep

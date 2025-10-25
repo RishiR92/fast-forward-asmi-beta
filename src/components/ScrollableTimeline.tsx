@@ -38,38 +38,29 @@ const timelineMoments: TimelineMoment[] = [
   {
     time: "7:30 AM",
     title: "Morning Kickoff",
-    userInput: "What's on tap today? Keep it tight",
+    userInput: "What's on tap today?",
     response: {
       title: "Today's Overview",
       items: [
         {
           title: "Kids",
-          subtitle: "Emma's school pickup",
-          details: ["3:30 PM early dismissal", "Science fair permission slip due"],
+          subtitle: "Emma pickup 3:30 PM",
           tags: ["Personal"]
-        },
-        {
-          title: "Personal",
-          subtitle: "Dentist appointment",
-          details: ["10 AM, Dr. Chen", "Bring insurance card"],
-          tags: ["Health"]
         },
         {
           title: "Work",
-          subtitle: "Client call with Acme Corp",
-          details: ["2 PM, pricing discussion", "Decision maker: Steve Johnson"],
+          subtitle: "Acme call 2 PM",
+          details: ["Pricing discussion"],
           tags: ["Sales"]
         },
         {
-          title: "Errands",
-          subtitle: "Pharmacy pickup & groceries",
-          details: ["Prescription refill ready", "Essentials list prepped"],
-          tags: ["Personal"]
+          title: "Personal",
+          subtitle: "Dentist 10 AM",
+          tags: ["Health"]
         },
         {
           title: "Evening",
-          subtitle: "Date night at Zuni Café",
-          details: ["7:30 PM reservation confirmed"],
+          subtitle: "Date night 7:30 PM",
           tags: ["Personal"]
         }
       ]
@@ -80,30 +71,30 @@ const timelineMoments: TimelineMoment[] = [
   {
     time: "1:45 PM",
     title: "Client Brief",
-    userInput: "Quick brief on Acme Corp before the 2 PM call",
+    userInput: "Quick Acme brief",
     response: {
-      title: "Acme Corp Meeting Prep",
+      title: "Meeting Prep",
       items: [
         {
-          title: "Company Overview",
-          details: ["Enterprise SaaS, 500+ employees", "Expanding West Coast operations"],
-          tags: ["Enterprise"]
-        },
-        {
           title: "Steve Johnson",
-          subtitle: "VP Sales, Decision Maker",
-          details: ["MIT Sloan MBA", "3 years at Acme, former Oracle director"],
+          subtitle: "VP Sales",
           tags: ["Contact"]
         },
         {
-          title: "Last Conversation",
+          title: "Last Talk",
           subtitle: "July 15",
-          details: ["Discussed pricing concerns", "Implementation timeline worries"],
+          details: ["Pricing concerns"],
+          tags: ["Context"]
         },
         {
-          title: "Talking Points",
-          details: ["Address timeline concerns", "Share ROI case studies", "Goal: Close pilot by month-end ($500K+ deal)"],
+          title: "Focus",
+          details: ["ROI case studies"],
           tags: ["Strategy"]
+        },
+        {
+          title: "Goal",
+          subtitle: "Close $500K pilot",
+          tags: ["Sales"]
         }
       ]
     },
@@ -112,39 +103,31 @@ const timelineMoments: TimelineMoment[] = [
   },
   {
     time: "3:15 PM",
-    title: "School Pickup Reminder",
-    userInput: "Remind me about Emma's pickup and what's next",
+    title: "School Pickup",
+    userInput: "Emma's schedule?",
     response: {
-      title: "Emma's Schedule",
+      title: "Emma's Day",
       items: [
         {
           title: "Pickup",
-          subtitle: "3:30 PM",
-          details: ["Early dismissal, room 204", "North entrance"],
+          subtitle: "3:30 PM, room 204",
           tags: ["School"]
         },
         {
-          title: "After School",
-          subtitle: "Soccer practice 4-5 PM",
+          title: "Soccer",
+          subtitle: "4-5 PM",
           location: "Central Park",
-          details: ["Bring water bottle"],
           tags: ["Sports"]
         },
         {
           title: "Carpool",
-          details: ["Dropping off Mia (Sarah's daughter) on way home"],
+          subtitle: "Drop Mia home",
           tags: ["Personal"]
         },
         {
-          title: "Evening Prep",
-          details: ["Piano practice 5:30-6 PM", "Dinner ingredients ready (pasta + salad)"],
+          title: "Evening",
+          subtitle: "Piano + dinner",
           tags: ["Home"]
-        },
-        {
-          title: "Note",
-          subtitle: "Science project supplies",
-          details: ["Arrived yesterday - unpack together tonight"],
-          tags: ["School"]
         }
       ]
     },
@@ -154,30 +137,28 @@ const timelineMoments: TimelineMoment[] = [
   {
     time: "5:45 PM",
     title: "Email Wrap-up",
-    userInput: "Show me emails that need replies before I sign off",
+    userInput: "Priority emails?",
     response: {
-      title: "Draft Replies Ready",
+      title: "Drafts Ready",
       items: [
         {
           title: "Acme Corp",
-          subtitle: "Follow-up on today's call",
-          details: ["Draft ready, send now"],
+          subtitle: "Follow-up draft",
           actions: [{ label: "Send", type: "send", status: "ready" }]
         },
         {
-          title: "Priya (PM Candidate)",
-          subtitle: "Interview schedule confirmation",
-          details: ["Urgent, send tonight"],
+          title: "Priya",
+          subtitle: "Interview confirm",
+          details: ["Urgent"],
           actions: [{ label: "Send", type: "send", status: "ready" }]
         },
         {
-          title: "Northstar Logistics",
-          subtitle: "Contract review meeting",
-          details: ["Thursday meeting proposed"],
+          title: "Northstar",
+          subtitle: "Thu meeting OK?",
           actions: [{ label: "Draft", type: "view", status: "ready" }]
         }
       ],
-      summary: "3 drafts ready to review, 2 can wait until tomorrow morning"
+      summary: "3 need review tonight"
     },
     icon: RotateCcw,
     color: "text-[#5DFF9F]"
@@ -231,15 +212,15 @@ export const ScrollableTimeline = () => {
       <div className="overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
         <div className="flex gap-4 min-w-max px-4 md:justify-center items-start">
           {timelineMoments.map((moment, index) => (
-            <motion.div
-              key={index}
-              ref={(el) => (cardRefs.current[index] = el)}
-              className="flex-none w-[300px] md:w-[320px] snap-center"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.8 }}
-              whileHover={{ y: -8, scale: 1.02 }}
-            >
+              <motion.div
+                key={index}
+                ref={(el) => (cardRefs.current[index] = el)}
+                className="flex-none w-[280px] md:w-[320px] snap-center"
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.2, duration: 0.8 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+              >
               <Card className="bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#5DFF9F]/30 transition-all duration-300 rounded-xl shadow-lg cursor-pointer"
                 onClick={() => toggleCard(index)}
                 role="button"
@@ -275,12 +256,12 @@ export const ScrollableTimeline = () => {
 
                   {/* User Input */}
                   <motion.div
-                    className="bg-muted/8 rounded-xl rounded-tr-md p-3 ml-6 relative shadow-lg border border-border/20 backdrop-blur-sm"
+                    className="bg-muted/8 rounded-xl rounded-tr-md p-2.5 ml-4 relative shadow-lg border border-border/20 backdrop-blur-sm"
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.3 + 0.5 }}
                   >
-                    <p className="text-gray-400 text-xs leading-relaxed">{moment.userInput}</p>
+                    <p className="text-gray-400 text-[11px] leading-relaxed">{moment.userInput}</p>
                     <div className="absolute top-2 -right-1 w-2 h-2 bg-muted/8 rotate-45 border-t border-r border-border/20" />
                   </motion.div>
 
@@ -297,7 +278,7 @@ export const ScrollableTimeline = () => {
                          transition={{ duration: 2, repeat: Infinity }}
                          className="w-1.5 h-1.5 bg-[#5DFF9F]/60 rounded-full"
                        />
-                      <span className="text-gray-400 text-xs">Tap to see Asmi's response</span>
+                      <span className="text-gray-400 text-[10px]">Tap to see response</span>
                       <motion.div
                         animate={{ y: [0, 3, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
@@ -312,7 +293,7 @@ export const ScrollableTimeline = () => {
                     {openIndex === index && (
                       <motion.div
                         id={`response-${index}`}
-                        className="bg-card/80 rounded-xl rounded-tl-md p-3 mr-6 relative shadow-lg border border-border/50 backdrop-blur-sm"
+                        className="bg-card/80 rounded-xl rounded-tl-md p-2.5 mr-4 relative shadow-lg border border-border/50 backdrop-blur-sm"
                         initial={{ opacity: 0, height: 0, x: -20 }}
                         animate={{ opacity: 1, height: "auto", x: 0 }}
                         exit={{ opacity: 0, height: 0, x: -20 }}
@@ -326,7 +307,7 @@ export const ScrollableTimeline = () => {
                         
                          {/* Response Title */}
                          <motion.div 
-                           className="text-[#5DFF9F] text-xs font-medium mb-2"
+                           className="text-[#5DFF9F] text-[10px] font-medium mb-2"
                            initial={{ opacity: 0, y: 10 }}
                            animate={{ opacity: 1, y: 0 }}
                            transition={{ delay: 0.2 }}
@@ -349,15 +330,15 @@ export const ScrollableTimeline = () => {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: 0.6 + itemIndex * 0.1 }}
                             >
-                              <div className="flex items-start gap-2">
+                               <div className="flex items-start gap-2">
                                  {item.time && (
-                                   <span className="bg-[#5DFF9F]/10 text-[#5DFF9F] text-xs font-mono px-1.5 py-0.5 rounded flex-shrink-0 border border-[#5DFF9F]/30">
+                                   <span className="bg-[#5DFF9F]/10 text-[#5DFF9F] text-[10px] font-mono px-1.5 py-0.5 rounded flex-shrink-0 border border-[#5DFF9F]/30">
                                      {item.time}
                                    </span>
                                  )}
                                   <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-1.5 mb-1">
-                                      <span className="text-white text-xs font-medium">{item.title}</span>
+                                    <div className="flex items-center gap-1.5 mb-0.5">
+                                      <span className="text-white text-[11px] font-medium">{item.title}</span>
                                       {item.type === 'zoom' && <div className="w-1.5 h-1.5 bg-[#5DFF9F]/20 rounded-full border border-[#5DFF9F]/40"></div>}
                                       {item.type === 'in-person' && <div className="w-1.5 h-1.5 bg-[#A07CFE]/20 rounded-full border border-[#A07CFE]/40"></div>}
                                       {item.status && (
@@ -368,12 +349,12 @@ export const ScrollableTimeline = () => {
                                     </div>
                                     
                                     {item.subtitle && (
-                                      <div className="text-gray-400 text-xs mb-1">{item.subtitle}</div>
+                                      <div className="text-gray-400 text-[10px] mb-0.5">{item.subtitle}</div>
                                     )}
                                     
                                     {item.location && (
-                                      <div className="text-[#A07CFE] text-xs flex items-center gap-1 mb-1 bg-[#A07CFE]/10 px-1.5 py-0.5 rounded-md border border-[#A07CFE]/30">
-                                        <MapPin className="w-3 h-3" />
+                                      <div className="text-[#A07CFE] text-[10px] flex items-center gap-1 mb-0.5 bg-[#A07CFE]/10 px-1.5 py-0.5 rounded-md border border-[#A07CFE]/30">
+                                        <MapPin className="w-2.5 h-2.5" />
                                         {item.location}
                                       </div>
                                     )}
@@ -381,8 +362,8 @@ export const ScrollableTimeline = () => {
                                     {item.details && (
                                       <div className="space-y-0.5">
                                         {item.details.map((detail, detailIndex) => (
-                                          <div key={detailIndex} className="text-gray-400 text-xs flex items-center gap-1.5">
-                                            <div className="w-1 h-1 bg-gray-400/40 rounded-full flex-shrink-0"></div>
+                                          <div key={detailIndex} className="text-gray-400 text-[10px] flex items-center gap-1.5">
+                                            <div className="w-0.5 h-0.5 bg-gray-400/40 rounded-full flex-shrink-0"></div>
                                             {detail}
                                           </div>
                                         ))}
