@@ -62,18 +62,18 @@ const Index = () => {
 
   // Demo 1: Kids School Management (Personal)
   const demo1Messages = [
-    { type: "user", text: "Emma has science project Friday & soccer conflicts with piano", delay: 2000, timestamp: "9:15 AM" },
-    { type: "asmi", text: "✅ Project timeline\n📚 Research Wed eve\n🔨 Build Thu eve\n🎤 Practice Fri AM", delay: 2500, timestamp: "9:15 AM" },
-    { type: "asmi", text: "🎹 Piano → Sat 10 AM\n⚽ Soccer stays Tue 4 PM\n🚗 Carpool with Sarah", delay: 2500, timestamp: "9:16 AM" },
-    { type: "asmi", text: "Supply list:\nPoster board, markers, glue\n\n🔗 Amazon cart ready", delay: 2500, timestamp: "9:17 AM" }
+    { type: "user", text: "Emma has science project due Friday and soccer conflicts with piano lesson", delay: 2000, timestamp: "9:15 AM" },
+    { type: "asmi", text: "✅ Science project timeline created:\n\n📚 Research phase - Wed 6-7 PM\n🔨 Build volcano model - Thu 6-8 PM\n🎤 Practice presentation - Fri morning\n\n⏰ Reminders scheduled", delay: 2500, timestamp: "9:15 AM" },
+    { type: "asmi", text: "Schedule conflicts resolved:\n\n🎹 Piano lesson moved to Sat 10 AM (Ms. Rodriguez confirmed)\n⚽ Soccer practice stays Tue 4-5 PM\n🚗 Sarah M. arranged for carpool pickup", delay: 2500, timestamp: "9:16 AM" },
+    { type: "asmi", text: "Supply list for volcano project:\n• Tri-fold poster board\n• Markers & colored pencils\n• Glue sticks, scissors\n• Printed volcano stage photos\n\n🔗 Amazon cart link ready", delay: 2500, timestamp: "9:17 AM" }
   ];
 
   // Demo 2: Travel Management (Personal)
   const demo2Messages = [
-    { type: "user", text: "Weekend Tahoe trip next month with family", delay: 2000, timestamp: "9:18 AM" },
-    { type: "asmi", text: "🏔️ Dec 15-17 hotels:\n• Squaw Creek (ski-in)\n• Hyatt (pet-friendly)\n• Basecamp (budget)\n\n🔗 Links ready", delay: 2500, timestamp: "9:18 AM" },
-    { type: "asmi", text: "✈️ Flight tracking ON\nSFO-Reno: $180-240\n📊 Price alerts active\n\n🚗 Drive: 3.5hrs (6 AM)", delay: 2500, timestamp: "9:19 AM" },
-    { type: "asmi", text: "📍 Must-see: Emerald Bay\n\n🎒 Emma pack:\nSnow boots, thermals, swimsuit\n\n☀️ 20-35°F, light snow", delay: 2500, timestamp: "9:20 AM" }
+    { type: "user", text: "Planning weekend trip to Lake Tahoe next month with the family", delay: 2000, timestamp: "9:18 AM" },
+    { type: "asmi", text: "🏔️ Best family hotels for Dec 15-17:\n\n• Resort at Squaw Creek (ski-in/ski-out, kids program)\n• Hyatt Regency (pet-friendly, lakefront)\n• Basecamp Hotel (budget-friendly, cozy)\n\n🔗 Booking links ready", delay: 2500, timestamp: "9:18 AM" },
+    { type: "asmi", text: "✈️ Flight price tracking activated:\nSFO → Reno: $180-240/person\n📊 Price drop alerts ON\n💡 Best rates on Tuesdays\n\n🚗 Drive option: 3.5 hours\n(Leave 6 AM to avoid traffic)", delay: 2500, timestamp: "9:19 AM" },
+    { type: "asmi", text: "📍 Must-visit spots:\n• Emerald Bay scenic overlook\n• Tahoe City winter village\n\n🎒 Packing list for Emma (age 8):\n• Snow boots size 2 (she grew!)\n• Thermal layers x3\n• Swimsuit for hotel pool\n\n☀️ Weather: 20-35°F, light snow expected", delay: 2500, timestamp: "9:20 AM" }
   ];
 
   // Demo 3: Meeting Intelligence - Deep research & prep
@@ -86,12 +86,10 @@ const Index = () => {
   // Demo 4: Blink, It's Done - Advanced task management
   const demo4Messages = [
     { type: "user", text: "Book 1 hr dinner with Sophia to run me through marketing plan. Pick a quiet downtown SF spot.", delay: 2000, timestamp: "9:22 AM" },
-    { type: "asmi", text: "Dinner with Sophia\n\n🕗 07:00 PM, Aug 8, 2025\n👤 Sophia Lee, BrightWave\n📍 The Rotunda at Neiman Marcus\n📋 Agenda: Marketing plan walkthrough", delay: 2500, timestamp: "9:22 AM" },
-    { type: "user", text: "Confirmed", delay: 1500, timestamp: "9:23 AM" },
-    { type: "asmi", text: "Dinner scheduled ✅", delay: 1500, timestamp: "9:23 AM" },
-    { type: "asmi", text: "Pat (Sequoia) reached out 2 days ago about an investment chat. Want me to draft a reply?", delay: 3000, timestamp: "9:24 AM" },
+    { type: "asmi", text: "✅ Dinner scheduled with Sophia\n\n🕗 07:00 PM, Aug 8, 2025\n👤 Sophia Lee, BrightWave Marketing\n📍 The Rotunda at Neiman Marcus\n📋 Agenda: Marketing plan walkthrough\n\nCalendar invite sent", delay: 2500, timestamp: "9:22 AM" },
+    { type: "asmi", text: "Pat Chen from Sequoia reached out 2 days ago about investment discussion. Want me to send a reply?", delay: 3000, timestamp: "9:23 AM" },
     { type: "user", text: "Yes", delay: 1500, timestamp: "9:24 AM" },
-    { type: "asmi", text: "Draft Reply to Pat\n\n\"Hi Pat, thanks for reaching out. I'd love to explore this further. How about we schedule a call for next week? I'm available Tuesday-Thursday afternoons. Looking forward to connecting.\"", delay: 2500, timestamp: "9:25 AM" }
+    { type: "asmi", text: "✅ Reply sent to Pat\n\n\"Hi Pat, thanks for reaching out. I'd love to explore this further. How about we schedule a call for next week? I'm available Tuesday-Thursday afternoons. Looking forward to connecting.\"\n\nCopied on your behalf", delay: 2500, timestamp: "9:25 AM" }
   ];
 
   const demos = [demo1Messages, demo3Messages, demo2Messages, demo4Messages];

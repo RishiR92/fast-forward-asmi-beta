@@ -38,30 +38,33 @@ const timelineMoments: TimelineMoment[] = [
   {
     time: "7:30 AM",
     title: "Morning Kickoff",
-    userInput: "What's on tap today?",
+    userInput: "What's on tap today? Keep it tight",
     response: {
       title: "Today's Overview",
       items: [
         {
-          title: "Kids",
-          subtitle: "Emma pickup 3:30 PM",
-          tags: ["Personal"]
+          title: "Emma's early dismissal",
+          subtitle: "Pickup 3:30 PM (Room 204, north entrance)",
+          details: ["Science fair permission slip due"]
         },
         {
-          title: "Work",
-          subtitle: "Acme call 2 PM",
-          details: ["Pricing discussion"],
-          tags: ["Sales"]
+          title: "Dentist appointment",
+          subtitle: "10:00 AM with Dr. Chen",
+          details: ["Bring insurance card"]
         },
         {
-          title: "Personal",
-          subtitle: "Dentist 10 AM",
-          tags: ["Health"]
+          title: "Acme Corp client call",
+          subtitle: "2:00 PM (Zoom)",
+          details: ["Pricing discussion", "$500K+ deal"]
         },
         {
-          title: "Evening",
-          subtitle: "Date night 7:30 PM",
-          tags: ["Personal"]
+          title: "Pharmacy pickup ready",
+          subtitle: "Prescription refill #4782"
+        },
+        {
+          title: "Date night reservation",
+          subtitle: "7:30 PM at Zuni Café",
+          details: ["Confirmed for 2 guests"]
         }
       ]
     },
@@ -71,30 +74,27 @@ const timelineMoments: TimelineMoment[] = [
   {
     time: "1:45 PM",
     title: "Client Brief",
-    userInput: "Quick Acme brief",
+    userInput: "Quick brief on Acme Corp before the 2 PM call",
     response: {
       title: "Meeting Prep",
       items: [
         {
-          title: "Steve Johnson",
-          subtitle: "VP Sales",
-          tags: ["Contact"]
+          title: "Steve Johnson - VP Sales at Acme Corp",
+          subtitle: "Decision maker, MIT Sloan MBA",
+          details: ["3 years at Acme", "Former Oracle director"]
         },
         {
-          title: "Last Talk",
-          subtitle: "July 15",
-          details: ["Pricing concerns"],
-          tags: ["Context"]
+          title: "Last conversation - July 15",
+          details: ["Discussed pricing concerns", "Implementation timeline worries"]
         },
         {
-          title: "Focus",
-          details: ["ROI case studies"],
-          tags: ["Strategy"]
+          title: "Key talking points",
+          details: ["Address timeline concerns", "Share ROI case studies from similar enterprise clients"]
         },
         {
-          title: "Goal",
-          subtitle: "Close $500K pilot",
-          tags: ["Sales"]
+          title: "Goal: Close pilot agreement",
+          subtitle: "$500K+ deal value",
+          details: ["Target: month-end"]
         }
       ]
     },
@@ -104,30 +104,28 @@ const timelineMoments: TimelineMoment[] = [
   {
     time: "3:15 PM",
     title: "School Pickup",
-    userInput: "Emma's schedule?",
+    userInput: "Remind me about Emma's pickup and what's next",
     response: {
-      title: "Emma's Day",
+      title: "Emma's Afternoon",
       items: [
         {
-          title: "Pickup",
-          subtitle: "3:30 PM, room 204",
-          tags: ["School"]
+          title: "School pickup - 3:30 PM",
+          subtitle: "Early dismissal today",
+          details: ["Room 204, north entrance"]
         },
         {
-          title: "Soccer",
-          subtitle: "4-5 PM",
-          location: "Central Park",
-          tags: ["Sports"]
+          title: "Soccer practice after school",
+          subtitle: "4:00 - 5:00 PM at Central Park",
+          details: ["Bring water bottle"]
         },
         {
-          title: "Carpool",
-          subtitle: "Drop Mia home",
-          tags: ["Personal"]
+          title: "Carpool duty",
+          subtitle: "Drop off Mia (Sarah's daughter) on way home"
         },
         {
-          title: "Evening",
-          subtitle: "Piano + dinner",
-          tags: ["Home"]
+          title: "Evening routine",
+          subtitle: "Piano practice 5:30-6:00 PM",
+          details: ["Dinner ingredients ready (pasta + salad)", "Science project supplies arrived - unpack together tonight"]
         }
       ]
     },
@@ -137,28 +135,30 @@ const timelineMoments: TimelineMoment[] = [
   {
     time: "5:45 PM",
     title: "Email Wrap-up",
-    userInput: "Priority emails?",
+    userInput: "Show me emails that need replies before I sign off",
     response: {
-      title: "Drafts Ready",
+      title: "Ready to Send",
       items: [
         {
-          title: "Acme Corp",
-          subtitle: "Follow-up draft",
-          actions: [{ label: "Send", type: "send", status: "ready" }]
+          title: "Acme Corp follow-up",
+          subtitle: "Follow-up from today's call",
+          details: ["Draft summarizes pricing discussion and next steps"],
+          actions: [{ label: "Send Now", type: "send", status: "ready" }]
         },
         {
-          title: "Priya",
-          subtitle: "Interview confirm",
-          details: ["Urgent"],
-          actions: [{ label: "Send", type: "send", status: "ready" }]
+          title: "Priya interview confirmation",
+          subtitle: "PM candidate interview schedule",
+          details: ["Urgent - needs response tonight"],
+          actions: [{ label: "Send Now", type: "send", status: "ready" }]
         },
         {
-          title: "Northstar",
-          subtitle: "Thu meeting OK?",
-          actions: [{ label: "Draft", type: "view", status: "ready" }]
+          title: "Northstar Logistics contract review",
+          subtitle: "Proposed Thursday meeting",
+          details: ["Can wait until tomorrow morning"],
+          actions: [{ label: "Review Draft", type: "view", status: "ready" }]
         }
       ],
-      summary: "3 need review tonight"
+      summary: "2 urgent, 1 can wait"
     },
     icon: RotateCcw,
     color: "text-[#5DFF9F]"
@@ -370,28 +370,6 @@ export const ScrollableTimeline = () => {
                                       </div>
                                     )}
                                     
-                                    {item.tags && (
-                                      <div className="flex gap-1 mt-1 flex-wrap">
-                                        {item.tags.map((tag, tagIndex) => {
-                                          const isPersonal = ['Personal', 'Health', 'Home', 'School', 'Sports'].includes(tag);
-                                          const isWork = ['Sales', 'Enterprise', 'Contact', 'Strategy'].includes(tag);
-                                          return (
-                                            <span 
-                                              key={tagIndex} 
-                                              className={`text-[10px] px-1.5 py-0.5 rounded-full border ${
-                                                isPersonal 
-                                                  ? 'bg-[#A07CFE]/15 text-[#A07CFE] border-[#A07CFE]/30' 
-                                                  : isWork
-                                                  ? 'bg-[#5DFF9F]/15 text-[#5DFF9F] border-[#5DFF9F]/30'
-                                                  : 'bg-[#5DFF9F]/15 text-[#5DFF9F] border-[#5DFF9F]/30'
-                                              }`}
-                                            >
-                                              {tag}
-                                            </span>
-                                          );
-                                        })}
-                                      </div>
-                                    )}
                                     
                                      {item.actions && (
                                        <div className="flex gap-1 mt-1.5 flex-wrap">
