@@ -14,23 +14,23 @@ interface Story {
 
 const stories: Story[] = [
   {
-    id: "voice-meeting",
-    before: "🎤 Schedule coffee with Sarah tomorrow 3pm",
-    after: "✅ Meeting scheduled with Sarah Johnson\n\n📧 Invite sent to sarah@wisprflow.ai\n\n📋 Prep notes ready:\n\n• Q4 marketing strategy discussion\n\n• Brand partnership opportunities\n\n• Review pending case studies",
+    id: "family-dinner",
+    before: "🎤 Block dinner with Sam this Sunday. Pick a good pizza place",
+    after: "✅ Dinner time blocked: Sunday 8-9 PM\n\n👤 Sam Rodriguez confirmed via text\n\n🍕 Top pizza spots near you:\n\n• Tony's Little Star Pizza (North Beach) ⭐ 4.8\n• Arizmendi Bakery (Mission) 🌱 vegan options\n• Delfina Pizzeria (Castro) 🔥 wood-fired\n\n🔗 Reservation links ready",
     icon: Mic,
     color: "text-blue-400"
   },
   {
-    id: "prep-meeting", 
-    before: "Meeting with John in 30 mins",
-    after: "👤 John Martinez, Senior Developer @ InnovateTech\n\n💼 Background: 8+ years in fintech, recently promoted\n\n🎯 Suggested talking points:\n\n• New API integration timeline\n\n• Team scaling plans\n\n• Code review process improvements",
+    id: "work-meeting", 
+    before: "Meeting with Steve tomorrow at 3 PM needs prep",
+    after: "👤 Steve Johnson, VP Sales @ Acme Corp\n\n💼 Background: Enterprise sales leader, 3 years at Acme, former Oracle director\n\n🎯 Talking points:\n\n• Address timeline concerns\n• Share ROI case studies\n• Close pilot by month-end\n\n📊 Deal value: $500K+",
     icon: Calendar,
     color: "text-green-400"
   },
   {
-    id: "voice-note",
-    before: "🎤 Remind me to follow up with investors about Series A",
-    after: "📝 Action item saved to priority list\n\n⏰ Reminder set for Monday 9 AM\n\n📧 Draft follow-up email prepared:\n\n• Updated pitch deck attached\n\n• Financial projections included\n\n• Meeting availability options",
+    id: "weekly-errands",
+    before: "🎤 Remind me to pick up prescriptions and groceries this week",
+    after: "📝 Recurring tasks scheduled:\n\n💊 Pharmacy pickup: Tuesday 11 AM (Rx #4782 ready)\n\n🛒 Grocery run: Wednesday 6 PM\n• Milk, eggs, bread\n• Fresh produce (spinach, tomatoes)\n• Emma's school snacks\n\n⏰ Calendar reminders set\n📍 Optimized route saved",
     icon: CheckCircle,
     color: "text-purple-400"
   }

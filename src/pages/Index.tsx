@@ -60,21 +60,20 @@ const Index = () => {
     return id;
   };
 
-  // Demo 1: Profile Discovery - Integration & Analysis
+  // Demo 1: Kids School Management (Personal)
   const demo1Messages = [
-    { type: "user", text: "Asmi, you look intriguing! What can you do for me?", delay: 2000, timestamp: "9:15 AM" },
-    { type: "asmi", text: "Hi Alex. Asmi is your smart chief of staff. To get started, first integrate your calendar and mail here and see the magic!", delay: 2500, timestamp: "9:15 AM" },
-    { type: "asmi", text: "Gmail linked ✅\nCalendar linked ✅", delay: 2000, timestamp: "9:16 AM" },
-    { type: "asmi", text: "Well well Alex, you are absolutely crushing it\n\n• Serial entrepreneur & CEO at TechFlow\n• Boston Marathon finisher (3:12 best time)\n• 5× founder with 2 successful exits\n• Stanford MBA, former McKinsey consultant\n• Angel investor in 15+ startups\n• Lives in Palo Alto, originally from Boston", delay: 3000, timestamp: "9:16 AM" },
-    { type: "asmi", text: "Key insights from your emails & calendar\n\n📧 Q3 roadmap due Friday (board pressure)\n📧 Steve Johnson - Acme Corp partnership opportunity\n📅 3 investor calls next week\n📧 Pat (Sequoia) - Series B intro", delay: 2500, timestamp: "9:17 AM" }
+    { type: "user", text: "Asmi, Emma has a science project due Friday and soccer practice conflicting with piano. Help me sort this out", delay: 2000, timestamp: "9:15 AM" },
+    { type: "asmi", text: "Science project timeline breakdown ✅\n\n📚 Research phase: Wednesday evening\n🔨 Build phase: Thursday evening\n🎤 Practice presentation: Friday morning\n\n⏰ Reminders set for Wed & Thu at 6 PM", delay: 2500, timestamp: "9:15 AM" },
+    { type: "asmi", text: "Schedule conflicts resolved 🎹\n\n• Piano lesson rescheduled to Saturday 10 AM (Ms. Rodriguez confirmed)\n• Soccer practice stays Tuesday 4-5 PM\n• Carpool arranged with Sarah M. for pickup", delay: 2500, timestamp: "9:16 AM" },
+    { type: "asmi", text: "Supply list for science project:\n\n✓ Poster board (tri-fold)\n✓ Markers & colored pencils\n✓ Glue sticks\n✓ Scissors\n✓ Printed photos (volcano stages)\n\n🔗 Amazon cart link ready", delay: 3000, timestamp: "9:17 AM" }
   ];
 
-  // Demo 2: Smart Scheduling - Meeting coordination
+  // Demo 2: Travel Management (Personal)
   const demo2Messages = [
-    { type: "user", text: "Hey Asmi, block dinner with Sam this Sunday. Pick a good pizza place", delay: 2000, timestamp: "9:18 AM" },
-    { type: "asmi", text: "Dinner with Sam booked ✅\n\n🕒 8:00 PM - 9:00 PM, Sunday\n👤 Sam Rodriguez\n🍕 Top pizza spots in San Francisco:\n\n• Tony's Little Star Pizza (North Beach)\n• Arizmendi Bakery (Mission)\n• Delfina Pizzeria (Castro)\n\nReservation confirmed at Tony's ⭐", delay: 3000, timestamp: "9:18 AM" },
-    { type: "user", text: "Perfect!", delay: 1500, timestamp: "9:19 AM" },
-    { type: "asmi", text: "Calendar updated & reservation set 🎉", delay: 1500, timestamp: "9:19 AM" }
+    { type: "user", text: "Planning weekend trip to Tahoe with family next month. Handle the basics", delay: 2000, timestamp: "9:18 AM" },
+    { type: "asmi", text: "Tahoe Trip Planning - Dec 15-17 🏔️\n\n🏨 Best hotels for families:\n• Resort at Squaw Creek (ski-in/ski-out, kids program)\n• Hyatt Regency Lake Tahoe (pet-friendly, beach access)\n• Basecamp Hotel (budget-friendly, cozy)\n\n🔗 Booking links ready", delay: 3000, timestamp: "9:18 AM" },
+    { type: "asmi", text: "Flight price tracking activated ✅\n\n✈️ SFO → Reno: $180-240/person\n📊 Price drop alerts ON\n💡 Tip: Prices lowest on Tuesdays\n\nDrive option: 3.5 hours (leave 6 AM, avoid traffic)", delay: 2500, timestamp: "9:19 AM" },
+    { type: "asmi", text: "Must-visit spots & packing:\n\n📍 Places:\n• Emerald Bay scenic point\n• Tahoe City winter village\n• Donner Lake (less crowded)\n\n🎒 Pack for Emma (age 8):\n• Snow boots (size 2, she grew!)\n• Thermal layers × 3\n• Swim suit (hotel pool)\n• iPad + charger (car ride)\n\n☀️ Weather: 20-35°F, light snow expected", delay: 3500, timestamp: "9:20 AM" }
   ];
 
   // Demo 3: Meeting Intelligence - Deep research & prep
@@ -95,8 +94,8 @@ const Index = () => {
     { type: "asmi", text: "Draft Reply to Pat\n\n\"Hi Pat, thanks for reaching out. I'd love to explore this further. How about we schedule a call for next week? I'm available Tuesday-Thursday afternoons. Looking forward to connecting.\"", delay: 2500, timestamp: "9:25 AM" }
   ];
 
-  const demos = [demo1Messages, demo2Messages, demo3Messages, demo4Messages];
-  const demoTitles = ["Profile Discovery", "Smart Scheduling", "Meeting Intelligence", "Blink, It's Done"];
+  const demos = [demo1Messages, demo3Messages, demo2Messages, demo4Messages];
+  const demoTitles = ["Family Coordinator", "Meeting Intelligence", "Trip Planner", "Blink, It's Done"];
   
   // Reorganized demo cycle: intro(0) → demo1(1) → demo2(2) → demo3(3) → demo4(4) → end(5)
   const totalDemoCycles = 6;

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Calendar, Mail, Mic, Globe, Brain } from "lucide-react";
+import { Calendar, Mail, MessageSquare, Globe, Brain } from "lucide-react";
 
 interface MemoryNode {
   id: string;
@@ -20,7 +20,7 @@ const memoryNodes: MemoryNode[] = [
     label: "Calendar",
     position: { x: 50, y: 20 },
     mobilePosition: { x: 50, y: 25 },
-    data: ["Meeting with Sarah @ 3pm", "Investor call @ 5pm", "Team standup @ 9am"]
+    data: ["Meeting with Sarah @ 3pm", "Investor call @ 5pm", "Emma's soccer practice @ 4pm"]
   },
   {
     id: "mail",
@@ -28,15 +28,15 @@ const memoryNodes: MemoryNode[] = [
     label: "Mails",
     position: { x: 80, y: 50 },
     mobilePosition: { x: 75, y: 50 },
-    data: ["Follow-up from John", "Q4 report due", "Partnership proposal"]
+    data: ["Follow-up from Acme Corp", "School newsletter - science fair", "Dentist appointment confirmation"]
   },
   {
-    id: "voice",
-    icon: Mic,
-    label: "Voice Notes",
+    id: "conversations",
+    icon: MessageSquare,
+    label: "Conversations",
     position: { x: 50, y: 80 },
     mobilePosition: { x: 50, y: 75 },
-    data: ["Remember to call mom", "Book flight to NYC", "Review pitch deck"]
+    data: ["Plan weekend trip to Tahoe", "Emma's school project help", "Client pricing discussion"]
   },
   {
     id: "internet",
@@ -44,7 +44,7 @@ const memoryNodes: MemoryNode[] = [
     label: "Internet",
     position: { x: 20, y: 50 },
     mobilePosition: { x: 25, y: 50 },
-    data: ["Sarah's LinkedIn updated", "Company news alert", "Market trends"]
+    data: ["Steve's LinkedIn updated", "Tahoe weather forecast", "Pizza places SF reviews"]
   }
 ];
 

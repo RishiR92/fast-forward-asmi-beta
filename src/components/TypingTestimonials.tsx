@@ -12,40 +12,40 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    quote: "Asmi runs my day in chat — condenses chaos into a one‑pager each morning, drafts follow‑ups, and remembers every promise across Slack, email, and meetings.",
+    quote: "Asmi handles my work chaos and family schedule in one place. Meeting prep, school pickups, travel research—everything flows through one conversation.",
     name: "Founder",
-    role: "Seed-stage SaaS",
+    role: "Tech Startup CEO & Parent",
     avatar: "🚀"
   },
   {
-    quote: "Before every call, Asmi drops a 30‑sec brief: last touch, likely objections, and a tailored opener. My prep time went from 20 min to 2.",
-    name: "Senior AE",
-    role: "Enterprise Sales Team",
-    avatar: "🎯"
-  },
-  {
-    quote: "Asmi tracks deliverables across threads, nudges me on invoices, and drafts scope replies. I review, tweak one line, and send.",
-    name: "Freelancer",
-    role: "Product Designer",
-    avatar: "✨"
-  },
-  {
-    quote: "Weekly exec readouts write themselves — Asmi threads outcomes, risks, and next steps from notes and email. Clients think I never forget.",
+    quote: "Client briefs before calls, restaurant recommendations after. Asmi switches between work mode and life mode seamlessly. It's like having a chief of staff for everything.",
     name: "Consultant",
     role: "Independent Strategy",
     avatar: "📊"
   },
   {
-    quote: "Sourcing is faster. Asmi recalls past convos, suggests warm intros from our CRM, and drafts tailored outreach. Reply rates are up 28%.",
-    name: "Recruiter",
-    role: "Tech Talent",
+    quote: "Tracks my project deadlines and my kids' activities. Reminds me about client invoices and piano lessons. Finally, one AI that gets my whole day.",
+    name: "Designer",
+    role: "Freelance Creative",
+    avatar: "✨"
+  },
+  {
+    quote: "Pipeline hygiene and family coordination. Asmi drafts follow-ups, finds restaurants, and keeps me on top of both careers—work and parenting.",
+    name: "VP Sales",
+    role: "Enterprise SaaS",
+    avatar: "⚡"
+  },
+  {
+    quote: "Weekend trips, doctor appointments, business travel—Asmi researches it all. Tracks flight prices, suggests hotels, creates packing lists. I just decide.",
+    name: "Entrepreneur",
+    role: "Multi-venture Operator",
     avatar: "🧲"
   },
   {
-    quote: "Pipeline hygiene without dashboards — Asmi drafts updates, flags silent deals, and nudges reps on next steps. Our standups are 7 minutes.",
-    name: "VP Sales",
-    role: "Mid‑market",
-    avatar: "⚡"
+    quote: "From board prep to soccer carpools, Asmi handles the details. My calendar reflects my actual life now—not just my job.",
+    name: "Executive",
+    role: "Tech Company COO",
+    avatar: "🎯"
   }
 ];
 

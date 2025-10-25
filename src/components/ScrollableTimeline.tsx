@@ -37,39 +37,40 @@ interface TimelineMoment {
 const timelineMoments: TimelineMoment[] = [
   {
     time: "7:30 AM",
-    title: "Plan of Day",
-    userInput: "Give me a crisp plan for today—meetings, agenda, and what to prep.",
+    title: "Morning Kickoff",
+    userInput: "What's on tap today? Keep it tight",
     response: {
-      title: "Today's Agenda",
+      title: "Today's Overview",
       items: [
         {
-          time: "9:00",
-          title: "Team Standup",
-          subtitle: "Demo handoff + blockers",
-          type: "zoom",
-          actions: [{ label: "Prep Notes", type: "prep" }]
+          title: "Kids",
+          subtitle: "Emma's school pickup",
+          details: ["3:30 PM early dismissal", "Science fair permission slip due"],
+          tags: ["Personal"]
         },
         {
-          time: "11:00",
-          title: "PM Onsite (Priya N.)",
-          subtitle: "Product sense interview",
-          type: "in-person",
-          actions: [{ label: "Hiring Brief", type: "view" }]
+          title: "Personal",
+          subtitle: "Dentist appointment",
+          details: ["10 AM, Dr. Chen", "Bring insurance card"],
+          tags: ["Health"]
         },
         {
-          time: "2:30",
-          title: "Northstar Check-in",
-          subtitle: "Ananya P. • Rollout & pricing",
-          location: "SoMa office",
-          type: "in-person",
-          details: ["Leave at 2:05", "20min commute"],
-          actions: [{ label: "Relationship Brief", type: "prep" }]
+          title: "Work",
+          subtitle: "Client call with Acme Corp",
+          details: ["2 PM, pricing discussion", "Decision maker: Steve Johnson"],
+          tags: ["Sales"]
         },
         {
-          time: "5:30",
-          title: "Email Focus",
-          subtitle: "Follow-ups & approvals",
-          actions: [{ label: "Draft Queue", type: "open" }]
+          title: "Errands",
+          subtitle: "Pharmacy pickup & groceries",
+          details: ["Prescription refill ready", "Essentials list prepped"],
+          tags: ["Personal"]
+        },
+        {
+          title: "Evening",
+          subtitle: "Date night at Zuni Café",
+          details: ["7:30 PM reservation confirmed"],
+          tags: ["Personal"]
         }
       ]
     },
@@ -77,93 +78,106 @@ const timelineMoments: TimelineMoment[] = [
     color: "text-[#5DFF9F]"
   },
   {
-    time: "9:30 AM",
-    title: "Relationship Brief",
-    userInput: "Quick background on Ananya Patel for the 2:30 check‑in — keep it tight.",
+    time: "1:45 PM",
+    title: "Client Brief",
+    userInput: "Quick brief on Acme Corp before the 2 PM call",
     response: {
-      title: "Ananya Patel",
+      title: "Acme Corp Meeting Prep",
       items: [
         {
-          title: "Head of Ops, Northstar Logistics",
-          details: ["Ex-Amazon operations", "Led 3 DC rollouts", "KPI-driven leader"],
-          tags: ["Operations", "Logistics"]
+          title: "Company Overview",
+          details: ["Enterprise SaaS, 500+ employees", "Expanding West Coast operations"],
+          tags: ["Enterprise"]
         },
         {
-          title: "Last Discussion",
-          details: ["Phased rollout strategy", "Pricing guardrails", "Success = on-time departures"]
+          title: "Steve Johnson",
+          subtitle: "VP Sales, Decision Maker",
+          details: ["MIT Sloan MBA", "3 years at Acme, former Oracle director"],
+          tags: ["Contact"]
         },
         {
-          title: "Rapport Builder",
-          subtitle: "IIT Delhi Connection",
-          details: ["Both alumni", "Mention robotics club story"],
-          tags: ["Personal"]
+          title: "Last Conversation",
+          subtitle: "July 15",
+          details: ["Discussed pricing concerns", "Implementation timeline worries"],
+        },
+        {
+          title: "Talking Points",
+          details: ["Address timeline concerns", "Share ROI case studies", "Goal: Close pilot by month-end ($500K+ deal)"],
+          tags: ["Strategy"]
         }
-      ],
-      quickActions: [
-        { label: "Account Brief", type: "view" },
-        { label: "Last Deck", type: "open" }
       ]
     },
     icon: Eye,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "11:00 AM",
-    title: "Hiring Brief",
-    userInput: "Prep me for the Senior PM onsite loop — what to validate?",
+    time: "3:15 PM",
+    title: "School Pickup Reminder",
+    userInput: "Remind me about Emma's pickup and what's next",
     response: {
-      title: "PM Candidates",
+      title: "Emma's Schedule",
       items: [
         {
-          title: "Priya N.",
-          subtitle: "Ex-Stripe • 0→1 Platform",
-          details: ["Strong: Stakeholder mgmt", "Strong: Metrics-driven"],
-          tags: ["Probe: Hardware exp"],
-          status: "Top choice"
+          title: "Pickup",
+          subtitle: "3:30 PM",
+          details: ["Early dismissal, room 204", "North entrance"],
+          tags: ["School"]
         },
         {
-          title: "Marcus L.",
-          subtitle: "Uber Eats • Growth",
-          details: ["Strong: Experiments", "Strong: Scale"],
-          tags: ["Probe: Enterprise depth"]
+          title: "After School",
+          subtitle: "Soccer practice 4-5 PM",
+          location: "Central Park",
+          details: ["Bring water bottle"],
+          tags: ["Sports"]
+        },
+        {
+          title: "Carpool",
+          details: ["Dropping off Mia (Sarah's daughter) on way home"],
+          tags: ["Personal"]
+        },
+        {
+          title: "Evening Prep",
+          details: ["Piano practice 5:30-6 PM", "Dinner ingredients ready (pasta + salad)"],
+          tags: ["Home"]
+        },
+        {
+          title: "Note",
+          subtitle: "Science project supplies",
+          details: ["Arrived yesterday - unpack together tonight"],
+          tags: ["School"]
         }
-      ],
-      summary: "Focus: Roadmap thinking, prioritization tradeoffs",
-      quickActions: [
-        { label: "Interview Packet", type: "open" },
-        { label: "Exercises", type: "prep" }
       ]
     },
     icon: Mic,
     color: "text-[#5DFF9F]"
   },
   {
-    time: "5:30 PM",
-    title: "Important Emails",
-    userInput: "Surface important emails I haven't replied to and draft replies.",
+    time: "5:45 PM",
+    title: "Email Wrap-up",
+    userInput: "Show me emails that need replies before I sign off",
     response: {
       title: "Draft Replies Ready",
       items: [
         {
-          title: "ACME Corp",
-          subtitle: "Pilot kickoff Monday",
-          details: ["Success plan attached"],
+          title: "Acme Corp",
+          subtitle: "Follow-up on today's call",
+          details: ["Draft ready, send now"],
           actions: [{ label: "Send", type: "send", status: "ready" }]
         },
         {
-          title: "Nimbus",
-          subtitle: "SOC2 compliance review",
-          details: ["Thursday 3 PM meeting?"],
+          title: "Priya (PM Candidate)",
+          subtitle: "Interview schedule confirmation",
+          details: ["Urgent, send tonight"],
           actions: [{ label: "Send", type: "send", status: "ready" }]
         },
         {
-          title: "Orbital",
-          subtitle: "ROI model results",
-          details: ["14% lift projected", "20-min overview"],
-          actions: [{ label: "Send", type: "send", status: "ready" }]
+          title: "Northstar Logistics",
+          subtitle: "Contract review meeting",
+          details: ["Thursday meeting proposed"],
+          actions: [{ label: "Draft", type: "view", status: "ready" }]
         }
       ],
-      summary: "CRM updated • Follow-up nudges scheduled"
+      summary: "3 drafts ready to review, 2 can wait until tomorrow morning"
     },
     icon: RotateCcw,
     color: "text-[#5DFF9F]"
@@ -378,15 +392,15 @@ export const ScrollableTimeline = () => {
                                     {item.tags && (
                                       <div className="flex gap-1 mt-1 flex-wrap">
                                         {item.tags.map((tag, tagIndex) => {
-                                          const isPersonal = tag === 'Personal';
-                                          const isOperational = ['Operations', 'Logistics'].includes(tag);
+                                          const isPersonal = ['Personal', 'Health', 'Home', 'School', 'Sports'].includes(tag);
+                                          const isWork = ['Sales', 'Enterprise', 'Contact', 'Strategy'].includes(tag);
                                           return (
                                             <span 
                                               key={tagIndex} 
                                               className={`text-[10px] px-1.5 py-0.5 rounded-full border ${
                                                 isPersonal 
                                                   ? 'bg-[#A07CFE]/15 text-[#A07CFE] border-[#A07CFE]/30' 
-                                                  : isOperational
+                                                  : isWork
                                                   ? 'bg-[#5DFF9F]/15 text-[#5DFF9F] border-[#5DFF9F]/30'
                                                   : 'bg-[#5DFF9F]/15 text-[#5DFF9F] border-[#5DFF9F]/30'
                                               }`}
@@ -416,59 +430,38 @@ export const ScrollableTimeline = () => {
                             </motion.div>
                           ))}
                         </motion.div>
-                        
-                         {/* Summary */}
-                         {moment.response.summary && (
-                           <motion.div 
-                             className="text-gray-400 text-xs mt-2 pt-2 border-t border-border/30"
-                             initial={{ opacity: 0 }}
-                             animate={{ opacity: 1 }}
-                             transition={{ delay: 0.8 }}
-                           >
-                             {moment.response.summary}
-                           </motion.div>
-                         )}
-                         
-                         {/* Quick Actions */}
-                         {moment.response.quickActions && (
-                           <motion.div 
-                             className="flex gap-1 mt-2 flex-wrap"
-                             initial={{ opacity: 0, y: 10 }}
-                             animate={{ opacity: 1, y: 0 }}
-                             transition={{ delay: 1 }}
-                           >
-                             {moment.response.quickActions.map((action, actionIndex) => (
-                               <button
-                                 key={actionIndex}
-                                 className="text-[10px] px-2 py-1 rounded-md border bg-[#5DFF9F]/10 text-[#5DFF9F] hover:bg-[#5DFF9F]/20 border-[#5DFF9F]/30 transition-all duration-200 hover:scale-105 active:scale-95"
-                                 onClick={(e) => e.stopPropagation()}
-                               >
-                                 {action.label}
-                               </button>
-                             ))}
-                           </motion.div>
-                         )}
 
-                         {/* Collapse Button */}
-                         <motion.button
-                           className="flex items-center justify-center gap-1 w-full mt-3 pt-2 border-t border-border/30 text-gray-400 hover:text-white text-xs transition-colors"
-                           onClick={(e) => {
-                             e.stopPropagation();
-                             toggleCard(index);
-                           }}
-                           initial={{ opacity: 0 }}
-                           animate={{ opacity: 1 }}
-                           transition={{ delay: 1.2 }}
-                           whileHover={{ scale: 1.02 }}
-                         >
-                           <motion.div
-                             animate={{ rotate: 180 }}
-                             transition={{ duration: 0.3 }}
-                           >
-                             <ChevronDown className="w-3 h-3" />
-                           </motion.div>
-                           Hide response
-                         </motion.button>
+                        {/* Summary */}
+                        {moment.response.summary && (
+                          <motion.div
+                            className="mt-3 pt-2 border-t border-border/30"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.8 }}
+                          >
+                            <p className="text-gray-400 text-xs">{moment.response.summary}</p>
+                          </motion.div>
+                        )}
+
+                        {/* Quick Actions */}
+                        {moment.response.quickActions && (
+                          <motion.div
+                            className="flex gap-2 mt-3"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1 }}
+                          >
+                            {moment.response.quickActions.map((action, actionIndex) => (
+                              <button
+                                key={actionIndex}
+                                className="text-xs px-3 py-1.5 rounded-lg transition-all duration-200 border bg-[#5DFF9F]/10 text-[#5DFF9F] hover:bg-[#5DFF9F]/20 border-[#5DFF9F]/30 hover:scale-105 active:scale-95"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {action.label}
+                              </button>
+                            ))}
+                          </motion.div>
+                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -479,16 +472,21 @@ export const ScrollableTimeline = () => {
         </div>
       </div>
 
-      {/* Scroll indicators for larger screens */}
-      <div className="hidden md:flex justify-center gap-2 mt-6">
-        {timelineMoments.map((_, index) => (
-          <motion.div
-            key={index}
-            className="w-2 h-2 rounded-full bg-white/10"
-            whileHover={{ scale: 1.5, backgroundColor: "rgba(93, 255, 159, 0.5)" }}
-            transition={{ duration: 0.2 }}
-          />
-        ))}
+      {/* Desktop Scroll Indicators */}
+      <div className="hidden md:flex justify-center items-center gap-4 mt-6">
+        <motion.div
+          animate={{ x: [-5, 5, -5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <ChevronLeft className="w-5 h-5 text-gray-400" />
+        </motion.div>
+        <span className="text-gray-400 text-sm">Scroll to see more moments</span>
+        <motion.div
+          animate={{ x: [5, -5, 5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <ChevronRight className="w-5 h-5 text-gray-400" />
+        </motion.div>
       </div>
     </div>
   );
