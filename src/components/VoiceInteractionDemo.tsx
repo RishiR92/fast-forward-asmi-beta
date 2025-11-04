@@ -111,7 +111,7 @@ export const VoiceInteractionDemo = () => {
   }, [state, currentDemo]);
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
+    <section className="relative py-16 sm:py-24 lg:py-32 px-6 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-background/50 via-primary/5 to-background/50" />
 
@@ -120,12 +120,12 @@ export const VoiceInteractionDemo = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-6 text-foreground">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 sm:mb-6 text-foreground px-4">
             Just Tell. Asmi Handles the Rest.
           </h2>
-          <p className="text-xl sm:text-2xl text-muted-foreground font-light">
+          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light px-4">
             One interface for your entire life.
           </p>
         </motion.div>
@@ -138,18 +138,36 @@ export const VoiceInteractionDemo = () => {
             transition={{ duration: 0.6 }}
             className="relative w-full max-w-sm"
           >
-            {/* iPhone Mockup */}
-            <div className="relative bg-foreground rounded-[3rem] p-3 shadow-2xl">
-              <div className="bg-background rounded-[2.5rem] overflow-hidden h-[600px] flex flex-col">
-                {/* Status Bar */}
-                <div className="bg-card px-6 py-3 flex justify-between items-center border-b border-border">
-                  <span className="text-xs font-medium text-muted-foreground">Asmi</span>
-                  <div className="flex gap-1">
-                    <div className="w-1 h-1 rounded-full bg-muted" />
-                    <div className="w-1 h-1 rounded-full bg-muted" />
-                    <div className="w-1 h-1 rounded-full bg-muted" />
+            {/* iPhone 15 Pro Mockup with Real Frame */}
+            <div className="relative">
+              {/* iPhone Frame */}
+              <div className="relative bg-[#1d1d1f] rounded-[3.5rem] p-2 shadow-2xl border-[3px] border-[#1d1d1f]">
+                {/* Dynamic Island */}
+                <div className="absolute top-6 left-1/2 -translate-x-1/2 w-28 h-8 bg-black rounded-full z-20" />
+                
+                {/* Screen */}
+                <div className="bg-background rounded-[3rem] overflow-hidden h-[600px] sm:h-[640px] flex flex-col relative">
+                  {/* Status Bar - iOS Style */}
+                  <div className="bg-background px-6 pt-12 pb-3 flex justify-between items-center">
+                    <span className="text-xs font-semibold text-foreground">9:41</span>
+                    <div className="flex items-center gap-1.5">
+                      <svg className="w-4 h-3" viewBox="0 0 16 12" fill="currentColor">
+                        <path d="M13.5 4.5C13.5 5.88071 12.3807 7 11 7C9.61929 7 8.5 5.88071 8.5 4.5C8.5 3.11929 9.61929 2 11 2C12.3807 2 13.5 3.11929 13.5 4.5Z" className="text-foreground" />
+                        <path d="M14.5 1H15C15.5523 1 16 1.44772 16 2V10C16 10.5523 15.5523 11 15 11H14.5V1Z" className="text-foreground/60" />
+                      </svg>
+                      <span className="text-xs font-semibold text-foreground">100%</span>
+                    </div>
                   </div>
-                </div>
+                  
+                  {/* App Header */}
+                  <div className="bg-card px-6 py-3 flex justify-between items-center border-b border-border">
+                    <span className="text-sm font-semibold text-foreground">Asmi</span>
+                    <div className="flex gap-1">
+                      <div className="w-1 h-1 rounded-full bg-primary" />
+                      <div className="w-1 h-1 rounded-full bg-muted" />
+                      <div className="w-1 h-1 rounded-full bg-muted" />
+                    </div>
+                  </div>
 
                 {/* Content Area */}
                 <div className="flex-1 p-6 flex flex-col justify-center items-center">
@@ -298,10 +316,16 @@ export const VoiceInteractionDemo = () => {
                   </AnimatePresence>
                 </div>
               </div>
+              
+              {/* Side Buttons - Volume & Power */}
+              <div className="absolute left-0 top-32 w-1 h-12 bg-[#1d1d1f] rounded-l-sm -translate-x-1" />
+              <div className="absolute left-0 top-48 w-1 h-16 bg-[#1d1d1f] rounded-l-sm -translate-x-1" />
+              <div className="absolute right-0 top-40 w-1 h-20 bg-[#1d1d1f] rounded-r-sm translate-x-1" />
             </div>
+          </div>
 
-            {/* Progress Dots */}
-            <div className="flex justify-center gap-2 mt-8">
+          {/* Progress Dots */}
+          <div className="flex justify-center gap-2 mt-6 sm:mt-8">
               {demos.map((_, i) => (
                 <div
                   key={i}

@@ -67,7 +67,7 @@ export const HeroSection = () => {
               })}
               
               <motion.h1 
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white leading-tight relative space-y-2 sm:space-y-4"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight relative space-y-3 sm:space-y-4 px-4"
                 style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}
               >
                 <motion.div
@@ -108,7 +108,7 @@ export const HeroSection = () => {
             className="relative z-20 text-center max-w-6xl mx-auto"
           >
             <motion.h1 
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight px-4"
               style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}
             >
               <motion.span 
@@ -155,7 +155,7 @@ export const HeroSection = () => {
                 transformStyle: 'preserve-3d'
               }}
             >
-              <h1 className="text-6xl sm:text-7xl lg:text-9xl font-bold mb-8 leading-tight">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-6 sm:mb-8 leading-tight px-4">
                 <span className="relative inline-block">
                   <motion.span 
                     className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
@@ -184,7 +184,7 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="text-xl sm:text-2xl md:text-3xl lg:text-5xl text-white font-bold max-w-5xl mx-auto"
+                className="text-lg sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl text-white font-bold max-w-5xl mx-auto px-4"
                 style={{ textShadow: '0 4px 40px rgba(0,0,0,0.6), 0 0 80px rgba(168, 85, 247, 0.3)' }}
               >
                 The AI That Gets Things Done

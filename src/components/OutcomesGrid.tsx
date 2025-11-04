@@ -21,7 +21,7 @@ export const OutcomesGrid = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-center mb-24 text-foreground"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-center mb-16 sm:mb-20 lg:mb-24 text-foreground px-4"
         >
           How Asmi Works
         </motion.h2>
@@ -112,10 +112,10 @@ export const OutcomesGrid = () => {
               viewport={{ once: false }}
               transition={{ delay: 1.5, duration: 0.8 }}
             >
-              <h3 className="text-2xl sm:text-3xl font-semibold mb-4 text-foreground">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-3 sm:mb-4 text-foreground text-center px-4">
                 Learns Your Patterns
               </h3>
-              <p className="text-lg sm:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">{/* ... keep existing code */}
                 Asmi begins as a part consultant, part problem-solver - you speak, it executes. It gradually learns your patterns, your priorities - and automatically starts clearing what's in your way.
               </p>
             </motion.div>
@@ -223,10 +223,10 @@ export const OutcomesGrid = () => {
               viewport={{ once: false }}
               transition={{ delay: 2.2, duration: 0.8 }}
             >
-              <h3 className="text-2xl sm:text-3xl font-semibold mb-4 text-foreground">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-3 sm:mb-4 text-foreground text-center px-4">
                 Team of Smart Helpers
               </h3>
-              <p className="text-lg sm:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">{/* ... keep existing code */}
                 Asmi breaks down your tasks and deploys specialized AI agents - each expert in their domain - working in parallel to handle everything efficiently.
               </p>
             </motion.div>
@@ -322,10 +322,10 @@ export const OutcomesGrid = () => {
               viewport={{ once: false }}
               transition={{ delay: 2, duration: 0.8 }}
             >
-              <h3 className="text-2xl sm:text-3xl font-semibold mb-4 text-foreground">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-3 sm:mb-4 text-foreground text-center px-4">
                 Gets It Done
               </h3>
-              <p className="text-lg sm:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">{/* ... keep existing code */}
                 From meetings to trips to planning - Asmi finishes what you start.
               </p>
             </motion.div>
@@ -339,9 +339,9 @@ export const OutcomesGrid = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center max-w-4xl mx-auto mt-20 sm:mt-24 lg:mt-32 px-6 sm:px-8 lg:px-0"
+          className="text-center max-w-4xl mx-auto mt-16 sm:mt-20 lg:mt-32 px-6 sm:px-8 lg:px-12"
         >
-          <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif italic text-foreground/90 leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-serif italic text-foreground/90 leading-relaxed">{/* ... keep existing code */}
             "An outcome-first, always-on AI for your life."
           </p>
         </motion.div>
