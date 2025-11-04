@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Calendar, Mail, MessageSquare, Users, Zap, CheckCircle2 } from "lucide-react";
+import { HelpCircle, Lightbulb, CheckCircle2, Wrench, Network } from "lucide-react";
 
 export const OutcomesGrid = () => {
   return (
@@ -11,11 +11,11 @@ export const OutcomesGrid = () => {
           viewport={{ once: true }}
           className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-center mb-24 text-foreground"
         >
-          How Asmi Works
+          How It Works
         </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-12 mb-24">
-          {/* Panel 1: Learns Your Patterns */}
+          {/* Step 1: Helps You Understand */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -24,40 +24,42 @@ export const OutcomesGrid = () => {
             className="relative group"
           >
             <div className="bg-card border border-border rounded-3xl p-10 h-full flex flex-col items-center text-center overflow-hidden relative">
-              {/* Animated Background */}
-              <div className="absolute inset-0 overflow-hidden opacity-10">
-                {[Calendar, Mail, MessageSquare].map((Icon, i) => (
+              {/* Question marks floating around */}
+              <div className="absolute inset-0 overflow-hidden opacity-20">
+                {[...Array(5)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute"
-                    initial={{ x: -100, y: -100, opacity: 0 }}
+                    className="absolute text-muted-foreground"
+                    initial={{ 
+                      x: `${20 + i * 15}%`,
+                      y: `${30 + i * 10}%`,
+                      opacity: 0,
+                      scale: 0.5
+                    }}
                     whileInView={{ 
-                      x: ["50%", "50%"],
-                      y: ["50%", "50%"],
-                      opacity: [0, 1, 1]
+                      opacity: [0, 1, 0],
+                      scale: [0.5, 1, 1.2],
+                      rotate: [0, 360]
                     }}
                     viewport={{ once: true }}
                     transition={{
-                      delay: i * 0.3,
+                      delay: i * 0.15,
                       duration: 1.5,
                       ease: "easeOut"
                     }}
-                    style={{
-                      left: `${20 + i * 30}%`,
-                      top: `${30 + i * 20}%`
-                    }}
                   >
-                    <Icon className="w-16 h-16" />
+                    <HelpCircle className="w-12 h-12" />
                   </motion.div>
                 ))}
               </div>
 
-              {/* Central Brain */}
+              {/* Central Lightbulb - appears after questions */}
               <motion.div
                 className="relative z-10 mb-8"
-                whileInView={{ scale: [0, 1] }}
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.8, duration: 0.6, type: "spring" }}
+                transition={{ delay: 1, duration: 0.6, type: "spring", stiffness: 200 }}
               >
                 <motion.div
                   className="absolute inset-0 bg-primary/30 rounded-full blur-2xl"
@@ -72,22 +74,20 @@ export const OutcomesGrid = () => {
                   }}
                 />
                 <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-primary via-accent to-primary flex items-center justify-center shadow-2xl">
-                  <svg className="w-14 h-14 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
+                  <Lightbulb className="w-14 h-14 text-white" />
                 </div>
               </motion.div>
 
               <h3 className="text-2xl font-semibold mb-4 text-foreground relative z-10">
-                Learns Your Patterns
+                Helps You Understand
               </h3>
               <p className="text-lg text-muted-foreground font-light leading-relaxed relative z-10">
-                Asmi learns from your calendar, emails, and chats—understanding what's important to you.
+                Asmi first helps users understand what's bogging them down.
               </p>
             </div>
           </motion.div>
 
-          {/* Panel 2: Team of Smart Helpers */}
+          {/* Step 2: Takes It Off Your Plate */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -96,34 +96,39 @@ export const OutcomesGrid = () => {
             className="relative group"
           >
             <div className="bg-card border border-border rounded-3xl p-10 h-full flex flex-col items-center text-center overflow-hidden relative">
-              {/* Network Animation */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-20">
+              {/* Tasks floating away */}
+              <div className="absolute inset-0 overflow-hidden opacity-15">
                 {[...Array(6)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute w-12 h-12 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center"
-                    initial={{ scale: 0, opacity: 0 }}
+                    className="absolute w-16 h-3 bg-muted rounded-full"
+                    initial={{ 
+                      x: `${40}%`,
+                      y: `${50}%`,
+                      opacity: 1
+                    }}
                     whileInView={{ 
-                      scale: 1, 
-                      opacity: 1,
-                      x: Math.cos(i * 60 * Math.PI / 180) * 80,
-                      y: Math.sin(i * 60 * Math.PI / 180) * 80,
+                      y: `${-20 - i * 10}%`,
+                      opacity: [1, 0.8, 0],
+                      scale: [1, 0.8, 0.6]
                     }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }}
-                  >
-                    <Zap className="w-6 h-6 text-white" />
-                  </motion.div>
+                    transition={{
+                      delay: i * 0.2,
+                      duration: 1.8,
+                      ease: "easeOut"
+                    }}
+                  />
                 ))}
               </div>
 
-              {/* Central Hub */}
+              {/* Central Icon - checkmark emerging */}
               <motion.div
                 className="relative z-10 mb-8"
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
+                initial={{ scale: 0, rotate: -180 }}
+                whileInView={{ scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
+                transition={{ delay: 0.5, duration: 0.8, type: "spring", stiffness: 150 }}
               >
                 <motion.div
                   className="absolute inset-0 bg-accent/30 rounded-full blur-2xl"
@@ -138,20 +143,31 @@ export const OutcomesGrid = () => {
                   }}
                 />
                 <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-accent via-primary to-accent flex items-center justify-center shadow-2xl">
-                  <Users className="w-14 h-14 text-white" />
+                  <motion.div
+                    animate={{
+                      y: [0, -5, 0]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <CheckCircle2 className="w-14 h-14 text-white" />
+                  </motion.div>
                 </div>
               </motion.div>
 
               <h3 className="text-2xl font-semibold mb-4 text-foreground relative z-10">
-                Team of Smart Helpers
+                Takes It Off Your Plate
               </h3>
               <p className="text-lg text-muted-foreground font-light leading-relaxed relative z-10">
-                AI helpers coordinate together to get it done fast and right.
+                It takes those tasks off their plate.
               </p>
             </div>
           </motion.div>
 
-          {/* Panel 3: Gets It Done */}
+          {/* Step 3: Shifts to High-Agency Mode */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -160,37 +176,62 @@ export const OutcomesGrid = () => {
             className="relative group"
           >
             <div className="bg-card border border-border rounded-3xl p-10 h-full flex flex-col items-center text-center overflow-hidden relative">
-              {/* Task List Animation */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center space-y-3 opacity-15 px-8">
-                {[...Array(4)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-full flex items-center space-x-3"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.2 }}
-                  >
+              {/* Tool icons connecting to center */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                {[...Array(8)].map((_, i) => {
+                  const angle = (i * 360) / 8;
+                  const radius = 90;
+                  return (
                     <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
+                      key={i}
+                      className="absolute"
+                      initial={{ 
+                        scale: 0,
+                        opacity: 0,
+                        x: 0,
+                        y: 0
+                      }}
+                      whileInView={{ 
+                        scale: 1,
+                        opacity: 1,
+                        x: Math.cos(angle * Math.PI / 180) * radius,
+                        y: Math.sin(angle * Math.PI / 180) * radius
+                      }}
                       viewport={{ once: true }}
-                      transition={{ delay: 0.5 + i * 0.2, type: "spring" }}
+                      transition={{
+                        delay: 0.2 + i * 0.1,
+                        duration: 0.6,
+                        type: "spring"
+                      }}
                     >
-                      <CheckCircle2 className="w-6 h-6 text-green-500" />
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                        <Wrench className="w-4 h-4 text-white" />
+                      </div>
+                      {/* Connection line to center */}
+                      <motion.div
+                        className="absolute top-1/2 left-1/2 h-0.5 bg-gradient-to-r from-primary/50 to-transparent origin-left"
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        whileInView={{ scaleX: 1, opacity: 0.6 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.8 + i * 0.05, duration: 0.4 }}
+                        style={{
+                          width: `${radius}px`,
+                          transform: `rotate(${angle + 180}deg)`,
+                          transformOrigin: 'left center'
+                        }}
+                      />
                     </motion.div>
-                    <div className="h-2 bg-muted rounded-full flex-1" />
-                  </motion.div>
-                ))}
+                  );
+                })}
               </div>
 
-              {/* Central Checkmark */}
+              {/* Central Hub - Network orchestrating */}
               <motion.div
                 className="relative z-10 mb-8"
-                initial={{ scale: 0, rotate: -180 }}
-                whileInView={{ scale: 1, rotate: 0 }}
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.7, duration: 0.8, type: "spring", stiffness: 200 }}
+                transition={{ delay: 0.7, duration: 0.6, type: "spring", stiffness: 200 }}
               >
                 <motion.div
                   className="absolute inset-0 bg-green-500/30 rounded-full blur-2xl"
@@ -205,30 +246,41 @@ export const OutcomesGrid = () => {
                   }}
                 />
                 <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-2xl">
-                  <CheckCircle2 className="w-14 h-14 text-white" />
+                  <motion.div
+                    animate={{
+                      rotate: [0, 360]
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    <Network className="w-14 h-14 text-white" />
+                  </motion.div>
                 </div>
               </motion.div>
 
               <h3 className="text-2xl font-semibold mb-4 text-foreground relative z-10">
-                Gets It Done
+                Shifts to High-Agency Mode
               </h3>
               <p className="text-lg text-muted-foreground font-light leading-relaxed relative z-10">
-                From meetings to trips to hiring—Asmi finishes what you start.
+                It asks for access to the right tools as required → then gradually shifts into high-agency mode, managing work, personal, and family tasks end-to-end.
               </p>
             </div>
           </motion.div>
         </div>
 
-        {/* Closing Statement */}
+        {/* Closing Tagline */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center max-w-4xl mx-auto"
         >
           <p className="text-2xl sm:text-3xl lg:text-4xl font-serif italic text-foreground/90 leading-relaxed">
-            "A voice-first, always-on Chief of Staff for your life."
+            "An outcome-first, always-on Chief of Staff for your life."
           </p>
         </motion.div>
       </div>
