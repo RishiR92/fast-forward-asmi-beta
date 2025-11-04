@@ -6,27 +6,23 @@ const teamMembers = [
     name: "Rishi Raj Rathore",
     role: "Founder",
     title: "Built Category Defining Companies Before",
-    linkedin: "https://www.linkedin.com/in/rishi-r-37705a3a/",
-    color: "from-blue-500 to-cyan-500"
+    linkedin: "https://www.linkedin.com/in/rishi-r-37705a3a/"
   },
   {
     name: "Satwik Kottur",
     role: "Founder",
     title: "One of Top Scientist in AI Agents Space",
-    linkedin: "https://satwikkottur.github.io/",
-    color: "from-purple-500 to-pink-500"
+    linkedin: "https://satwikkottur.github.io/"
   },
   {
     name: "Sibi Venkatesan",
     title: "Senior Scientist",
-    linkedin: "https://www.linkedin.com/in/sibi-venkatesan/",
-    color: "from-green-500 to-emerald-500"
+    linkedin: "https://www.linkedin.com/in/sibi-venkatesan/"
   },
   {
     name: "Vishisht Dhawan",
     title: "Growth",
-    linkedin: "https://www.linkedin.com/in/vishishtdhawan/",
-    color: "from-orange-500 to-red-500"
+    linkedin: "https://www.linkedin.com/in/vishishtdhawan/"
   },
 ];
 
@@ -60,7 +56,7 @@ export const TeamGrid = () => {
             >
               <div className="relative bg-card border border-border rounded-3xl p-6 h-full flex flex-col items-center text-center overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
                 {/* Gradient Accent */}
-                <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${member.color}`} />
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-accent" />
                 
                 {/* Role Badge - Top Right */}
                 {member.role && (

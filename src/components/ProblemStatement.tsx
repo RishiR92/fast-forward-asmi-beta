@@ -124,8 +124,6 @@ export const ProblemStatement = () => {
                 className="text-2xl sm:text-3xl leading-relaxed text-foreground font-semibold pt-4"
               >
                 <span className="text-accent">Asmi changes that.</span>
-                <br />
-                <span className="text-foreground/90 font-light">One interface for your entire life.</span>
               </motion.p>
             </div>
           </div>

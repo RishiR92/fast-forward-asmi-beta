@@ -79,7 +79,7 @@ export const HeroSection = () => {
                     ease: [0.22, 1, 0.36, 1]
                   }}
                 >
-                  People don't want more tools.
+                  People Don't Want Tools
                 </motion.div>
                 <motion.div 
                   className="text-accent"
@@ -91,7 +91,7 @@ export const HeroSection = () => {
                     ease: [0.22, 1, 0.36, 1]
                   }}
                 >
-                  They want sh*t done.
+                  They Want Sh*t Done
                 </motion.div>
               </motion.h1>
             </div>
@@ -117,7 +117,7 @@ export const HeroSection = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                {"Unveiling the next paradigm shift".split("").map((char, i) => (
+                {"Unveiling The Next Paradigm Shift".split("").map((char, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0 }}

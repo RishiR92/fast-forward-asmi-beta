@@ -126,7 +126,7 @@ export const VoiceInteractionDemo = () => {
             Just Tell. Asmi Handles the Rest.
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground font-light">
-            Speak naturally. Watch Asmi work.
+            One interface for your entire life.
           </p>
         </motion.div>
 
