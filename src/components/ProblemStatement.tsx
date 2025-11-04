@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Smartphone, Mail, Calendar, MessageSquare, FileText, Briefcase } from "lucide-react";
+import { Smartphone, Mail, Calendar, MessageSquare, FileText, Briefcase, Clock, Video, Globe, DollarSign, Music } from "lucide-react";
 
 const appIcons = [
   { Icon: Smartphone, delay: 0, color: "text-primary" },
@@ -8,6 +8,11 @@ const appIcons = [
   { Icon: MessageSquare, delay: 0.3, color: "text-foreground" },
   { Icon: FileText, delay: 0.4, color: "text-muted-foreground" },
   { Icon: Briefcase, delay: 0.5, color: "text-primary" },
+  { Icon: Clock, delay: 0.6, color: "text-accent" },
+  { Icon: Video, delay: 0.7, color: "text-destructive" },
+  { Icon: Globe, delay: 0.8, color: "text-primary" },
+  { Icon: DollarSign, delay: 0.9, color: "text-foreground" },
+  { Icon: Music, delay: 1.0, color: "text-accent" },
 ];
 
 export const ProblemStatement = () => {
@@ -28,30 +33,31 @@ export const ProblemStatement = () => {
               {appIcons.map((item, index) => {
                 const Icon = item.Icon;
                 return (
-                  <motion.div
-                    key={index}
-                    initial={{ y: -100, opacity: 0, rotate: 0 }}
-                    whileInView={{ 
-                      y: [
-                        -100, 
-                        Math.sin(index * 1.3) * 40 + 120,
-                        Math.sin(index * 1.3) * 40 + 140
-                      ], 
-                      opacity: [0, 1, 0.9],
-                      rotate: [0, Math.random() * 30 - 15, Math.random() * 30 - 15]
-                    }}
-                    viewport={{ once: true }}
-                    transition={{ 
-                      duration: 1.2,
-                      delay: item.delay,
-                      times: [0, 0.6, 1],
-                      ease: "easeOut"
-                    }}
-                    className="absolute left-1/2 -translate-x-1/2"
-                    style={{
-                      left: `${30 + Math.cos(index * 1.3) * 30}%`
-                    }}
-                  >
+                   <motion.div
+                     key={index}
+                     initial={{ y: -100, opacity: 0, rotate: 0 }}
+                     whileInView={{ 
+                       y: [
+                         -100, 
+                         Math.sin(index * 1.1) * 50 + 100,
+                         Math.sin(index * 1.1) * 50 + 120
+                       ], 
+                       opacity: [0, 1, 0.9],
+                       rotate: [0, (Math.random() - 0.5) * 60, (Math.random() - 0.5) * 60]
+                     }}
+                     viewport={{ once: true }}
+                     transition={{ 
+                       duration: 1.4,
+                       delay: item.delay,
+                       times: [0, 0.5, 1],
+                       ease: [0.34, 1.56, 0.64, 1]
+                     }}
+                     className="absolute left-1/2 -translate-x-1/2"
+                     style={{
+                       left: `${25 + Math.cos(index * 0.9) * 35}%`,
+                       zIndex: appIcons.length - index
+                     }}
+                   >
                     <div className={`w-20 h-20 rounded-2xl bg-card border-2 border-border shadow-lg flex items-center justify-center ${item.color}`}>
                       <Icon className="w-10 h-10" />
                     </div>
@@ -93,7 +99,7 @@ export const ProblemStatement = () => {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="text-xl sm:text-2xl leading-relaxed text-foreground/80 font-light"
               >
-                Your life is dynamic. Work challenges and personal tasks shift every day.
+                Your world keeps shifting each day - work, family, plans, all in flux
               </motion.p>
               
               <motion.p
@@ -103,7 +109,8 @@ export const ProblemStatement = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-xl sm:text-2xl leading-relaxed text-foreground/80 font-light"
               >
-                AI made it easy to build tools for everything. Now we're drowning in apps.
+                AI made it easy to build tools for everything.{" "}
+                <span className="text-foreground">Now we're buried under them.</span>
               </motion.p>
               
               <motion.p
@@ -113,9 +120,11 @@ export const ProblemStatement = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="text-2xl sm:text-3xl leading-relaxed text-foreground font-semibold pt-4"
               >
-                <span className="text-accent">Asmi is different.</span>
+                <span className="text-accent">Asmi changes that.</span>
                 <br />
-                <span className="text-foreground/90 font-light">One interface. Just talk. Everything gets done.</span>
+                <span className="text-foreground/90 font-light">One interface for your entire life.</span>
+                <br />
+                <span className="text-foreground/90 font-light">You speak. It gets done.</span>
               </motion.p>
             </div>
           </div>

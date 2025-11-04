@@ -88,7 +88,7 @@ export const HeroSection = () => {
                     times: [0, 0.6, 1]
                   }}
                 >
-                  They want Sh*t done.
+                  They want sh*t done.
                 </motion.span>
               </motion.h1>
             </div>
@@ -189,8 +189,8 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="text-2xl sm:text-3xl lg:text-5xl text-white font-light max-w-5xl mx-auto"
-                style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}
+                className="text-2xl sm:text-3xl lg:text-5xl text-white font-bold max-w-5xl mx-auto"
+                style={{ textShadow: '0 4px 40px rgba(0,0,0,0.6), 0 0 80px rgba(168, 85, 247, 0.3)' }}
               >
                 The AI That Gets Things Done
               </motion.p>
