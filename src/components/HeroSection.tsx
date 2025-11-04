@@ -19,7 +19,7 @@ export const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6">
       {/* Clean Gradient Background */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-white via-primary/5 to-accent/10" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-background via-muted/20 to-background" />
 
       <AnimatePresence mode="wait">
         {stage === 'stage1' && (

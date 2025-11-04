@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import { Smartphone, Mail, Calendar, MessageSquare, FileText, Briefcase } from "lucide-react";
 
 const appIcons = [
-  { Icon: Smartphone, delay: 0, color: "text-blue-500" },
-  { Icon: Mail, delay: 0.1, color: "text-red-500" },
-  { Icon: Calendar, delay: 0.2, color: "text-green-500" },
-  { Icon: MessageSquare, delay: 0.3, color: "text-purple-500" },
-  { Icon: FileText, delay: 0.4, color: "text-yellow-500" },
-  { Icon: Briefcase, delay: 0.5, color: "text-indigo-500" },
+  { Icon: Smartphone, delay: 0, color: "text-primary" },
+  { Icon: Mail, delay: 0.1, color: "text-destructive" },
+  { Icon: Calendar, delay: 0.2, color: "text-accent" },
+  { Icon: MessageSquare, delay: 0.3, color: "text-foreground" },
+  { Icon: FileText, delay: 0.4, color: "text-muted-foreground" },
+  { Icon: Briefcase, delay: 0.5, color: "text-primary" },
 ];
 
 export const ProblemStatement = () => {
