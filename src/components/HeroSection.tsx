@@ -79,7 +79,7 @@ export const HeroSection = () => {
                     ease: [0.22, 1, 0.36, 1]
                   }}
                 >
-                  People Don't Want Tools
+                  People Don't Want More Tools
                 </motion.div>
                 <motion.div 
                   className="text-accent"

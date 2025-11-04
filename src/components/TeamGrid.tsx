@@ -39,9 +39,6 @@ export const TeamGrid = () => {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-6 text-foreground">
             Behind The Scenes
           </h2>
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto font-light">
-            The team building your AI Chief of Staff
-          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
