@@ -3,25 +3,45 @@ import { Mic } from "lucide-react";
 
 interface DemoMessage {
   voiceInput: string;
-  result: string;
+  results: string[];
 }
 
 const demos: DemoMessage[] = [
   {
-    voiceInput: "Emma's science project due Friday, soccer conflicts with piano",
-    result: "✅ Timeline created • Piano rescheduled • Supply list ready"
+    voiceInput: "Emma's science project is due Friday, and soccer conflicts with piano",
+    results: [
+      "✅ Created 3-day timeline for project",
+      "✅ Rescheduled piano to Thursday 5pm",
+      "✅ Supply list emailed: poster board, markers, clay",
+      "✅ Carpool arranged with Sarah's mom"
+    ]
   },
   {
     voiceInput: "Brief me on the 2pm Acme call",
-    result: "📊 Steve Johnson VP Sales • Key concerns ready • ROI deck prepped"
+    results: [
+      "📊 Steve Johnson, VP Sales - Decision maker",
+      "📋 Key concerns: ROI timeline, integration",
+      "📁 Deck ready: Custom ROI projections loaded",
+      "💡 Talking points prepped in your notes"
+    ]
   },
   {
-    voiceInput: "Plan Tahoe trip next month",
-    result: "✈️ Flights tracked • Hotels researched • Packing list ready"
+    voiceInput: "Plan my Tahoe trip next month",
+    results: [
+      "✈️ Tracking 3 flight options (alerts set)",
+      "🏨 Top 5 hotels researched + links",
+      "📝 Packing list for ski trip created",
+      "🎿 Lift ticket deals found, calendar blocked"
+    ]
   },
   {
     voiceInput: "Handle my evening tasks",
-    result: "✅ Pat replied • Dinner confirmed • Reports prepped"
+    results: [
+      "✅ Replied to Pat re: Q4 strategy",
+      "🍽️ Dinner confirmed at Osteria, 7:30pm",
+      "📊 Q3 reports compiled in your inbox",
+      "📅 Tomorrow prepped: 3 meetings briefed"
+    ]
   }
 ];
 
@@ -31,6 +51,7 @@ export const VoiceInteractionDemo = () => {
   const [currentDemo, setCurrentDemo] = useState(0);
   const [state, setState] = useState<DemoState>('listening');
   const [displayText, setDisplayText] = useState('');
+  const [displayResults, setDisplayResults] = useState<string[]>([]);
 
   useEffect(() => {
     const demo = demos[currentDemo];
@@ -39,18 +60,20 @@ export const VoiceInteractionDemo = () => {
     switch (state) {
       case 'listening':
         setDisplayText('');
-        timer = setTimeout(() => setState('input'), 500);
+        setDisplayResults([]);
+        timer = setTimeout(() => setState('input'), 1000);
         break;
       case 'input':
         setDisplayText(demo.voiceInput);
-        timer = setTimeout(() => setState('processing'), 1000);
+        timer = setTimeout(() => setState('processing'), 2000);
         break;
       case 'processing':
         timer = setTimeout(() => setState('result'), 500);
         break;
       case 'result':
-        setDisplayText(demo.result);
-        timer = setTimeout(() => setState('fadeOut'), 1500);
+        setDisplayText('');
+        setDisplayResults(demo.results);
+        timer = setTimeout(() => setState('fadeOut'), 4000);
         break;
       case 'fadeOut':
         timer = setTimeout(() => {
@@ -64,18 +87,18 @@ export const VoiceInteractionDemo = () => {
   }, [state, currentDemo]);
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-background to-primary/5">
-      <div className="max-w-4xl mx-auto text-center mb-12">
-        <h2 className="text-4xl sm:text-5xl font-light mb-4 text-foreground">
-          Just talk. Asmi handles the rest.
+    <section className="py-32 px-6 bg-background">
+      <div className="max-w-4xl mx-auto text-center mb-16">
+        <h2 className="text-5xl sm:text-6xl font-medium mb-6 text-foreground">
+          Just Tell. Asmi Handles the Rest.
         </h2>
-        <p className="text-lg text-muted-foreground">
+        <p className="text-xl text-muted-foreground">
           Voice-first. Always on. Instant execution.
         </p>
       </div>
 
       {/* iPhone mockup */}
-      <div className="relative max-w-sm mx-auto iphone-float">
+      <div className="relative max-w-sm mx-auto" style={{ animation: 'iphone-float 6s ease-in-out infinite' }}>
         {/* iPhone frame */}
         <div className="relative bg-foreground rounded-[3rem] p-3 shadow-2xl">
           {/* Screen */}
@@ -94,19 +117,20 @@ export const VoiceInteractionDemo = () => {
               {/* Waveform or Mic */}
               {state === 'listening' && (
                 <div className="mb-8">
-                  <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Mic className="w-8 h-8 text-primary" />
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center" style={{ animation: 'pulse-glow 2s ease-in-out infinite' }}>
+                    <Mic className="w-10 h-10 text-white" />
                   </div>
                 </div>
               )}
 
               {state === 'listening' && (
-                <div className="flex gap-1 items-end justify-center h-8 mb-4">
-                  {[...Array(5)].map((_, i) => (
+                <div className="flex gap-1.5 items-end justify-center h-12 mb-4">
+                  {[...Array(7)].map((_, i) => (
                     <div
                       key={i}
-                      className="waveform-bar w-1 bg-primary rounded-full"
+                      className="waveform-bar w-1.5 rounded-full"
                       style={{
+                        background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))',
                         animationDelay: `${i * 0.1}s`,
                       }}
                     />
@@ -114,11 +138,40 @@ export const VoiceInteractionDemo = () => {
                 </div>
               )}
 
-              {/* Message display */}
-              {displayText && (
-                <div className={`transition-opacity duration-500 ${state === 'fadeOut' ? 'opacity-0' : 'opacity-100'}`}>
-                  <div className={`rounded-2xl p-4 ${state === 'input' ? 'bg-primary/10 text-foreground' : 'bg-primary text-primary-foreground'} max-w-xs`}>
+              {/* User input */}
+              {displayText && state === 'input' && (
+                <div className="transition-opacity duration-500 w-full">
+                  <div className="rounded-2xl p-5 bg-secondary text-foreground max-w-xs mx-auto">
                     <p className="text-sm leading-relaxed">{displayText}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Processing */}
+              {state === 'processing' && (
+                <div className="flex gap-2">
+                  {[...Array(3)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-3 h-3 bg-primary rounded-full"
+                      style={{
+                        animation: 'pulse-glow 1s ease-in-out infinite',
+                        animationDelay: `${i * 0.2}s`
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Results */}
+              {displayResults.length > 0 && (
+                <div className={`transition-opacity duration-500 w-full ${state === 'fadeOut' ? 'opacity-0' : 'opacity-100'}`}>
+                  <div className="rounded-2xl p-5 bg-gradient-to-br from-primary to-primary-light text-white max-w-xs mx-auto space-y-3">
+                    {displayResults.map((result, i) => (
+                      <p key={i} className="text-sm leading-relaxed text-left">
+                        {result}
+                      </p>
+                    ))}
                   </div>
                 </div>
               )}
@@ -130,7 +183,7 @@ export const VoiceInteractionDemo = () => {
         </div>
 
         {/* Progress dots */}
-        <div className="flex gap-2 justify-center mt-6">
+        <div className="flex gap-2 justify-center mt-8">
           {demos.map((_, i) => (
             <div
               key={i}

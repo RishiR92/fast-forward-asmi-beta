@@ -1,46 +1,72 @@
 import { Brain, Sparkles, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const outcomes = [
   {
     icon: Brain,
     title: "Learns Your Patterns",
-    description: "Asmi integrates hierarchical context and memory across your calendar, email, and conversations - understanding what matters most."
+    description: "Asmi learns from your calendar, emails, and chats—understanding what matters to you."
   },
   {
     icon: Sparkles,
-    title: "Deploys AI Minions",
-    description: "Swarms of AI agents communicate, delegate, and execute together - optimizing for speed, cost, and accuracy."
+    title: "Deploys AI Helpers",
+    description: "When you ask, Asmi sends out a team of AI helpers that work together to get it done."
   },
   {
     icon: CheckCircle,
-    title: "Delivers Outcomes",
-    description: "From gym sessions to trip planning to hiring updates - Asmi shifts into high-agency mode and gets it done."
+    title: "Delivers Results",
+    description: "From gym bookings to trip planning to hiring updates—Asmi finishes what you start."
   }
 ];
 
 export const OutcomesGrid = () => {
   return (
-    <section className="py-20 px-6 bg-primary/5">
+    <section className="py-32 px-6 bg-gradient-to-b from-background to-primary/5">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-center mb-16">
-          People don't want more tools. They want outcomes.
-        </h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl sm:text-5xl md:text-6xl font-medium text-center mb-20 text-foreground"
+        >
+          How Asmi Works
+        </motion.h2>
         
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-          {outcomes.map((outcome) => (
-            <div key={outcome.title} className="text-center">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
-                <outcome.icon className="w-8 h-8 text-primary" />
+        <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
+          {outcomes.map((outcome, index) => (
+            <motion.div
+              key={outcome.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className="text-center group"
+            >
+              <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <outcome.icon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-medium mb-3 text-foreground">
+              <h3 className="text-2xl font-semibold mb-4 text-foreground">
                 {outcome.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed max-w-xs mx-auto">
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-sm mx-auto">
                 {outcome.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-24 text-center"
+        >
+          <p className="text-3xl md:text-4xl text-foreground/80 font-light italic max-w-4xl mx-auto leading-relaxed">
+            A voice-first, always-on Chief of Staff for your life.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Linkedin } from "lucide-react";
 
 const teamMembers = [
@@ -5,111 +6,107 @@ const teamMembers = [
     name: "Rishi Raj Rathore",
     title: "Co-founder & CEO",
     linkedin: "https://www.linkedin.com/in/rishi-r-37705a3a/",
-    bio: [
-      "Second-time founder",
-      "Scaled & exited Arzooo: $400M GMV",
-      "Raised $75M, built India's largest vertical e-commerce",
-      "Started Quick Commerce at Flipkart (Walmart)",
-      "Forbes 30U30 Asia, #9 Hurun India U35"
-    ],
-    featured: true
+    credentials: [
+      "Built & exited $400M company (Arzooo)",
+      "Forbes 30 Under 30 Asia",
+      "Started Quick Commerce at Flipkart (Walmart)"
+    ]
   },
   {
     name: "Satwik Kottur",
     title: "Co-founder & CTO",
     linkedin: "https://satwikkottur.github.io/",
-    bio: [
-      "Top AI Agents & NLP scientist",
-      "ex-Meta FAIR & DeepMind",
-      "PhD CMU (best thesis in AI agents)",
-      "40+ papers, 8K+ citations",
-      "Worked on foundational models, Meta glasses, CAIR",
-      "All India Rank-6 IIT, Bronze medal International Olympiad"
-    ],
-    featured: true
+    credentials: [
+      "AI Scientist at Meta & DeepMind",
+      "PhD from Carnegie Mellon (Top AI thesis)",
+      "40+ research papers, 8K+ citations"
+    ]
   },
   {
     name: "Sibi Venkatesan",
     title: "Senior Scientist",
-    bio: [
-      "AI scientist ex-Amazon",
-      "CMU PhD + UC Berkeley",
-      "Tech advisor to multiple startups"
-    ],
-    featured: false
+    credentials: [
+      "AI Scientist at Amazon",
+      "PhD from Carnegie Mellon"
+    ]
   },
   {
     name: "Vishisht Dhawan",
-    title: "GTM Head",
-    bio: [
-      "Consumer GTM expert",
+    title: "Growth Lead",
+    credentials: [
       "Scaled Classplus to 100M users",
-      "Worked with Granola & AI-native companies"
-    ],
-    featured: false
+      "Consumer product expert"
+    ]
   }
 ];
 
 export const TeamGrid = () => {
   return (
-    <section className="py-20 px-6 bg-background">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-light text-center mb-4">
+    <section className="py-32 px-6 bg-background">
+      <div className="max-w-5xl mx-auto">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl sm:text-5xl font-medium text-center mb-20 text-foreground"
+        >
           One of The Most Cracked Teams in Consumer AI
-        </h2>
+        </motion.h2>
         
-        <div className="grid md:grid-cols-2 gap-8 mt-12">
-          {teamMembers.map((member) => (
-            <div
+        <div className="grid sm:grid-cols-2 gap-8 mb-16">
+          {teamMembers.map((member, index) => (
+            <motion.div
               key={member.name}
-              className={`p-8 rounded-2xl bg-card hover:shadow-lg transition-all hover:-translate-y-1 ${
-                member.featured ? 'md:col-span-1' : ''
-              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="bg-card rounded-2xl p-8 shadow-sm border border-border hover:shadow-md transition-shadow duration-300"
             >
-              {/* Avatar */}
-              <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                <span className="text-2xl font-medium text-primary">
-                  {member.name.split(' ').map(n => n[0]).join('')}
-                </span>
-              </div>
-
-              {/* Name & Title */}
-              <div className="mb-4">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-xl font-medium text-foreground">{member.name}</h3>
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/80 transition-colors"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
-                  )}
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <h3 className="text-2xl font-semibold text-foreground mb-1">
+                    {member.name}
+                  </h3>
+                  <p className="text-primary font-medium">
+                    {member.title}
+                  </p>
                 </div>
-                <p className="text-primary text-sm">{member.title}</p>
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent hover:text-accent/80 transition-colors"
+                  >
+                    <Linkedin className="w-6 h-6" />
+                  </a>
+                )}
               </div>
-
-              {/* Bio */}
               <ul className="space-y-2">
-                {member.bio.map((item, i) => (
-                  <li key={i} className="text-sm text-muted-foreground leading-relaxed flex">
-                    <span className="mr-2 text-primary">•</span>
-                    <span>{item}</span>
+                {member.credentials.map((credential, i) => (
+                  <li key={i} className="text-muted-foreground flex items-start">
+                    <span className="text-accent mr-2">•</span>
+                    <span>{credential}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* Quote */}
-        <div className="mt-12 text-center">
-          <p className="text-lg italic text-muted-foreground max-w-2xl mx-auto font-serif">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-8 text-center border border-primary/20"
+        >
+          <p className="text-xl text-foreground/80 italic">
             "Rishi and Satwik have been friends for 12 years and finally decided to build the next consumer revolution together."
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -16,7 +16,7 @@ export const WaitlistBanner = () => {
     setTimeout(() => {
       toast({
         title: "You're on the list! 🎉",
-        description: "We'll reach out soon with early access.",
+        description: "Experience Asmi before everyone else.",
       });
       setEmail("");
       setIsLoading(false);
@@ -24,28 +24,28 @@ export const WaitlistBanner = () => {
   };
 
   return (
-    <section className="py-20 px-6 bg-primary/10">
+    <section className="py-32 px-6 bg-gradient-to-br from-primary to-primary-light">
       <div className="max-w-xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-light mb-4">
-          Ready to Move Fast?
+        <h2 className="text-4xl sm:text-5xl font-semibold mb-6 text-white">
+          Ready to Enter the Future?
         </h2>
-        <p className="text-muted-foreground mb-8">
-          Join the waitlist. Be among the first to experience Asmi.
+        <p className="text-white/90 text-lg mb-12">
+          Join the waitlist. Experience Asmi before everyone else.
         </p>
         
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
           <Input
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="flex-1 h-12 bg-background border-border"
+            className="flex-1 h-14 bg-white border-white text-foreground text-lg"
           />
           <Button
             type="submit"
             disabled={isLoading}
-            className="h-12 px-8 bg-accent hover:bg-accent/90 text-accent-foreground"
+            className="h-14 px-10 text-lg bg-accent hover:bg-accent/90 text-white font-semibold"
           >
             {isLoading ? "Joining..." : "Join Waitlist"}
           </Button>
