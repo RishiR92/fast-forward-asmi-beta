@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Mic } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface DemoMessage {
   voiceInput: string;
@@ -55,143 +56,209 @@ export const VoiceInteractionDemo = () => {
 
   useEffect(() => {
     const demo = demos[currentDemo];
-    let timer: NodeJS.Timeout;
+    let timeout: NodeJS.Timeout;
 
     switch (state) {
       case 'listening':
-        setDisplayText('');
-        setDisplayResults([]);
-        timer = setTimeout(() => setState('input'), 1000);
+        timeout = setTimeout(() => setState('input'), 1000);
         break;
       case 'input':
-        setDisplayText(demo.voiceInput);
-        timer = setTimeout(() => setState('processing'), 2000);
-        break;
+        const text = demo.voiceInput;
+        let charIndex = 0;
+        const typeInterval = setInterval(() => {
+          if (charIndex <= text.length) {
+            setDisplayText(text.slice(0, charIndex));
+            charIndex++;
+          } else {
+            clearInterval(typeInterval);
+            setTimeout(() => setState('processing'), 500);
+          }
+        }, 30);
+        return () => clearInterval(typeInterval);
       case 'processing':
-        timer = setTimeout(() => setState('result'), 500);
+        timeout = setTimeout(() => {
+          setDisplayResults(demo.results);
+          setState('result');
+        }, 1500);
         break;
       case 'result':
-        setDisplayText('');
-        setDisplayResults(demo.results);
-        timer = setTimeout(() => setState('fadeOut'), 4000);
+        timeout = setTimeout(() => setState('fadeOut'), 3000);
         break;
       case 'fadeOut':
-        timer = setTimeout(() => {
+        timeout = setTimeout(() => {
+          setDisplayText('');
+          setDisplayResults([]);
           setCurrentDemo((prev) => (prev + 1) % demos.length);
           setState('listening');
         }, 500);
         break;
     }
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timeout);
   }, [state, currentDemo]);
 
   return (
-    <section className="py-32 px-6 bg-background">
-      <div className="max-w-4xl mx-auto text-center mb-16">
-        <h2 className="text-5xl sm:text-6xl font-medium mb-6 text-foreground">
-          Just Tell. Asmi Handles the Rest.
-        </h2>
-        <p className="text-xl text-muted-foreground">
-          Voice-first. Always on. Instant execution.
-        </p>
-      </div>
+    <section className="relative py-32 px-6 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-background/50 via-primary/5 to-background/50" />
 
-      {/* iPhone mockup */}
-      <div className="relative max-w-sm mx-auto" style={{ animation: 'iphone-float 6s ease-in-out infinite' }}>
-        {/* iPhone frame */}
-        <div className="relative bg-foreground rounded-[3rem] p-3 shadow-2xl">
-          {/* Screen */}
-          <div className="bg-background rounded-[2.5rem] overflow-hidden" style={{ aspectRatio: '9/19.5' }}>
-            {/* Status bar */}
-            <div className="h-12 bg-background flex items-center justify-between px-8 pt-2">
-              <span className="text-xs font-medium">9:41</span>
-              <div className="flex gap-1 items-center">
-                <div className="w-4 h-3 border border-foreground rounded-sm" />
-                <div className="w-1 h-3 bg-foreground rounded-sm" />
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-6 text-foreground">
+            Just Tell. Asmi Handles the Rest.
+          </h2>
+          <p className="text-xl sm:text-2xl text-muted-foreground font-light">
+            Speak naturally. Watch Asmi work.
+          </p>
+        </motion.div>
+
+        <div className="flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative w-full max-w-sm"
+          >
+            {/* iPhone Mockup */}
+            <div className="relative bg-foreground rounded-[3rem] p-3 shadow-2xl">
+              <div className="bg-background rounded-[2.5rem] overflow-hidden h-[600px] flex flex-col">
+                {/* Status Bar */}
+                <div className="bg-card px-6 py-3 flex justify-between items-center border-b border-border">
+                  <span className="text-xs font-medium text-muted-foreground">Asmi</span>
+                  <div className="flex gap-1">
+                    <div className="w-1 h-1 rounded-full bg-muted" />
+                    <div className="w-1 h-1 rounded-full bg-muted" />
+                    <div className="w-1 h-1 rounded-full bg-muted" />
+                  </div>
+                </div>
+
+                {/* Content Area */}
+                <div className="flex-1 p-6 flex flex-col justify-center items-center">
+                  <AnimatePresence mode="wait">
+                    {state === 'listening' && (
+                      <motion.div
+                        key="listening"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        className="flex flex-col items-center gap-6"
+                      >
+                        <motion.div
+                          animate={{ scale: [1, 1.1, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          className="w-20 h-20 rounded-full bg-gradient-to-r from-primary via-accent to-primary flex items-center justify-center"
+                        >
+                          <Mic className="w-10 h-10 text-white" />
+                        </motion.div>
+                        
+                        {/* Siri-style Waveform */}
+                        <div className="flex gap-1 items-center h-8">
+                          {[...Array(7)].map((_, i) => (
+                            <motion.div
+                              key={i}
+                              className="w-1 bg-gradient-to-t from-primary via-accent to-primary rounded-full"
+                              animate={{
+                                height: ["8px", "24px", "8px"],
+                              }}
+                              transition={{
+                                duration: 0.6,
+                                repeat: Infinity,
+                                delay: i * 0.1,
+                                ease: "easeInOut"
+                              }}
+                            />
+                          ))}
+                        </div>
+                        <p className="text-sm text-muted-foreground">Listening...</p>
+                      </motion.div>
+                    )}
+
+                    {state === 'input' && (
+                      <motion.div
+                        key="input"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="w-full"
+                      >
+                        <div className="bg-muted/20 rounded-2xl p-4 mb-4">
+                          <p className="text-sm text-foreground">{displayText}</p>
+                          <motion.span
+                            animate={{ opacity: [1, 0] }}
+                            transition={{ duration: 0.5, repeat: Infinity }}
+                            className="inline-block w-0.5 h-4 bg-primary ml-1"
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {state === 'processing' && (
+                      <motion.div
+                        key="processing"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex gap-2"
+                      >
+                        {[...Array(3)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            className="w-3 h-3 rounded-full bg-primary"
+                            animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                            transition={{
+                              duration: 1,
+                              repeat: Infinity,
+                              delay: i * 0.2
+                            }}
+                          />
+                        ))}
+                      </motion.div>
+                    )}
+
+                    {(state === 'result' || state === 'fadeOut') && (
+                      <motion.div
+                        key="result"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="w-full space-y-3"
+                      >
+                        {displayResults.map((result, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.15 }}
+                            className="bg-primary/10 rounded-xl p-3 border border-primary/20"
+                          >
+                            <p className="text-sm text-foreground">{result}</p>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
 
-            {/* Content area */}
-            <div className="h-full flex flex-col items-center justify-center p-6 pb-24">
-              {/* Waveform or Mic */}
-              {state === 'listening' && (
-                <div className="mb-8">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center" style={{ animation: 'pulse-glow 2s ease-in-out infinite' }}>
-                    <Mic className="w-10 h-10 text-white" />
-                  </div>
-                </div>
-              )}
-
-              {state === 'listening' && (
-                <div className="flex gap-1.5 items-end justify-center h-12 mb-4">
-                  {[...Array(7)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="waveform-bar w-1.5 rounded-full"
-                      style={{
-                        background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))',
-                        animationDelay: `${i * 0.1}s`,
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* User input */}
-              {displayText && state === 'input' && (
-                <div className="transition-opacity duration-500 w-full">
-                  <div className="rounded-2xl p-5 bg-secondary text-foreground max-w-xs mx-auto">
-                    <p className="text-sm leading-relaxed">{displayText}</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Processing */}
-              {state === 'processing' && (
-                <div className="flex gap-2">
-                  {[...Array(3)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-3 h-3 bg-primary rounded-full"
-                      style={{
-                        animation: 'pulse-glow 1s ease-in-out infinite',
-                        animationDelay: `${i * 0.2}s`
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* Results */}
-              {displayResults.length > 0 && (
-                <div className={`transition-opacity duration-500 w-full ${state === 'fadeOut' ? 'opacity-0' : 'opacity-100'}`}>
-                  <div className="rounded-2xl p-5 bg-gradient-to-br from-primary to-primary-light text-white max-w-xs mx-auto space-y-3">
-                    {displayResults.map((result, i) => (
-                      <p key={i} className="text-sm leading-relaxed text-left">
-                        {result}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              )}
+            {/* Progress Dots */}
+            <div className="flex justify-center gap-2 mt-8">
+              {demos.map((_, i) => (
+                <div
+                  key={i}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    i === currentDemo ? 'bg-primary w-6' : 'bg-muted'
+                  }`}
+                />
+              ))}
             </div>
-
-            {/* Home indicator */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-foreground/30 rounded-full" />
-          </div>
-        </div>
-
-        {/* Progress dots */}
-        <div className="flex gap-2 justify-center mt-8">
-          {demos.map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                i === currentDemo ? 'bg-primary' : 'bg-border'
-              }`}
-            />
-          ))}
+          </motion.div>
         </div>
       </div>
     </section>

@@ -3,7 +3,6 @@ import { ProblemStatement } from "@/components/ProblemStatement";
 import { VoiceInteractionDemo } from "@/components/VoiceInteractionDemo";
 import { OutcomesGrid } from "@/components/OutcomesGrid";
 import { TeamGrid } from "@/components/TeamGrid";
-import { VisionStatement } from "@/components/VisionStatement";
 import { WaitlistBanner } from "@/components/WaitlistBanner";
 import { Footer } from "@/components/Footer";
 
@@ -16,9 +15,6 @@ const Index = () => {
       <OutcomesGrid />
       <div id="team">
         <TeamGrid />
-      </div>
-      <div id="vision">
-        <VisionStatement />
       </div>
       <WaitlistBanner />
       <Footer />
