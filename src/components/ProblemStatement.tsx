@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Smartphone, Mail, Calendar, MessageSquare, FileText, Briefcase, Clock, Video, DollarSign, ShoppingCart, Music, Camera, Bell, Database, Globe } from "lucide-react";
+import { Smartphone, Mail, Calendar, MessageSquare, FileText, Briefcase } from "lucide-react";
 
 const appIcons = [
   { Icon: Smartphone, delay: 0, color: "text-primary" },
@@ -8,15 +8,6 @@ const appIcons = [
   { Icon: MessageSquare, delay: 0.3, color: "text-foreground" },
   { Icon: FileText, delay: 0.4, color: "text-muted-foreground" },
   { Icon: Briefcase, delay: 0.5, color: "text-primary" },
-  { Icon: Clock, delay: 0.6, color: "text-accent" },
-  { Icon: Video, delay: 0.7, color: "text-primary" },
-  { Icon: DollarSign, delay: 0.8, color: "text-destructive" },
-  { Icon: ShoppingCart, delay: 0.9, color: "text-foreground" },
-  { Icon: Music, delay: 1.0, color: "text-accent" },
-  { Icon: Camera, delay: 1.1, color: "text-primary" },
-  { Icon: Bell, delay: 1.2, color: "text-muted-foreground" },
-  { Icon: Database, delay: 1.3, color: "text-foreground" },
-  { Icon: Globe, delay: 1.4, color: "text-accent" },
 ];
 
 export const ProblemStatement = () => {

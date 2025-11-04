@@ -62,7 +62,8 @@ export const HeroSection = () => {
               ))}
               
               <motion.h1 
-                className="text-5xl sm:text-6xl lg:text-8xl font-bold text-foreground leading-tight relative"
+                className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white leading-tight relative"
+                style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}
                 initial={{ scale: 0.5, opacity: 0, y: 50 }}
                 animate={{ 
                   scale: 1, 
@@ -104,7 +105,8 @@ export const HeroSection = () => {
             className="relative z-20 text-center max-w-6xl mx-auto"
           >
             <motion.h1 
-              className="text-5xl sm:text-6xl lg:text-8xl font-bold text-foreground leading-tight"
+              className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white leading-tight"
+              style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}
             >
               <motion.span
                 initial={{ opacity: 0, x: -20 }}
@@ -187,7 +189,8 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="text-2xl sm:text-3xl lg:text-5xl text-foreground font-light max-w-5xl mx-auto"
+                className="text-2xl sm:text-3xl lg:text-5xl text-white font-light max-w-5xl mx-auto"
+                style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}
               >
                 The AI That Gets Things Done
               </motion.p>
