@@ -1,9 +1,21 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Calendar, Mail, MessageSquare, Users, Zap, CheckCircle2, Globe } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
 
 export const OutcomesGrid = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: false, margin: "-100px" });
+  const [animationKey, setAnimationKey] = useState(0);
+
+  // Reset animation when scrolling back into view
+  useEffect(() => {
+    if (isInView) {
+      setAnimationKey(prev => prev + 1);
+    }
+  }, [isInView]);
+
   return (
-    <section className="py-32 px-6 bg-gradient-to-b from-background via-primary/5 to-background">
+    <section ref={sectionRef} className="py-32 px-6 bg-gradient-to-b from-background via-primary/5 to-background">
       <div className="max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -14,74 +26,68 @@ export const OutcomesGrid = () => {
           How Asmi Works
         </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-12 mb-24">
-          {/* Panel 1: Learns Your Patterns */}
+        {/* Vertical Cinematic Animation Flow */}
+        <div className="max-w-3xl mx-auto space-y-32">
+          
+          {/* Step 1: Learns Your Patterns */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative group"
+            key={`step1-${animationKey}`}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false, margin: "-100px" }}
+            className="text-center"
           >
-            <div className="bg-card border border-border rounded-3xl p-10 h-full flex flex-col items-center text-center overflow-hidden relative">
-              {/* Animated Background - Icons streaming to center */}
-              <div className="absolute inset-0 overflow-hidden opacity-15">
-                {[Calendar, Mail, MessageSquare, Globe].map((Icon, i) => {
-                  const angle = (i * 360) / 4;
-                  const startX = Math.cos((angle * Math.PI) / 180) * 200;
-                  const startY = Math.sin((angle * Math.PI) / 180) * 200;
-                  
-                  return (
-                    <motion.div
-                      key={i}
-                      className="absolute left-1/2 top-1/2"
-                      initial={{ x: startX, y: startY, opacity: 0, scale: 0.5 }}
-                      whileInView={{ 
-                        x: [startX, 0, Math.cos((angle * Math.PI) / 180) * 60],
-                        y: [startY, 0, Math.sin((angle * Math.PI) / 180) * 60],
-                        opacity: [0, 1, 0.8],
-                        scale: [0.5, 1.2, 0.8],
-                        rotate: [0, 180, 360]
-                      }}
-                      viewport={{ once: true }}
-                      transition={{
-                        delay: i * 0.15,
-                        duration: 2,
-                        times: [0, 0.5, 1],
-                        ease: "anticipate"
-                      }}
-                    >
-                      <Icon className="w-12 h-12" />
-                    </motion.div>
-                  );
-                })}
+            {/* Animation Area */}
+            <div className="relative h-80 mb-12 flex items-center justify-center">
+              {/* Icons streaming to brain */}
+              {[Calendar, Mail, MessageSquare, Globe].map((Icon, i) => {
+                const angle = (i * 360) / 4;
+                const startX = Math.cos((angle * Math.PI) / 180) * 250;
+                const startY = Math.sin((angle * Math.PI) / 180) * 250;
                 
-                {/* Connecting lines */}
-                {[...Array(4)].map((_, i) => (
+                return (
                   <motion.div
-                    key={`line-${i}`}
-                    className="absolute left-1/2 top-1/2 w-0.5 h-24 bg-gradient-to-b from-primary/30 to-transparent origin-top"
-                    initial={{ scaleY: 0, rotate: (i * 90) }}
-                    whileInView={{ scaleY: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 + i * 0.1, duration: 0.8 }}
-                    style={{ transform: `rotate(${i * 90}deg)` }}
-                  />
-                ))}
-              </div>
-
+                    key={i}
+                    className="absolute"
+                    initial={{ 
+                      x: startX, 
+                      y: startY, 
+                      opacity: 0, 
+                      scale: 0.5 
+                    }}
+                    whileInView={{ 
+                      x: [startX, 0, 0],
+                      y: [startY, 0, 0],
+                      opacity: [0, 1, 0],
+                      scale: [0.5, 1.2, 0.3],
+                      rotate: [0, 180, 360]
+                    }}
+                    viewport={{ once: false }}
+                    transition={{
+                      delay: i * 0.2,
+                      duration: 2,
+                      times: [0, 0.6, 1],
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <Icon className="w-16 h-16 text-primary" />
+                  </motion.div>
+                );
+              })}
+              
               {/* Central Brain */}
               <motion.div
-                className="relative z-10 mb-8"
-                whileInView={{ scale: [0, 1] }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.8, duration: 0.6, type: "spring" }}
+                className="relative z-10"
+                initial={{ scale: 0.5, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.8, duration: 0.8, type: "spring" }}
               >
                 <motion.div
-                  className="absolute inset-0 bg-primary/30 rounded-full blur-2xl"
+                  className="absolute inset-0 bg-primary/30 rounded-full blur-3xl"
                   animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [0.4, 0.7, 0.4],
+                    scale: [1, 1.5, 1],
+                    opacity: [0.4, 0.8, 0.4],
                   }}
                   transition={{
                     duration: 3,
@@ -89,162 +95,185 @@ export const OutcomesGrid = () => {
                     ease: "easeInOut"
                   }}
                 />
-                <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-primary via-accent to-primary flex items-center justify-center shadow-2xl">
-                  <svg className="w-14 h-14 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-primary via-accent to-primary flex items-center justify-center shadow-2xl">
+                  <svg className="w-16 h-16 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Text */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{ delay: 1.5, duration: 0.8 }}
+            >
+              <h3 className="text-3xl font-semibold mb-4 text-foreground">
+                Learns Your Patterns
+              </h3>
+              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+                Asmi learns from your calendar, emails, chats, and internet activity—understanding what's important to you.
+              </p>
+            </motion.div>
+          </motion.div>
+
+          {/* Step 2: Team of Smart Helpers */}
+          <motion.div
+            key={`step2-${animationKey}`}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false, margin: "-100px" }}
+            className="text-center"
+          >
+            {/* Animation Area */}
+            <div className="relative h-80 mb-12 flex items-center justify-center">
+              {/* Brain morphs into agents */}
+              <motion.div
+                className="absolute"
+                initial={{ scale: 1, opacity: 1 }}
+                whileInView={{ scale: 0, opacity: 0 }}
+                viewport={{ once: false }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+              >
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary via-accent to-primary flex items-center justify-center opacity-30">
+                  <svg className="w-12 h-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </div>
               </motion.div>
 
-              <h3 className="text-2xl font-semibold mb-4 text-foreground relative z-10">
-                Learns Your Patterns
-              </h3>
-              <p className="text-lg text-muted-foreground font-light leading-relaxed relative z-10">
-                Asmi learns from your calendar, emails, chats, and internet activity—understanding what's important to you.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Panel 2: Team of Smart Helpers */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative group"
-          >
-            <div className="bg-card border border-border rounded-3xl p-10 h-full flex flex-col items-center text-center overflow-hidden relative">
-              {/* Network Animation - Agents multiplying and connecting */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                {[...Array(6)].map((_, i) => {
-                  const radius = 80;
-                  const angle = (i * 60 * Math.PI) / 180;
-                  
-                  return (
+              {/* Agents spread out in circle */}
+              {[...Array(6)].map((_, i) => {
+                const radius = 140;
+                const angle = (i * 60 * Math.PI) / 180;
+                
+                return (
+                  <motion.div
+                    key={i}
+                    className="absolute"
+                    initial={{ x: 0, y: 0, scale: 0, opacity: 0 }}
+                    whileInView={{ 
+                      x: Math.cos(angle) * radius,
+                      y: Math.sin(angle) * radius,
+                      scale: 1, 
+                      opacity: 1 
+                    }}
+                    viewport={{ once: false }}
+                    transition={{ 
+                      delay: 0.6 + i * 0.1, 
+                      duration: 0.8,
+                      type: "spring",
+                      stiffness: 200
+                    }}
+                  >
                     <motion.div
-                      key={i}
-                      className="absolute"
+                      className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-xl"
+                      animate={{
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{
+                        delay: 1.5 + i * 0.15,
+                        duration: 0.4,
+                        repeat: Infinity,
+                        repeatDelay: 2,
+                      }}
                     >
-                      <motion.div
-                        className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg"
-                        initial={{ scale: 0, opacity: 0 }}
-                        whileInView={{ 
-                          scale: [0, 0.5, 1.2, 1], 
-                          opacity: [0, 0.5, 1, 1],
-                          x: Math.cos(angle) * radius,
-                          y: Math.sin(angle) * radius,
-                        }}
-                        viewport={{ once: true }}
-                        transition={{ 
-                          delay: 0.3 + i * 0.12, 
-                          duration: 1,
-                          times: [0, 0.3, 0.7, 1],
-                          ease: "backOut"
-                        }}
-                      >
-                        <Zap className="w-6 h-6 text-white" />
-                      </motion.div>
-                      
-                      {/* Connection lines */}
-                      <motion.div
-                        className="absolute left-1/2 top-1/2 w-20 h-0.5 bg-gradient-to-r from-accent/50 to-transparent origin-left"
-                        initial={{ scaleX: 0, opacity: 0 }}
-                        whileInView={{ scaleX: 1, opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
-                        style={{ 
-                          rotate: `${(i * 60) + 180}deg`,
-                          x: Math.cos(angle) * radius,
-                          y: Math.sin(angle) * radius,
-                        }}
-                      />
+                      <Zap className="w-8 h-8 text-white" />
                     </motion.div>
-                  );
-                })}
-              </div>
+                    
+                    {/* Connection lines to center */}
+                    <motion.div
+                      className="absolute left-1/2 top-1/2 w-32 h-0.5 bg-gradient-to-r from-accent/60 to-transparent origin-left"
+                      initial={{ scaleX: 0, opacity: 0 }}
+                      whileInView={{ scaleX: 1, opacity: 1 }}
+                      viewport={{ once: false }}
+                      transition={{ delay: 1.2 + i * 0.08, duration: 0.5 }}
+                      style={{ 
+                        rotate: `${(i * 60) + 180}deg`,
+                      }}
+                    />
+                  </motion.div>
+                );
+              })}
 
-              {/* Central Hub */}
+              {/* Center hub icon */}
               <motion.div
-                className="relative z-10 mb-8"
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
+                className="relative z-10"
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: false }}
+                transition={{ delay: 1.8, duration: 0.6, type: "spring" }}
               >
-                <motion.div
-                  className="absolute inset-0 bg-accent/30 rounded-full blur-2xl"
-                  animate={{
-                    scale: [1, 1.4, 1],
-                    opacity: [0.4, 0.8, 0.4],
-                  }}
-                  transition={{
-                    duration: 2.5,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-accent via-primary to-accent flex items-center justify-center shadow-2xl">
-                  <Users className="w-14 h-14 text-white" />
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent via-primary to-accent flex items-center justify-center shadow-2xl">
+                  <Users className="w-10 h-10 text-white" />
                 </div>
               </motion.div>
+            </div>
 
-              <h3 className="text-2xl font-semibold mb-4 text-foreground relative z-10">
+            {/* Text */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{ delay: 2.2, duration: 0.8 }}
+            >
+              <h3 className="text-3xl font-semibold mb-4 text-foreground">
                 Team of Smart Helpers
               </h3>
-              <p className="text-lg text-muted-foreground font-light leading-relaxed relative z-10">
-                AI helpers coordinate together to get it done fast and right.
+              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+                Asmi breaks down your tasks and deploys specialized AI agents—each expert in their domain—working in parallel to handle everything efficiently.
               </p>
-            </div>
+            </motion.div>
           </motion.div>
 
-          {/* Panel 3: Gets It Done */}
+          {/* Step 3: Gets It Done */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative group"
+            key={`step3-${animationKey}`}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false, margin: "-100px" }}
+            className="text-center"
           >
-            <div className="bg-card border border-border rounded-3xl p-10 h-full flex flex-col items-center text-center overflow-hidden relative">
-              {/* Task List Animation - Tasks completing with progress */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center space-y-3 opacity-15 px-8">
+            {/* Animation Area */}
+            <div className="relative h-80 mb-12 flex items-center justify-center">
+              {/* Task list items */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md space-y-4">
                 {[...Array(4)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="w-full flex items-center space-x-3"
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: [0, 1, 1, 0.7], x: [0, 0, 0, 10] }}
-                    viewport={{ once: true }}
+                    className="flex items-center space-x-4 bg-card/50 backdrop-blur-sm rounded-xl p-4 border border-border/50"
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false }}
                     transition={{ 
-                      delay: 0.3 + i * 0.25,
-                      duration: 2,
-                      times: [0, 0.2, 0.8, 1]
+                      delay: i * 0.2,
+                      duration: 0.6
                     }}
                   >
                     <motion.div
                       initial={{ scale: 0, rotate: -90 }}
-                      whileInView={{ scale: [0, 1.3, 1], rotate: 0 }}
-                      viewport={{ once: true }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      viewport={{ once: false }}
                       transition={{ 
-                        delay: 0.5 + i * 0.25, 
-                        duration: 0.6,
-                        times: [0, 0.6, 1],
+                        delay: 0.3 + i * 0.2, 
+                        duration: 0.5,
                         type: "spring",
                         stiffness: 300
                       }}
                     >
-                      <CheckCircle2 className="w-6 h-6 text-green-500" />
+                      <CheckCircle2 className="w-8 h-8 text-green-500" />
                     </motion.div>
                     
-                    {/* Progress bar filling */}
-                    <div className="h-2 bg-muted rounded-full flex-1 overflow-hidden">
+                    <div className="h-3 bg-muted rounded-full flex-1 overflow-hidden">
                       <motion.div
                         className="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full"
                         initial={{ width: "0%" }}
                         whileInView={{ width: "100%" }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ 
-                          delay: 0.6 + i * 0.25,
+                          delay: 0.5 + i * 0.2,
                           duration: 0.8,
                           ease: "easeInOut"
                         }}
@@ -252,67 +281,52 @@ export const OutcomesGrid = () => {
                     </div>
                   </motion.div>
                 ))}
-                
-                {/* Confetti particles */}
-                {[...Array(8)].map((_, i) => (
-                  <motion.div
-                    key={`confetti-${i}`}
-                    className="absolute w-2 h-2 rounded-full"
-                    style={{
-                      background: `hsl(${(i * 45) % 360}, 70%, 60%)`,
-                      left: '50%',
-                      top: '50%'
-                    }}
-                    initial={{ scale: 0, x: 0, y: 0, opacity: 0 }}
-                    whileInView={{
-                      scale: [0, 1, 0],
-                      x: Math.cos((i * 45 * Math.PI) / 180) * 60,
-                      y: Math.sin((i * 45 * Math.PI) / 180) * 60,
-                      opacity: [0, 1, 0]
-                    }}
-                    viewport={{ once: true }}
-                    transition={{
-                      delay: 1.5,
-                      duration: 1.2,
-                      ease: "easeOut"
-                    }}
-                  />
-                ))}
               </div>
-
-              {/* Central Checkmark */}
-              <motion.div
-                className="relative z-10 mb-8"
-                initial={{ scale: 0, rotate: -180 }}
-                whileInView={{ scale: 1, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.7, duration: 0.8, type: "spring", stiffness: 200 }}
-              >
+              
+              {/* Confetti burst */}
+              {[...Array(12)].map((_, i) => (
                 <motion.div
-                  className="absolute inset-0 bg-green-500/30 rounded-full blur-2xl"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.3, 0.6, 0.3],
+                  key={`confetti-${i}`}
+                  className="absolute w-3 h-3 rounded-full"
+                  style={{
+                    background: `hsl(${(i * 30) % 360}, 80%, 60%)`,
+                    left: '50%',
+                    top: '50%'
                   }}
+                  initial={{ scale: 0, x: 0, y: 0, opacity: 0 }}
+                  whileInView={{
+                    scale: [0, 1.5, 0],
+                    x: Math.cos((i * 30 * Math.PI) / 180) * (100 + Math.random() * 50),
+                    y: Math.sin((i * 30 * Math.PI) / 180) * (100 + Math.random() * 50),
+                    opacity: [0, 1, 0],
+                    rotate: Math.random() * 360
+                  }}
+                  viewport={{ once: false }}
                   transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
+                    delay: 1.6,
+                    duration: 1.5,
+                    ease: "easeOut"
                   }}
                 />
-                <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-2xl">
-                  <CheckCircle2 className="w-14 h-14 text-white" />
-                </div>
-              </motion.div>
+              ))}
+            </div>
 
-              <h3 className="text-2xl font-semibold mb-4 text-foreground relative z-10">
+            {/* Text */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{ delay: 2, duration: 0.8 }}
+            >
+              <h3 className="text-3xl font-semibold mb-4 text-foreground">
                 Gets It Done
               </h3>
-              <p className="text-lg text-muted-foreground font-light leading-relaxed relative z-10">
+              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
                 From meetings to trips to hiring—Asmi finishes what you start.
               </p>
-            </div>
+            </motion.div>
           </motion.div>
+
         </div>
 
         {/* Closing Statement */}
@@ -320,11 +334,11 @@ export const OutcomesGrid = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-4xl mx-auto"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-center max-w-4xl mx-auto mt-32"
         >
           <p className="text-2xl sm:text-3xl lg:text-4xl font-serif italic text-foreground/90 leading-relaxed">
-            "An outcome-first, always-on Chief of Staff for your life."
+            "An outcome-first, always-on AI for your life."
           </p>
         </motion.div>
       </div>

@@ -4,13 +4,15 @@ import { Linkedin } from "lucide-react";
 const teamMembers = [
   {
     name: "Rishi Raj Rathore",
-    title: "Co-founder & CEO",
+    role: "Founder",
+    title: "Built Category Defining Companies Before",
     linkedin: "https://www.linkedin.com/in/rishi-r-37705a3a/",
     color: "from-blue-500 to-cyan-500"
   },
   {
     name: "Satwik Kottur",
-    title: "Co-founder & CTO",
+    role: "Founder",
+    title: "One of Top Scientist in AI Agents Space",
     linkedin: "https://satwikkottur.github.io/",
     color: "from-purple-500 to-pink-500"
   },
@@ -22,7 +24,7 @@ const teamMembers = [
   },
   {
     name: "Vishisht Dhawan",
-    title: "Growth Lead",
+    title: "Growth",
     linkedin: "https://www.linkedin.com/in/vishishtdhawan/",
     color: "from-orange-500 to-red-500"
   },
@@ -59,6 +61,13 @@ export const TeamGrid = () => {
               <div className="relative bg-card border border-border rounded-3xl p-6 h-full flex flex-col items-center text-center overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
                 {/* Gradient Accent */}
                 <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${member.color}`} />
+                
+                {/* Role Badge - Top Right */}
+                {member.role && (
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full border border-primary/20">
+                    {member.role}
+                  </div>
+                )}
                 
                 <div className="mt-6 mb-4">
                   <h3 className="text-xl font-bold text-foreground mb-1">

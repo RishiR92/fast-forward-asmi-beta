@@ -64,32 +64,30 @@ export const HeroSection = () => {
               <motion.h1 
                 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white leading-tight relative"
                 style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}
-                initial={{ scale: 0.5, opacity: 0, y: 50 }}
-                animate={{ 
-                  scale: 1, 
-                  opacity: 1,
-                  y: 0
-                }}
-                transition={{ 
-                  duration: 0.8,
-                  delay: 0.2,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
               >
-                People don't want more tools.
-                <br />
-                <motion.span 
-                  className="text-accent"
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: [0.8, 1.05, 1] }}
+                <motion.div
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ 
-                    duration: 0.6,
-                    delay: 1,
-                    times: [0, 0.6, 1]
+                    duration: 0.8,
+                    delay: 0.2,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                >
+                  People don't want more tools.
+                </motion.div>
+                <motion.div 
+                  className="text-accent"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ 
+                    duration: 0.8,
+                    delay: 1.2,
+                    ease: [0.22, 1, 0.36, 1]
                   }}
                 >
                   They want sh*t done.
-                </motion.span>
+                </motion.div>
               </motion.h1>
             </div>
           </motion.div>
@@ -122,7 +120,7 @@ export const HeroSection = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                {"Unveiling the next big revolution...".split("").map((char, i) => (
+                {"Unveiling the next paradigm shift".split("").map((char, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0 }}
