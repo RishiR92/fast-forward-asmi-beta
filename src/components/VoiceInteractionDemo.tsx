@@ -55,46 +55,59 @@ export const VoiceInteractionDemo = () => {
   const [displayResults, setDisplayResults] = useState<string[]>([]);
 
   useEffect(() => {
-    const demo = demos[currentDemo];
-    let timeout: NodeJS.Timeout;
-
-    switch (state) {
-      case 'listening':
-        timeout = setTimeout(() => setState('input'), 1000);
-        break;
-      case 'input':
-        const text = demo.voiceInput;
-        let charIndex = 0;
-        const typeInterval = setInterval(() => {
-          if (charIndex <= text.length) {
-            setDisplayText(text.slice(0, charIndex));
-            charIndex++;
-          } else {
-            clearInterval(typeInterval);
-            setTimeout(() => setState('processing'), 500);
-          }
-        }, 30);
-        return () => clearInterval(typeInterval);
-      case 'processing':
-        timeout = setTimeout(() => {
-          setDisplayResults(demo.results);
-          setState('result');
-        }, 1500);
-        break;
-      case 'result':
-        timeout = setTimeout(() => setState('fadeOut'), 3000);
-        break;
-      case 'fadeOut':
-        timeout = setTimeout(() => {
-          setDisplayText('');
-          setDisplayResults([]);
-          setCurrentDemo((prev) => (prev + 1) % demos.length);
-          setState('listening');
-        }, 500);
-        break;
+    if (state === 'listening') {
+      const timer = setTimeout(() => setState('input'), 2000);
+      return () => clearTimeout(timer);
     }
-
-    return () => clearTimeout(timeout);
+    
+    if (state === 'input') {
+      const demo = demos[currentDemo];
+      let currentText = '';
+      let charIndex = 0;
+      
+      const typingInterval = setInterval(() => {
+        if (charIndex < demo.voiceInput.length) {
+          currentText += demo.voiceInput[charIndex];
+          setDisplayText(currentText);
+          charIndex++;
+        } else {
+          clearInterval(typingInterval);
+          setTimeout(() => setState('processing'), 800);
+        }
+      }, 55);
+      
+      return () => clearInterval(typingInterval);
+    }
+    
+    if (state === 'processing') {
+      const timer = setTimeout(() => setState('result'), 1800);
+      return () => clearTimeout(timer);
+    }
+    
+    if (state === 'result') {
+      const demo = demos[currentDemo];
+      let resultIndex = 0;
+      
+      const resultInterval = setInterval(() => {
+        if (resultIndex < demo.results.length) {
+          setDisplayResults(demo.results.slice(0, resultIndex + 1));
+          resultIndex++;
+        } else {
+          clearInterval(resultInterval);
+          setTimeout(() => {
+            setState('fadeOut');
+            setTimeout(() => {
+              setCurrentDemo((prev) => (prev + 1) % demos.length);
+              setDisplayText('');
+              setDisplayResults([]);
+              setState('listening');
+            }, 600);
+          }, 5500);
+        }
+      }, 400);
+      
+      return () => clearInterval(resultInterval);
+    }
   }, [state, currentDemo]);
 
   return (
@@ -147,35 +160,56 @@ export const VoiceInteractionDemo = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
-                        className="flex flex-col items-center gap-6"
+                        className="flex flex-col items-center justify-center space-y-8 py-12"
                       >
                         <motion.div
-                          animate={{ scale: [1, 1.1, 1] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                          className="w-20 h-20 rounded-full bg-gradient-to-r from-primary via-accent to-primary flex items-center justify-center"
+                          animate={{ scale: [1, 1.05, 1] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                          className="relative"
                         >
-                          <Mic className="w-10 h-10 text-white" />
+                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-2xl">
+                            <Mic className="w-12 h-12 text-white" />
+                          </div>
+                          <motion.div
+                            className="absolute inset-0 rounded-full border-4 border-primary/30"
+                            animate={{ scale: [1, 1.6, 1], opacity: [0.8, 0, 0.8] }}
+                            transition={{ duration: 2.5, repeat: Infinity }}
+                          />
                         </motion.div>
                         
-                        {/* Siri-style Waveform */}
-                        <div className="flex gap-1 items-center h-8">
-                          {[...Array(7)].map((_, i) => (
-                            <motion.div
-                              key={i}
-                              className="w-1 bg-gradient-to-t from-primary via-accent to-primary rounded-full"
-                              animate={{
-                                height: ["8px", "24px", "8px"],
-                              }}
-                              transition={{
-                                duration: 0.6,
-                                repeat: Infinity,
-                                delay: i * 0.1,
-                                ease: "easeInOut"
-                              }}
-                            />
-                          ))}
+                        {/* Colorful Siri-style Waveform */}
+                        <div className="flex items-center space-x-2 h-16">
+                          {[...Array(9)].map((_, i) => {
+                            const colors = [
+                              "from-red-500 to-orange-500",
+                              "from-orange-500 to-yellow-500",
+                              "from-yellow-500 to-green-500",
+                              "from-green-500 to-teal-500",
+                              "from-teal-500 to-blue-500",
+                              "from-blue-500 to-indigo-500",
+                              "from-indigo-500 to-purple-500",
+                              "from-purple-500 to-pink-500",
+                              "from-pink-500 to-red-500",
+                            ];
+                            return (
+                              <motion.div
+                                key={i}
+                                className={`w-1.5 bg-gradient-to-t ${colors[i]} rounded-full shadow-lg`}
+                                animate={{
+                                  height: ["24px", "56px", "24px"],
+                                }}
+                                transition={{
+                                  duration: 1,
+                                  repeat: Infinity,
+                                  delay: i * 0.08,
+                                  ease: "easeInOut"
+                                }}
+                              />
+                            );
+                          })}
                         </div>
-                        <p className="text-sm text-muted-foreground">Listening...</p>
+                        
+                        <p className="text-foreground/60 text-base font-medium">Listening...</p>
                       </motion.div>
                     )}
 
@@ -185,16 +219,18 @@ export const VoiceInteractionDemo = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="w-full"
+                        className="flex flex-col items-center justify-center space-y-4 py-8 px-6"
                       >
-                        <div className="bg-muted/20 rounded-2xl p-4 mb-4">
-                          <p className="text-sm text-foreground">{displayText}</p>
+                        <p className="text-lg text-foreground/90 leading-relaxed px-6 font-medium text-center">
+                          <span className="text-foreground/60">"</span>
+                          {displayText}
                           <motion.span
                             animate={{ opacity: [1, 0] }}
-                            transition={{ duration: 0.5, repeat: Infinity }}
-                            className="inline-block w-0.5 h-4 bg-primary ml-1"
+                            transition={{ duration: 0.8, repeat: Infinity }}
+                            className="inline-block w-0.5 h-6 bg-accent ml-1"
                           />
-                        </div>
+                          <span className="text-foreground/60">"</span>
+                        </p>
                       </motion.div>
                     )}
 
@@ -224,20 +260,37 @@ export const VoiceInteractionDemo = () => {
                     {(state === 'result' || state === 'fadeOut') && (
                       <motion.div
                         key="result"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="w-full space-y-3"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="py-8 px-6 space-y-4"
                       >
-                        {displayResults.map((result, i) => (
+                        {displayResults.map((result, index) => (
                           <motion.div
-                            key={i}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.15 }}
-                            className="bg-primary/10 rounded-xl p-3 border border-primary/20"
+                            key={index}
+                            initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            transition={{ 
+                              delay: index * 0.15,
+                              type: "spring",
+                              stiffness: 200,
+                              damping: 20
+                            }}
+                            className="flex items-start space-x-3 p-4 rounded-xl bg-primary/10 border border-primary/20 hover:bg-primary/15 transition-colors"
                           >
-                            <p className="text-sm text-foreground">{result}</p>
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: index * 0.15 + 0.2, type: "spring" }}
+                              className="flex-shrink-0"
+                            >
+                              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                              </div>
+                            </motion.div>
+                            <p className="text-base text-foreground/90 leading-relaxed">{result}</p>
                           </motion.div>
                         ))}
                       </motion.div>
