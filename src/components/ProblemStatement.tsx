@@ -17,21 +17,24 @@ const appIcons = [
 
 export const ProblemStatement = () => {
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-gradient-to-b from-background via-muted/30 to-background">
+    <section className="relative py-16 sm:py-24 lg:py-32 px-6 overflow-hidden bg-gradient-to-b from-background via-muted/30 to-background">
       <div className="relative z-20 max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left: Visual Storytelling */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative h-[400px] flex items-center justify-center"
+            className="relative h-[280px] sm:h-[350px] lg:h-[400px] flex items-center justify-center"
           >
             {/* App Icons Piling Up */}
             <div className="relative w-full h-full">
               {appIcons.map((item, index) => {
                 const Icon = item.Icon;
+                const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+                const scatterMultiplier = isMobile ? 0.6 : 1;
+                
                 return (
                    <motion.div
                      key={index}
@@ -54,12 +57,12 @@ export const ProblemStatement = () => {
                      }}
                      className="absolute left-1/2 -translate-x-1/2"
                      style={{
-                       left: `${25 + Math.cos(index * 0.9) * 35}%`,
+                       left: `${25 + Math.cos(index * 0.9) * 35 * scatterMultiplier}%`,
                        zIndex: appIcons.length - index
                      }}
                    >
-                    <div className={`w-20 h-20 rounded-2xl bg-card border-2 border-border shadow-lg flex items-center justify-center ${item.color}`}>
-                      <Icon className="w-10 h-10" />
+                    <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-card border-2 border-border shadow-lg flex items-center justify-center ${item.color}`}>
+                      <Icon className="w-8 h-8 sm:w-10 sm:h-10" />
                     </div>
                   </motion.div>
                 );
@@ -123,8 +126,6 @@ export const ProblemStatement = () => {
                 <span className="text-accent">Asmi changes that.</span>
                 <br />
                 <span className="text-foreground/90 font-light">One interface for your entire life.</span>
-                <br />
-                <span className="text-foreground/90 font-light">You speak. It gets done.</span>
               </motion.p>
             </div>
           </div>

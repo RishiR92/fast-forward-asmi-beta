@@ -15,7 +15,7 @@ export const OutcomesGrid = () => {
   }, [isInView]);
 
   return (
-    <section ref={sectionRef} className="py-32 px-6 bg-gradient-to-b from-background via-primary/5 to-background">
+    <section ref={sectionRef} className="py-16 sm:py-24 lg:py-32 px-6 bg-gradient-to-b from-background via-primary/5 to-background">
       <div className="max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -27,7 +27,7 @@ export const OutcomesGrid = () => {
         </motion.h2>
 
         {/* Vertical Cinematic Animation Flow */}
-        <div className="max-w-3xl mx-auto space-y-32">
+        <div className="max-w-3xl mx-auto space-y-16 sm:space-y-24 lg:space-y-32">
           
           {/* Step 1: Learns Your Patterns */}
           <motion.div
@@ -38,12 +38,14 @@ export const OutcomesGrid = () => {
             className="text-center"
           >
             {/* Animation Area */}
-            <div className="relative h-80 mb-12 flex items-center justify-center">
+            <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
               {/* Icons streaming to brain */}
               {[Calendar, Mail, MessageSquare, Globe].map((Icon, i) => {
+                const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+                const radius = isMobile ? 150 : 250;
                 const angle = (i * 360) / 4;
-                const startX = Math.cos((angle * Math.PI) / 180) * 250;
-                const startY = Math.sin((angle * Math.PI) / 180) * 250;
+                const startX = Math.cos((angle * Math.PI) / 180) * radius;
+                const startY = Math.sin((angle * Math.PI) / 180) * radius;
                 
                 return (
                   <motion.div
@@ -70,7 +72,7 @@ export const OutcomesGrid = () => {
                       ease: "easeInOut"
                     }}
                   >
-                    <Icon className="w-16 h-16 text-primary" />
+                    <Icon className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 text-primary" />
                   </motion.div>
                 );
               })}
@@ -95,7 +97,7 @@ export const OutcomesGrid = () => {
                     ease: "easeInOut"
                   }}
                 />
-                <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-primary via-accent to-primary flex items-center justify-center shadow-2xl">
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-primary via-accent to-primary flex items-center justify-center shadow-2xl">
                   <svg className="w-16 h-16 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
@@ -110,11 +112,11 @@ export const OutcomesGrid = () => {
               viewport={{ once: false }}
               transition={{ delay: 1.5, duration: 0.8 }}
             >
-              <h3 className="text-3xl font-semibold mb-4 text-foreground">
+              <h3 className="text-2xl sm:text-3xl font-semibold mb-4 text-foreground">
                 Learns Your Patterns
               </h3>
-              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
-                Asmi learns from your calendar, emails, chats, and internet activity—understanding what's important to you.
+              <p className="text-lg sm:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
+                Asmi begins as a part consultant, part problem-solver - you speak, it executes. It gradually learns your patterns, your priorities - and automatically starts clearing what's in your way.
               </p>
             </motion.div>
           </motion.div>
@@ -128,7 +130,7 @@ export const OutcomesGrid = () => {
             className="text-center"
           >
             {/* Animation Area */}
-            <div className="relative h-80 mb-12 flex items-center justify-center">
+            <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
               {/* Brain morphs into agents */}
               <motion.div
                 className="absolute"
@@ -146,7 +148,9 @@ export const OutcomesGrid = () => {
 
               {/* Agents spread out in circle */}
               {[...Array(6)].map((_, i) => {
-                const radius = 140;
+                const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+                const isTablet = typeof window !== 'undefined' && window.innerWidth < 1024;
+                const radius = isMobile ? 80 : isTablet ? 110 : 140;
                 const angle = (i * 60 * Math.PI) / 180;
                 
                 return (
@@ -169,7 +173,7 @@ export const OutcomesGrid = () => {
                     }}
                   >
                     <motion.div
-                      className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-xl"
+                      className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-xl"
                       animate={{
                         scale: [1, 1.1, 1],
                       }}
@@ -180,12 +184,12 @@ export const OutcomesGrid = () => {
                         repeatDelay: 2,
                       }}
                     >
-                      <Zap className="w-8 h-8 text-white" />
+                      <Zap className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
                     </motion.div>
                     
                     {/* Connection lines to center */}
                     <motion.div
-                      className="absolute left-1/2 top-1/2 w-32 h-0.5 bg-gradient-to-r from-accent/60 to-transparent origin-left"
+                      className="absolute left-1/2 top-1/2 w-16 sm:w-24 lg:w-32 h-0.5 bg-gradient-to-r from-accent/60 to-transparent origin-left"
                       initial={{ scaleX: 0, opacity: 0 }}
                       whileInView={{ scaleX: 1, opacity: 1 }}
                       viewport={{ once: false }}
@@ -206,8 +210,8 @@ export const OutcomesGrid = () => {
                 viewport={{ once: false }}
                 transition={{ delay: 1.8, duration: 0.6, type: "spring" }}
               >
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent via-primary to-accent flex items-center justify-center shadow-2xl">
-                  <Users className="w-10 h-10 text-white" />
+                <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-full bg-gradient-to-br from-accent via-primary to-accent flex items-center justify-center shadow-2xl">
+                  <Users className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-white" />
                 </div>
               </motion.div>
             </div>
@@ -219,11 +223,11 @@ export const OutcomesGrid = () => {
               viewport={{ once: false }}
               transition={{ delay: 2.2, duration: 0.8 }}
             >
-              <h3 className="text-3xl font-semibold mb-4 text-foreground">
+              <h3 className="text-2xl sm:text-3xl font-semibold mb-4 text-foreground">
                 Team of Smart Helpers
               </h3>
-              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
-                Asmi breaks down your tasks and deploys specialized AI agents—each expert in their domain—working in parallel to handle everything efficiently.
+              <p className="text-lg sm:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
+                Asmi breaks down your tasks and deploys specialized AI agents - each expert in their domain - working in parallel to handle everything efficiently.
               </p>
             </motion.div>
           </motion.div>
@@ -237,9 +241,9 @@ export const OutcomesGrid = () => {
             className="text-center"
           >
             {/* Animation Area */}
-            <div className="relative h-80 mb-12 flex items-center justify-center">
+            <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
               {/* Task list items */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md space-y-4">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md space-y-2 sm:space-y-3 lg:space-y-4 px-4 sm:px-0">
                 {[...Array(4)].map((_, i) => (
                   <motion.div
                     key={i}
@@ -263,7 +267,7 @@ export const OutcomesGrid = () => {
                         stiffness: 300
                       }}
                     >
-                      <CheckCircle2 className="w-8 h-8 text-green-500" />
+                      <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-green-500" />
                     </motion.div>
                     
                     <div className="h-3 bg-muted rounded-full flex-1 overflow-hidden">
@@ -284,7 +288,7 @@ export const OutcomesGrid = () => {
               </div>
               
               {/* Confetti burst */}
-              {[...Array(12)].map((_, i) => (
+              {[...Array(typeof window !== 'undefined' && window.innerWidth < 640 ? 8 : 12)].map((_, i) => (
                 <motion.div
                   key={`confetti-${i}`}
                   className="absolute w-3 h-3 rounded-full"
@@ -318,11 +322,11 @@ export const OutcomesGrid = () => {
               viewport={{ once: false }}
               transition={{ delay: 2, duration: 0.8 }}
             >
-              <h3 className="text-3xl font-semibold mb-4 text-foreground">
+              <h3 className="text-2xl sm:text-3xl font-semibold mb-4 text-foreground">
                 Gets It Done
               </h3>
-              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
-                From meetings to trips to hiring—Asmi finishes what you start.
+              <p className="text-lg sm:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
+                From meetings to trips to planning - Asmi finishes what you start.
               </p>
             </motion.div>
           </motion.div>
@@ -335,9 +339,9 @@ export const OutcomesGrid = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center max-w-4xl mx-auto mt-32"
+          className="text-center max-w-4xl mx-auto mt-20 sm:mt-24 lg:mt-32 px-6 sm:px-8 lg:px-0"
         >
-          <p className="text-2xl sm:text-3xl lg:text-4xl font-serif italic text-foreground/90 leading-relaxed">
+          <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif italic text-foreground/90 leading-relaxed">
             "An outcome-first, always-on AI for your life."
           </p>
         </motion.div>

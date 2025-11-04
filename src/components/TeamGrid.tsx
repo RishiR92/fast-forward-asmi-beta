@@ -32,7 +32,7 @@ const teamMembers = [
 
 export const TeamGrid = () => {
   return (
-    <section className="py-32 px-6 bg-gradient-to-b from-background via-accent/5 to-background">
+    <section className="py-16 sm:py-24 lg:py-32 px-6 bg-gradient-to-b from-background via-accent/5 to-background">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

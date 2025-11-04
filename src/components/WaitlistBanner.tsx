@@ -24,7 +24,7 @@ export const WaitlistBanner = () => {
   };
 
   return (
-    <section className="py-32 px-6 bg-gradient-to-br from-primary to-primary-light">
+    <section className="py-16 sm:py-24 lg:py-32 px-6 bg-gradient-to-br from-primary to-primary-light">
       <div className="max-w-xl mx-auto text-center">
         <h2 className="text-4xl sm:text-5xl font-semibold mb-6 text-white">
           Ready to Enter the Future?
