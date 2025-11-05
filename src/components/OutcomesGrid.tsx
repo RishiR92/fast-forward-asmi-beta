@@ -4,15 +4,13 @@ import { useRef, useEffect, useState } from "react";
 
 export const OutcomesGrid = () => {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: false, margin: "-100px" });
-  const [animationKey, setAnimationKey] = useState(0);
-
-  // Reset animation when scrolling back into view
-  useEffect(() => {
-    if (isInView) {
-      setAnimationKey(prev => prev + 1);
-    }
-  }, [isInView]);
+  const step1Ref = useRef(null);
+  const step2Ref = useRef(null);
+  const step3Ref = useRef(null);
+  
+  const step1InView = useInView(step1Ref, { once: false, margin: "-20%" });
+  const step2InView = useInView(step2Ref, { once: false, margin: "-20%" });
+  const step3InView = useInView(step3Ref, { once: false, margin: "-20%" });
 
   return (
     <section ref={sectionRef} className="py-16 sm:py-24 lg:py-32 px-6 bg-gradient-to-b from-background via-primary/5 to-background">
@@ -28,18 +26,23 @@ export const OutcomesGrid = () => {
         </motion.h2>
 
         {/* Vertical Cinematic Animation Flow */}
-        <div className="max-w-3xl mx-auto space-y-16 sm:space-y-24 lg:space-y-32">
+        <div className="max-w-3xl mx-auto space-y-32 sm:space-y-40 lg:space-y-48">
           
           {/* Step 1: Learns Your Patterns */}
           <motion.div
-            key={`step1-${animationKey}`}
+            ref={step1Ref}
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: false, margin: "-100px" }}
+            animate={step1InView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6 }}
             className="text-center"
           >
             {/* Animation Area */}
-            <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
+            <motion.div 
+              className="relative h-64 sm:h-72 lg:h-80 mb-8 flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={step1InView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               {/* Icons streaming to brain */}
               {[Calendar, Mail, MessageSquare, Globe].map((Icon, i) => {
                 const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
@@ -58,17 +61,21 @@ export const OutcomesGrid = () => {
                       opacity: 0, 
                       scale: 0.5 
                     }}
-                    whileInView={{ 
+                    animate={step1InView ? { 
                       x: [startX, 0, 0],
                       y: [startY, 0, 0],
                       opacity: [0, 1, 0],
                       scale: [0.5, 1.2, 0.3],
                       rotate: [0, 180, 360]
+                    } : {
+                      x: startX, 
+                      y: startY, 
+                      opacity: 0, 
+                      scale: 0.5
                     }}
-                    viewport={{ once: false }}
                     transition={{
-                      delay: i * 0.2,
-                      duration: 2,
+                      delay: 0.3 + i * 0.15,
+                      duration: 1.8,
                       times: [0, 0.6, 1],
                       ease: "easeInOut"
                     }}
@@ -82,16 +89,15 @@ export const OutcomesGrid = () => {
               <motion.div
                 className="relative z-10"
                 initial={{ scale: 0.5, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: false }}
-                transition={{ delay: 0.8, duration: 0.8, type: "spring" }}
+                animate={step1InView ? { scale: 1, opacity: 1 } : { scale: 0.5, opacity: 0 }}
+                transition={{ delay: 0.9, duration: 0.8, type: "spring" }}
               >
                 <motion.div
                   className="absolute inset-0 bg-primary/30 rounded-full blur-3xl"
-                  animate={{
+                  animate={step1InView ? {
                     scale: [1, 1.5, 1],
                     opacity: [0.4, 0.8, 0.4],
-                  }}
+                  } : {}}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
@@ -104,19 +110,18 @@ export const OutcomesGrid = () => {
                   </svg>
                 </div>
               </motion.div>
-            </div>
+            </motion.div>
 
             {/* Text */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{ delay: 1.5, duration: 0.8 }}
+              animate={step1InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
             >
               <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-3 sm:mb-4 text-foreground text-center px-4">
                 Learns Your Patterns
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">{/* ... keep existing code */}
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">
                 Asmi begins as a part consultant, part problem-solver - you speak, it executes. It gradually learns your patterns, your priorities - and automatically starts clearing what's in your way.
               </p>
             </motion.div>
@@ -124,21 +129,25 @@ export const OutcomesGrid = () => {
 
           {/* Step 2: Team of Smart Helpers */}
           <motion.div
-            key={`step2-${animationKey}`}
+            ref={step2Ref}
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: false, margin: "-100px" }}
+            animate={step2InView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6 }}
             className="text-center"
           >
             {/* Animation Area */}
-            <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
+            <motion.div 
+              className="relative h-64 sm:h-72 lg:h-80 mb-8 flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={step2InView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               {/* Brain morphs into agents */}
               <motion.div
                 className="absolute"
                 initial={{ scale: 1, opacity: 1 }}
-                whileInView={{ scale: 0, opacity: 0 }}
-                viewport={{ once: false }}
-                transition={{ delay: 0.5, duration: 0.6 }}
+                animate={step2InView ? { scale: 0, opacity: 0 } : { scale: 1, opacity: 0.3 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
               >
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary via-accent to-primary flex items-center justify-center opacity-30">
                   <svg className="w-12 h-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -159,27 +168,28 @@ export const OutcomesGrid = () => {
                     key={i}
                     className="absolute"
                     initial={{ x: 0, y: 0, scale: 0, opacity: 0 }}
-                    whileInView={{ 
+                    animate={step2InView ? { 
                       x: Math.cos(angle) * radius,
                       y: Math.sin(angle) * radius,
                       scale: 1, 
                       opacity: 1 
+                    } : {
+                      x: 0, y: 0, scale: 0, opacity: 0
                     }}
-                    viewport={{ once: false }}
                     transition={{ 
-                      delay: 0.6 + i * 0.1, 
-                      duration: 0.8,
+                      delay: 0.5 + i * 0.08, 
+                      duration: 0.7,
                       type: "spring",
                       stiffness: 200
                     }}
                   >
                     <motion.div
                       className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-xl"
-                      animate={{
+                      animate={step2InView ? {
                         scale: [1, 1.1, 1],
-                      }}
+                      } : {}}
                       transition={{
-                        delay: 1.5 + i * 0.15,
+                        delay: 1.2 + i * 0.12,
                         duration: 0.4,
                         repeat: Infinity,
                         repeatDelay: 2,
@@ -192,9 +202,8 @@ export const OutcomesGrid = () => {
                     <motion.div
                       className="absolute left-1/2 top-1/2 w-16 sm:w-24 lg:w-32 h-0.5 bg-gradient-to-r from-accent/60 to-transparent origin-left"
                       initial={{ scaleX: 0, opacity: 0 }}
-                      whileInView={{ scaleX: 1, opacity: 1 }}
-                      viewport={{ once: false }}
-                      transition={{ delay: 1.2 + i * 0.08, duration: 0.5 }}
+                      animate={step2InView ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+                      transition={{ delay: 0.9 + i * 0.06, duration: 0.4 }}
                       style={{ 
                         rotate: `${(i * 60) + 180}deg`,
                       }}
@@ -207,27 +216,25 @@ export const OutcomesGrid = () => {
               <motion.div
                 className="relative z-10"
                 initial={{ scale: 0, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: false }}
-                transition={{ delay: 1.8, duration: 0.6, type: "spring" }}
+                animate={step2InView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                transition={{ delay: 1.3, duration: 0.6, type: "spring" }}
               >
                 <div className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-full bg-gradient-to-br from-accent via-primary to-accent flex items-center justify-center shadow-2xl">
                   <Users className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-white" />
                 </div>
               </motion.div>
-            </div>
+            </motion.div>
 
             {/* Text */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{ delay: 2.2, duration: 0.8 }}
+              animate={step2InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 1.5, duration: 0.6 }}
             >
               <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-3 sm:mb-4 text-foreground text-center px-4">
                 Team of Smart Helpers
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">{/* ... keep existing code */}
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">
                 Asmi breaks down your tasks and deploys specialized AI agents - each expert in their domain - working in parallel to handle everything efficiently.
               </p>
             </motion.div>
@@ -235,22 +242,26 @@ export const OutcomesGrid = () => {
 
           {/* Step 3: Gets It Done */}
           <motion.div
-            key={`step3-${animationKey}`}
+            ref={step3Ref}
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: false, margin: "-100px" }}
+            animate={step3InView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6 }}
             className="text-center"
           >
             {/* Animation Area - Vertical Progress Bar */}
-            <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
+            <motion.div 
+              className="relative h-64 sm:h-72 lg:h-80 mb-8 flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={step3InView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               {/* Vertical progress bar container */}
               <div className="relative flex items-center justify-center w-full max-w-2xl px-4 sm:px-6">
                 {/* Central vertical line */}
                 <motion.div
                   initial={{ scaleY: 0 }}
-                  whileInView={{ scaleY: 1 }}
-                  viewport={{ once: false }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  animate={step3InView ? { scaleY: 1 } : { scaleY: 0 }}
+                  transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
                   className="absolute left-12 sm:left-16 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/20 via-primary to-primary/20 origin-top"
                 />
                 
@@ -266,10 +277,9 @@ export const OutcomesGrid = () => {
                       key={i}
                       className="flex items-center gap-6 sm:gap-8 relative"
                       initial={{ opacity: 0, x: -30 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: false }}
+                      animate={step3InView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                       transition={{ 
-                        delay: 0.3 + i * 0.15,
+                        delay: 0.5 + i * 0.15,
                         duration: 0.5,
                         type: "spring",
                         stiffness: 120
@@ -278,11 +288,10 @@ export const OutcomesGrid = () => {
                       {/* Progress node with checkmark */}
                       <motion.div
                         initial={{ scale: 0, rotate: -180 }}
-                        whileInView={{ scale: 1, rotate: 0 }}
-                        viewport={{ once: false }}
+                        animate={step3InView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
                         transition={{ 
-                          delay: 0.4 + i * 0.15, 
-                          duration: 0.6,
+                          delay: 0.6 + i * 0.15, 
+                          duration: 0.5,
                           type: "spring",
                           stiffness: 200
                         }}
@@ -290,14 +299,14 @@ export const OutcomesGrid = () => {
                       >
                         <motion.div
                           className="absolute inset-0 rounded-full bg-green-500/40 blur-lg"
-                          animate={{
+                          animate={step3InView ? {
                             scale: [1, 1.4, 1],
                             opacity: [0.4, 0.7, 0.4],
-                          }}
+                          } : {}}
                           transition={{
                             duration: 2,
                             repeat: Infinity,
-                            delay: i * 0.3,
+                            delay: 1.2 + i * 0.2,
                           }}
                         />
                         <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-500 flex items-center justify-center shadow-lg">
@@ -309,9 +318,8 @@ export const OutcomesGrid = () => {
                       <motion.div 
                         className="flex items-center gap-3 sm:gap-4 flex-1"
                         initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: false }}
-                        transition={{ delay: 0.6 + i * 0.15 }}
+                        animate={step3InView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ delay: 0.7 + i * 0.15 }}
                       >
                         <span className="text-2xl sm:text-3xl shrink-0">{task.icon}</span>
                         <p className="text-base sm:text-lg text-foreground font-medium">
@@ -334,34 +342,34 @@ export const OutcomesGrid = () => {
                     top: '50%'
                   }}
                   initial={{ scale: 0, x: 0, y: 0, opacity: 0 }}
-                  whileInView={{
+                  animate={step3InView ? {
                     scale: [0, 1.5, 0],
                     x: Math.cos((i * 30 * Math.PI) / 180) * (100 + Math.random() * 50),
                     y: Math.sin((i * 30 * Math.PI) / 180) * (100 + Math.random() * 50),
                     opacity: [0, 1, 0],
                     rotate: Math.random() * 360
+                  } : {
+                    scale: 0, x: 0, y: 0, opacity: 0
                   }}
-                  viewport={{ once: false }}
                   transition={{
-                    delay: 1.2,
+                    delay: 1.8,
                     duration: 1.5,
                     ease: "easeOut"
                   }}
                 />
               ))}
-            </div>
+            </motion.div>
 
             {/* Text */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{ delay: 2, duration: 0.8 }}
+              animate={step3InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 1.8, duration: 0.6 }}
             >
               <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-3 sm:mb-4 text-foreground text-center px-4">
                 Gets It Done
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">{/* ... keep existing code */}
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">
                 From meetings to trips to planning - Asmi finishes what you start.
               </p>
             </motion.div>
