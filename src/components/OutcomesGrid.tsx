@@ -122,7 +122,7 @@ export const OutcomesGrid = () => {
                 Learns Your Patterns
               </h3>
               <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">
-                Asmi begins as a part consultant, part problem-solver - you speak, it executes. It gradually learns your patterns, your priorities - and automatically starts clearing what's in your way.
+                Asmi begins as a part consultant, part problem solver. You speak, it executes. It gradually learns your patterns, your priorities - and automatically starts clearing what's in your way.
               </p>
             </motion.div>
           </motion.div>
@@ -235,7 +235,7 @@ export const OutcomesGrid = () => {
                 Team of Smart Helpers
               </h3>
               <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto px-6 sm:px-8 lg:px-4">
-                Asmi breaks down your tasks and deploys specialized AI agents - each expert in their domain - working in parallel to handle everything efficiently.
+                Asmi breaks down your tasks and deploys specialized AI agents, each expert in their domain, working in parallel to handle everything efficiently.
               </p>
             </motion.div>
           </motion.div>
