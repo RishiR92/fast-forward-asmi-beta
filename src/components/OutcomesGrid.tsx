@@ -243,8 +243,8 @@ export const OutcomesGrid = () => {
           >
             {/* Animation Area */}
             <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
-              {/* Task completion cards */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm space-y-2 px-4 sm:px-6">
+              {/* Floating task items without boxes */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg space-y-4 px-4 sm:px-6">
                 {[
                   { icon: "✈️", text: "Tracking 3 flight options (alerts set)" },
                   { icon: "🏨", text: "Top 5 hotels researched + links" },
@@ -253,36 +253,58 @@ export const OutcomesGrid = () => {
                 ].map((task, i) => (
                   <motion.div
                     key={i}
-                    className="flex items-center gap-3 bg-card/80 backdrop-blur rounded-lg p-3 border border-border/30 shadow-sm"
-                    initial={{ opacity: 0, x: -30, scale: 0.95 }}
-                    whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                    className="flex items-center gap-4 relative"
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: false }}
                     transition={{ 
-                      delay: i * 0.15,
-                      duration: 0.4,
-                      ease: "easeOut"
+                      delay: i * 0.2,
+                      duration: 0.5,
+                      type: "spring",
+                      stiffness: 100
                     }}
                   >
+                    {/* Animated checkmark with glow */}
                     <motion.div
-                      initial={{ scale: 0, rotate: -90 }}
+                      initial={{ scale: 0, rotate: -180 }}
                       whileInView={{ scale: 1, rotate: 0 }}
                       viewport={{ once: false }}
                       transition={{ 
-                        delay: 0.2 + i * 0.15, 
-                        duration: 0.4,
+                        delay: 0.3 + i * 0.2, 
+                        duration: 0.6,
                         type: "spring",
-                        stiffness: 300
+                        stiffness: 200
                       }}
+                      className="relative"
                     >
-                      <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 shrink-0" />
+                      <motion.div
+                        className="absolute inset-0 rounded-full bg-green-500/40 blur-xl"
+                        animate={{
+                          scale: [1, 1.3, 1],
+                          opacity: [0.5, 0.8, 0.5],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: i * 0.3,
+                        }}
+                      />
+                      <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8 text-green-500 relative z-10 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
                     </motion.div>
                     
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <span className="text-lg sm:text-xl shrink-0">{task.icon}</span>
-                      <p className="text-sm sm:text-base text-foreground/90 font-medium">
+                    {/* Icon and text */}
+                    <motion.div 
+                      className="flex items-center gap-3 flex-1"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: false }}
+                      transition={{ delay: 0.5 + i * 0.2 }}
+                    >
+                      <span className="text-2xl sm:text-3xl shrink-0 drop-shadow-lg">{task.icon}</span>
+                      <p className="text-base sm:text-lg text-foreground font-medium drop-shadow-sm">
                         {task.text}
                       </p>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 ))}
               </div>

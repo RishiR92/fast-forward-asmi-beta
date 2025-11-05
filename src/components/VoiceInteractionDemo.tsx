@@ -181,45 +181,118 @@ export const VoiceInteractionDemo = () => {
                         className="flex flex-col items-center justify-center space-y-8 py-12"
                       >
                         <motion.div
-                          animate={{ scale: [1, 1.05, 1] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                           className="relative"
                         >
-                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-2xl">
-                            <Mic className="w-12 h-12 text-white" />
-                          </div>
+                          {/* Pulsing orb with particles */}
                           <motion.div
-                            className="absolute inset-0 rounded-full border-4 border-primary/30"
-                            animate={{ scale: [1, 1.6, 1], opacity: [0.8, 0, 0.8] }}
-                            transition={{ duration: 2.5, repeat: Infinity }}
-                          />
+                            animate={{ 
+                              scale: [1, 1.1, 1],
+                              rotate: [0, 180, 360]
+                            }}
+                            transition={{ 
+                              duration: 4, 
+                              repeat: Infinity, 
+                              ease: "easeInOut" 
+                            }}
+                            className="relative w-28 h-28"
+                          >
+                            {/* Main gradient orb */}
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 blur-xl opacity-80" />
+                            <div className="absolute inset-2 rounded-full bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 flex items-center justify-center shadow-2xl">
+                              <Mic className="w-12 h-12 text-white relative z-10" />
+                            </div>
+                            
+                            {/* Orbiting particles */}
+                            {[...Array(8)].map((_, i) => (
+                              <motion.div
+                                key={i}
+                                className="absolute w-2 h-2 rounded-full"
+                                style={{
+                                  background: `hsl(${(i * 45) % 360}, 80%, 60%)`,
+                                  boxShadow: `0 0 10px hsl(${(i * 45) % 360}, 80%, 60%)`,
+                                  left: '50%',
+                                  top: '50%'
+                                }}
+                                animate={{
+                                  x: [
+                                    Math.cos((i * 45 * Math.PI) / 180) * 50,
+                                    Math.cos(((i * 45 + 180) * Math.PI) / 180) * 50,
+                                  ],
+                                  y: [
+                                    Math.sin((i * 45 * Math.PI) / 180) * 50,
+                                    Math.sin(((i * 45 + 180) * Math.PI) / 180) * 50,
+                                  ],
+                                  scale: [0, 1, 0],
+                                  opacity: [0, 1, 0]
+                                }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Infinity,
+                                  delay: i * 0.2,
+                                  ease: "easeInOut"
+                                }}
+                              />
+                            ))}
+                            
+                            {/* Expanding rings */}
+                            {[...Array(3)].map((_, i) => (
+                              <motion.div
+                                key={`ring-${i}`}
+                                className="absolute inset-0 rounded-full border-2 border-purple-400/30"
+                                animate={{ 
+                                  scale: [1, 2.5, 1], 
+                                  opacity: [0.6, 0, 0.6] 
+                                }}
+                                transition={{ 
+                                  duration: 3, 
+                                  repeat: Infinity,
+                                  delay: i * 1,
+                                  ease: "easeOut"
+                                }}
+                              />
+                            ))}
+                          </motion.div>
                         </motion.div>
                         
-                        {/* Colorful Siri-style Waveform */}
-                        <div className="flex items-center space-x-2 h-16">
-                          {[...Array(9)].map((_, i) => {
+                        {/* Modern fluid waveform */}
+                        <div className="flex items-center justify-center gap-1.5 h-20">
+                          {[...Array(15)].map((_, i) => {
                             const colors = [
-                              "from-blue-500 to-indigo-500",
-                              "from-indigo-500 to-purple-500",
-                              "from-purple-500 to-pink-500",
-                              "from-pink-500 to-fuchsia-500",
-                              "from-fuchsia-500 to-purple-500",
-                              "from-purple-500 to-indigo-500",
-                              "from-indigo-500 to-blue-500",
-                              "from-blue-500 to-cyan-500",
-                              "from-cyan-500 to-blue-500",
+                              "bg-blue-500",
+                              "bg-indigo-500",
+                              "bg-violet-500",
+                              "bg-purple-500",
+                              "bg-fuchsia-500",
+                              "bg-pink-500",
+                              "bg-rose-500",
+                              "bg-purple-500",
+                              "bg-fuchsia-500",
+                              "bg-purple-500",
+                              "bg-violet-500",
+                              "bg-indigo-500",
+                              "bg-blue-500",
+                              "bg-cyan-500",
+                              "bg-blue-500"
                             ];
                             return (
                               <motion.div
                                 key={i}
-                                className={`w-1.5 bg-gradient-to-t ${colors[i]} rounded-full shadow-lg`}
+                                className={`w-1 ${colors[i]} rounded-full shadow-lg`}
+                                style={{
+                                  boxShadow: `0 0 10px currentColor`
+                                }}
                                 animate={{
-                                  height: ["24px", "56px", "24px"],
+                                  height: [
+                                    `${20 + Math.sin(i * 0.5) * 10}px`,
+                                    `${40 + Math.sin(i * 0.5) * 20}px`,
+                                    `${20 + Math.sin(i * 0.5) * 10}px`
+                                  ],
+                                  opacity: [0.6, 1, 0.6]
                                 }}
                                 transition={{
-                                  duration: 1,
+                                  duration: 0.8,
                                   repeat: Infinity,
-                                  delay: i * 0.08,
+                                  delay: i * 0.05,
                                   ease: "easeInOut"
                                 }}
                               />
