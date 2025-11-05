@@ -241,72 +241,86 @@ export const OutcomesGrid = () => {
             viewport={{ once: false, margin: "-100px" }}
             className="text-center"
           >
-            {/* Animation Area */}
+            {/* Animation Area - Vertical Progress Bar */}
             <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
-              {/* Floating task items without boxes */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg space-y-4 px-4 sm:px-6">
-                {[
-                  { icon: "✈️", text: "Tracking 3 flight options (alerts set)" },
-                  { icon: "🏨", text: "Top 5 hotels researched + links" },
-                  { icon: "📝", text: "Packing list for ski trip created" },
-                  { icon: "🎿", text: "Lift ticket deals found, comparing" }
-                ].map((task, i) => (
-                  <motion.div
-                    key={i}
-                    className="flex items-center gap-4 relative"
-                    initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false }}
-                    transition={{ 
-                      delay: i * 0.2,
-                      duration: 0.5,
-                      type: "spring",
-                      stiffness: 100
-                    }}
-                  >
-                    {/* Animated checkmark with glow */}
+              {/* Vertical progress bar container */}
+              <div className="relative flex items-center justify-center w-full max-w-2xl px-4 sm:px-6">
+                {/* Central vertical line */}
+                <motion.div
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  className="absolute left-12 sm:left-16 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/20 via-primary to-primary/20 origin-top"
+                />
+                
+                {/* Task items along the vertical line */}
+                <div className="relative w-full space-y-8 sm:space-y-10">
+                  {[
+                    { icon: "✈️", text: "Tracking 3 flight options (alerts set)" },
+                    { icon: "🏨", text: "Top 5 hotels researched + links" },
+                    { icon: "📝", text: "Packing list for ski trip created" },
+                    { icon: "🎿", text: "Lift ticket deals found, comparing" }
+                  ].map((task, i) => (
                     <motion.div
-                      initial={{ scale: 0, rotate: -180 }}
-                      whileInView={{ scale: 1, rotate: 0 }}
+                      key={i}
+                      className="flex items-center gap-6 sm:gap-8 relative"
+                      initial={{ opacity: 0, x: -30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: false }}
                       transition={{ 
-                        delay: 0.3 + i * 0.2, 
-                        duration: 0.6,
+                        delay: 0.3 + i * 0.15,
+                        duration: 0.5,
                         type: "spring",
-                        stiffness: 200
+                        stiffness: 120
                       }}
-                      className="relative"
                     >
+                      {/* Progress node with checkmark */}
                       <motion.div
-                        className="absolute inset-0 rounded-full bg-green-500/40 blur-xl"
-                        animate={{
-                          scale: [1, 1.3, 1],
-                          opacity: [0.5, 0.8, 0.5],
+                        initial={{ scale: 0, rotate: -180 }}
+                        whileInView={{ scale: 1, rotate: 0 }}
+                        viewport={{ once: false }}
+                        transition={{ 
+                          delay: 0.4 + i * 0.15, 
+                          duration: 0.6,
+                          type: "spring",
+                          stiffness: 200
                         }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: i * 0.3,
-                        }}
-                      />
-                      <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8 text-green-500 relative z-10 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+                        className="relative z-10"
+                      >
+                        <motion.div
+                          className="absolute inset-0 rounded-full bg-green-500/40 blur-lg"
+                          animate={{
+                            scale: [1, 1.4, 1],
+                            opacity: [0.4, 0.7, 0.4],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: i * 0.3,
+                          }}
+                        />
+                        <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-500 flex items-center justify-center shadow-lg">
+                          <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={2.5} />
+                        </div>
+                      </motion.div>
+                      
+                      {/* Task content */}
+                      <motion.div 
+                        className="flex items-center gap-3 sm:gap-4 flex-1"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: false }}
+                        transition={{ delay: 0.6 + i * 0.15 }}
+                      >
+                        <span className="text-2xl sm:text-3xl shrink-0">{task.icon}</span>
+                        <p className="text-base sm:text-lg text-foreground font-medium">
+                          {task.text}
+                        </p>
+                      </motion.div>
                     </motion.div>
-                    
-                    {/* Icon and text */}
-                    <motion.div 
-                      className="flex items-center gap-3 flex-1"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: false }}
-                      transition={{ delay: 0.5 + i * 0.2 }}
-                    >
-                      <span className="text-2xl sm:text-3xl shrink-0 drop-shadow-lg">{task.icon}</span>
-                      <p className="text-base sm:text-lg text-foreground font-medium drop-shadow-sm">
-                        {task.text}
-                      </p>
-                    </motion.div>
-                  </motion.div>
-                ))}
+                  ))}
+                </div>
               </div>
               
               {/* Confetti burst */}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Mic } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import asmiVoiceIcon from "@/assets/asmi-voice.png";
 
 interface DemoMessage {
   voiceInput: string;
@@ -183,46 +183,48 @@ export const VoiceInteractionDemo = () => {
                         <motion.div
                           className="relative"
                         >
-                          {/* Pulsing orb with particles */}
+                          {/* Rotating Asmi Voice Icon */}
                           <motion.div
                             animate={{ 
-                              scale: [1, 1.1, 1],
-                              rotate: [0, 180, 360]
+                              rotate: [0, 360]
                             }}
                             transition={{ 
-                              duration: 4, 
+                              duration: 8, 
                               repeat: Infinity, 
-                              ease: "easeInOut" 
+                              ease: "linear" 
                             }}
-                            className="relative w-28 h-28"
+                            className="relative w-32 h-32"
                           >
-                            {/* Main gradient orb */}
-                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 blur-xl opacity-80" />
-                            <div className="absolute inset-2 rounded-full bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 flex items-center justify-center shadow-2xl">
-                              <Mic className="w-12 h-12 text-white relative z-10" />
-                            </div>
+                            {/* Glow effect */}
+                            <div className="absolute inset-0 rounded-full bg-primary/40 blur-2xl" />
+                            
+                            {/* Icon image */}
+                            <img 
+                              src={asmiVoiceIcon} 
+                              alt="Asmi Voice" 
+                              className="w-full h-full object-contain relative z-10 drop-shadow-2xl"
+                            />
                             
                             {/* Orbiting particles */}
                             {[...Array(8)].map((_, i) => (
                               <motion.div
                                 key={i}
-                                className="absolute w-2 h-2 rounded-full"
+                                className="absolute w-2 h-2 rounded-full bg-primary"
                                 style={{
-                                  background: `hsl(${(i * 45) % 360}, 80%, 60%)`,
-                                  boxShadow: `0 0 10px hsl(${(i * 45) % 360}, 80%, 60%)`,
+                                  boxShadow: `0 0 10px hsl(var(--primary))`,
                                   left: '50%',
                                   top: '50%'
                                 }}
                                 animate={{
                                   x: [
-                                    Math.cos((i * 45 * Math.PI) / 180) * 50,
-                                    Math.cos(((i * 45 + 180) * Math.PI) / 180) * 50,
+                                    Math.cos((i * 45 * Math.PI) / 180) * 60,
+                                    Math.cos(((i * 45 + 180) * Math.PI) / 180) * 60,
                                   ],
                                   y: [
-                                    Math.sin((i * 45 * Math.PI) / 180) * 50,
-                                    Math.sin(((i * 45 + 180) * Math.PI) / 180) * 50,
+                                    Math.sin((i * 45 * Math.PI) / 180) * 60,
+                                    Math.sin(((i * 45 + 180) * Math.PI) / 180) * 60,
                                   ],
-                                  scale: [0, 1, 0],
+                                  scale: [0, 1.2, 0],
                                   opacity: [0, 1, 0]
                                 }}
                                 transition={{
@@ -238,7 +240,7 @@ export const VoiceInteractionDemo = () => {
                             {[...Array(3)].map((_, i) => (
                               <motion.div
                                 key={`ring-${i}`}
-                                className="absolute inset-0 rounded-full border-2 border-purple-400/30"
+                                className="absolute inset-0 rounded-full border-2 border-primary/30"
                                 animate={{ 
                                   scale: [1, 2.5, 1], 
                                   opacity: [0.6, 0, 0.6] 
@@ -254,50 +256,32 @@ export const VoiceInteractionDemo = () => {
                           </motion.div>
                         </motion.div>
                         
-                        {/* Modern fluid waveform */}
+                        {/* Modern fluid waveform with theme colors */}
                         <div className="flex items-center justify-center gap-1.5 h-20">
-                          {[...Array(15)].map((_, i) => {
-                            const colors = [
-                              "bg-blue-500",
-                              "bg-indigo-500",
-                              "bg-violet-500",
-                              "bg-purple-500",
-                              "bg-fuchsia-500",
-                              "bg-pink-500",
-                              "bg-rose-500",
-                              "bg-purple-500",
-                              "bg-fuchsia-500",
-                              "bg-purple-500",
-                              "bg-violet-500",
-                              "bg-indigo-500",
-                              "bg-blue-500",
-                              "bg-cyan-500",
-                              "bg-blue-500"
-                            ];
-                            return (
-                              <motion.div
-                                key={i}
-                                className={`w-1 ${colors[i]} rounded-full shadow-lg`}
-                                style={{
-                                  boxShadow: `0 0 10px currentColor`
-                                }}
-                                animate={{
-                                  height: [
-                                    `${20 + Math.sin(i * 0.5) * 10}px`,
-                                    `${40 + Math.sin(i * 0.5) * 20}px`,
-                                    `${20 + Math.sin(i * 0.5) * 10}px`
-                                  ],
-                                  opacity: [0.6, 1, 0.6]
-                                }}
-                                transition={{
-                                  duration: 0.8,
-                                  repeat: Infinity,
-                                  delay: i * 0.05,
-                                  ease: "easeInOut"
-                                }}
-                              />
-                            );
-                          })}
+                          {[...Array(15)].map((_, i) => (
+                            <motion.div
+                              key={i}
+                              className="w-1 rounded-full shadow-lg"
+                              style={{
+                                backgroundColor: `hsl(var(--primary))`,
+                                boxShadow: `0 0 10px hsl(var(--primary))`
+                              }}
+                              animate={{
+                                height: [
+                                  `${20 + Math.sin(i * 0.5) * 10}px`,
+                                  `${40 + Math.sin(i * 0.5) * 20}px`,
+                                  `${20 + Math.sin(i * 0.5) * 10}px`
+                                ],
+                                opacity: [0.6, 1, 0.6]
+                              }}
+                              transition={{
+                                duration: 0.8,
+                                repeat: Infinity,
+                                delay: i * 0.05,
+                                ease: "easeInOut"
+                              }}
+                            />
+                          ))}
                         </div>
                         
                         <p className="text-foreground/60 text-base font-medium">Listening...</p>

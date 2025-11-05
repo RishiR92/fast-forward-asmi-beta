@@ -181,8 +181,8 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl text-white font-black max-w-5xl mx-auto px-6 py-4 sm:px-8 sm:py-5 bg-black/50 backdrop-blur-md rounded-2xl border border-white/10"
-                style={{ textShadow: '0 4px 50px rgba(0,0,0,1), 0 2px 30px rgba(0,0,0,0.9), 0 0 100px rgba(168, 85, 247, 0.6)' }}
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-white font-black max-w-5xl mx-auto px-4 py-2 sm:px-6 sm:py-3"
+                style={{ textShadow: '0 2px 20px rgba(0,0,0,0.8)' }}
               >
                 The AI That Gets Things Done
               </motion.p>
