@@ -9,21 +9,21 @@ interface DemoMessage {
 
 const demos: DemoMessage[] = [
   {
-    voiceInput: "Emma's science project is due Friday, and soccer conflicts with piano",
-    results: [
-      "✅ Created 3-day timeline for project",
-      "✅ Rescheduled piano to Thursday 5pm",
-      "✅ Supply list emailed: poster board, markers, clay",
-      "✅ Carpool arranged with Sarah's mom"
-    ]
-  },
-  {
     voiceInput: "Brief me on the 2pm Acme call",
     results: [
       "📊 Steve Johnson, VP Sales - Decision maker",
       "📋 Key concerns: ROI timeline, integration",
       "📁 Deck ready: Custom ROI projections loaded",
       "💡 Talking points prepped in your notes"
+    ]
+  },
+  {
+    voiceInput: "Emma's science project is due Friday, and soccer conflicts with piano",
+    results: [
+      "✅ Created 3-day timeline for project",
+      "✅ Rescheduled piano to Thursday 5pm",
+      "✅ Supply list emailed: poster board, markers, clay",
+      "✅ Carpool arranged with Sarah's mom"
     ]
   },
   {
@@ -102,7 +102,7 @@ export const VoiceInteractionDemo = () => {
               setDisplayResults([]);
               setState('listening');
             }, 600);
-          }, 5500);
+          }, 3000);
         }
       }, 400);
       
@@ -122,10 +122,10 @@ export const VoiceInteractionDemo = () => {
           viewport={{ once: true }}
           className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 sm:mb-6 text-foreground px-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 sm:mb-6 text-foreground px-4 leading-tight">
             Just Tell. Asmi Handles the Rest.
           </h2>
-          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light px-4">
+          <p className="text-base sm:text-xl md:text-2xl text-muted-foreground font-light px-4">
             One interface for your entire life.
           </p>
         </motion.div>
