@@ -17,9 +17,8 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6">
-      {/* Clean Gradient Background */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-background via-muted/20 to-background" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6" style={{ backgroundColor: '#FFFFFF' }}>
+      {/* Pure white background */}
 
       <AnimatePresence mode="wait">
         {stage === 'stage1' && (
@@ -44,14 +43,13 @@ export const HeroSection = () => {
                   ease: [0.22, 1, 0.36, 1]
                 }}
                 style={{
-                  color: '#C7B7FF',
-                  textShadow: '0 0 25px #A59FC1, 0 -10px 40px rgba(199, 183, 255, 0.3)'
+                  color: '#D9D5FF',
+                  textShadow: '0 0 25px #7A3FFF'
                 }}
               >
                 People Don't Want More Tools
               </motion.div>
               <motion.div 
-                className="text-accent relative"
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ 
@@ -59,40 +57,15 @@ export const HeroSection = () => {
                   delay: 1.2,
                   ease: [0.22, 1, 0.36, 1]
                 }}
+                style={{
+                  background: 'linear-gradient(90deg, #8A4DFF, #C94BFF)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  fontWeight: 800,
+                  filter: 'drop-shadow(0 0 30px #5D3FFF)'
+                }}
               >
-                {/* Particle effects */}
-                {[...Array(20)].map((_, i) => {
-                  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-                  const radius = isMobile ? 150 : 300;
-                  
-                  return (
-                    <motion.div
-                      key={i}
-                      className="absolute w-2 h-2 rounded-full bg-accent/40"
-                      initial={{ 
-                        scale: 0,
-                        x: 0,
-                        y: 0,
-                        opacity: 0
-                      }}
-                      animate={{ 
-                        scale: [0, 1, 0],
-                        x: Math.cos(i * 18 * Math.PI / 180) * radius,
-                        y: Math.sin(i * 18 * Math.PI / 180) * radius,
-                        opacity: [0, 1, 0]
-                      }}
-                      transition={{ 
-                        duration: 1.5,
-                        delay: i * 0.05,
-                        ease: "easeOut"
-                      }}
-                      style={{
-                        left: '50%',
-                        top: '50%'
-                      }}
-                    />
-                  );
-                })}
                 They Want Sh*t Done
               </motion.div>
             </motion.h1>
@@ -157,27 +130,13 @@ export const HeroSection = () => {
               }}
             >
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-6 sm:mb-8 leading-tight px-4">
-                <span className="relative inline-block">
-                  <motion.span 
-                    className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
-                    animate={{
-                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                    style={{
-                      backgroundSize: '200% 200%',
-                      textShadow: '0 0 60px rgba(168, 85, 247, 0.5)'
-                    }}
-                  >
-                    Asmi
-                  </motion.span>
-                  <span className="relative bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                    Asmi
-                  </span>
+                <span 
+                  style={{
+                    color: '#7A3FFF',
+                    textShadow: '0 0 40px #C49BFF'
+                  }}
+                >
+                  Asmi
                 </span>
               </h1>
               
@@ -189,13 +148,12 @@ export const HeroSection = () => {
                 style={{ 
                   fontFamily: 'Inter, sans-serif',
                   fontWeight: 500,
-                  background: 'linear-gradient(90deg, #E7B5FF, #F1C6D3)',
+                  background: 'linear-gradient(90deg, #BFA3FF, #F1C6D3)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  opacity: 0.7,
-                  textShadow: '0 0 20px #B39FCB',
-                  filter: 'drop-shadow(0 0 20px #B39FCB)'
+                  opacity: 0.9,
+                  filter: 'drop-shadow(0 0 20px #7A3FFF)'
                 }}
               >
                 The AI That Gets Things Done
