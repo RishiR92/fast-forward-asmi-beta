@@ -27,7 +27,7 @@ export const WaitlistBanner = () => {
     <section className="py-16 sm:py-24 lg:py-32 px-6 bg-gradient-to-br from-primary to-primary-light">
       <div className="max-w-xl mx-auto text-center">
         <h2 className="text-4xl sm:text-5xl font-semibold mb-6 text-white">
-          Ready to Enter the Future?
+          Love Being The First Mover?
         </h2>
         <p className="text-white/90 text-lg mb-12">
           Join the waitlist. Experience Asmi before everyone else.
