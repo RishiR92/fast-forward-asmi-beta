@@ -31,70 +31,67 @@ export const HeroSection = () => {
             transition={{ duration: 0.6 }}
             className="relative z-20 text-center max-w-6xl mx-auto"
           >
-            <div className="relative">
-              {/* Particle effects */}
-              {[...Array(20)].map((_, i) => {
-                const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-                const radius = isMobile ? 150 : 300;
-                
-                return (
-                  <motion.div
-                    key={i}
-                    className="absolute w-2 h-2 rounded-full bg-accent/40"
-                    initial={{ 
-                      scale: 0,
-                      x: 0,
-                      y: 0,
-                      opacity: 0
-                    }}
-                    animate={{ 
-                      scale: [0, 1, 0],
-                      x: Math.cos(i * 18 * Math.PI / 180) * radius,
-                      y: Math.sin(i * 18 * Math.PI / 180) * radius,
-                      opacity: [0, 1, 0]
-                    }}
-                  transition={{ 
-                    duration: 1.5,
-                    delay: i * 0.05,
-                    ease: "easeOut"
-                  }}
-                    style={{
-                      left: '50%',
-                      top: '50%'
-                    }}
-                  />
-                );
-              })}
-              
-              <motion.h1 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight relative space-y-3 sm:space-y-4 px-4"
-                style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}
+            <motion.h1 
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight relative space-y-3 sm:space-y-4 px-4"
+              style={{ textShadow: '0 2px 30px rgba(0,0,0,0.4)' }}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ 
+                  duration: 0.8,
+                  delay: 0.2,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ 
-                    duration: 0.8,
-                    delay: 0.2,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                >
-                  People Don't Want More Tools
-                </motion.div>
-                <motion.div 
-                  className="text-accent"
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ 
-                    duration: 0.8,
-                    delay: 1.2,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                >
-                  They Want Sh*t Done
-                </motion.div>
-              </motion.h1>
-            </div>
+                People Don't Want More Tools
+              </motion.div>
+              <motion.div 
+                className="text-accent relative"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  duration: 0.8,
+                  delay: 1.2,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              >
+                {/* Particle effects */}
+                {[...Array(20)].map((_, i) => {
+                  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+                  const radius = isMobile ? 150 : 300;
+                  
+                  return (
+                    <motion.div
+                      key={i}
+                      className="absolute w-2 h-2 rounded-full bg-accent/40"
+                      initial={{ 
+                        scale: 0,
+                        x: 0,
+                        y: 0,
+                        opacity: 0
+                      }}
+                      animate={{ 
+                        scale: [0, 1, 0],
+                        x: Math.cos(i * 18 * Math.PI / 180) * radius,
+                        y: Math.sin(i * 18 * Math.PI / 180) * radius,
+                        opacity: [0, 1, 0]
+                      }}
+                      transition={{ 
+                        duration: 1.5,
+                        delay: i * 0.05,
+                        ease: "easeOut"
+                      }}
+                      style={{
+                        left: '50%',
+                        top: '50%'
+                      }}
+                    />
+                  );
+                })}
+                They Want Sh*t Done
+              </motion.div>
+            </motion.h1>
           </motion.div>
         )}
 
@@ -184,8 +181,8 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="text-lg sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl text-white font-bold max-w-5xl mx-auto px-4"
-                style={{ textShadow: '0 4px 40px rgba(0,0,0,0.6), 0 0 80px rgba(168, 85, 247, 0.3)' }}
+                className="text-lg sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl text-white font-black max-w-5xl mx-auto px-6 py-3 sm:px-8 sm:py-4 bg-black/40 backdrop-blur-sm rounded-xl"
+                style={{ textShadow: '0 4px 40px rgba(0,0,0,0.9), 0 2px 20px rgba(0,0,0,0.8), 0 0 80px rgba(168, 85, 247, 0.5)' }}
               >
                 The AI That Gets Things Done
               </motion.p>
