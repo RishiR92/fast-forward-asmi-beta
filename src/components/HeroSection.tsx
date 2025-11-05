@@ -206,7 +206,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2.2 }}
-              className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2"
+              className="absolute bottom-4 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2"
             >
               <motion.div
                 animate={{ y: [0, 10, 0] }}
