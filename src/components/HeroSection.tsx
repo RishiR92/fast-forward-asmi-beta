@@ -32,7 +32,7 @@ export const HeroSection = () => {
             className="relative z-20 text-center max-w-6xl mx-auto"
           >
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold leading-tight relative space-y-3 sm:space-y-4 px-4"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold leading-tight relative space-y-6 sm:space-y-8 md:space-y-10 px-4"
             >
               <motion.div
                 initial={{ opacity: 0, y: 30, scale: 0.9 }}
@@ -206,7 +206,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2.2 }}
-              className="absolute bottom-4 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2"
+              className="mt-12 sm:mt-16 md:mt-20 flex justify-center"
             >
               <motion.div
                 animate={{ y: [0, 10, 0] }}
