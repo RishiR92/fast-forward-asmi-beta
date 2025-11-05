@@ -20,8 +20,7 @@ export const OutcomesGrid = () => {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-200px" }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          viewport={{ once: true }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-center mb-16 sm:mb-20 lg:mb-24 text-foreground px-4"
         >
           How Asmi Works
@@ -243,24 +242,18 @@ export const OutcomesGrid = () => {
           >
             {/* Animation Area */}
             <div className="relative h-64 sm:h-72 lg:h-80 mb-12 flex items-center justify-center">
-              {/* Task completion cards */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm space-y-2 px-4 sm:px-6">
-                {[
-                  { icon: "✈️", text: "Tracking 3 flight options (alerts set)" },
-                  { icon: "🏨", text: "Top 5 hotels researched + links" },
-                  { icon: "📝", text: "Packing list for ski trip created" },
-                  { icon: "🎿", text: "Lift ticket deals found, comparing" }
-                ].map((task, i) => (
+              {/* Task list items */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md space-y-2 sm:space-y-3 lg:space-y-4 px-4 sm:px-0">
+                {[...Array(4)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="flex items-center gap-3 bg-card/80 backdrop-blur rounded-lg p-3 border border-border/30 shadow-sm"
-                    initial={{ opacity: 0, x: -30, scale: 0.95 }}
-                    whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                    className="flex items-center space-x-4 bg-card/50 backdrop-blur-sm rounded-xl p-4 border border-border/50"
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: false }}
                     transition={{ 
-                      delay: i * 0.15,
-                      duration: 0.4,
-                      ease: "easeOut"
+                      delay: i * 0.2,
+                      duration: 0.6
                     }}
                   >
                     <motion.div
@@ -268,20 +261,27 @@ export const OutcomesGrid = () => {
                       whileInView={{ scale: 1, rotate: 0 }}
                       viewport={{ once: false }}
                       transition={{ 
-                        delay: 0.2 + i * 0.15, 
-                        duration: 0.4,
+                        delay: 0.3 + i * 0.2, 
+                        duration: 0.5,
                         type: "spring",
                         stiffness: 300
                       }}
                     >
-                      <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 shrink-0" />
+                      <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-green-500" />
                     </motion.div>
                     
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <span className="text-lg sm:text-xl shrink-0">{task.icon}</span>
-                      <p className="text-sm sm:text-base text-foreground/90 font-medium">
-                        {task.text}
-                      </p>
+                    <div className="h-3 bg-muted rounded-full flex-1 overflow-hidden">
+                      <motion.div
+                        className="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full"
+                        initial={{ width: "0%" }}
+                        whileInView={{ width: "100%" }}
+                        viewport={{ once: false }}
+                        transition={{ 
+                          delay: 0.5 + i * 0.2,
+                          duration: 0.8,
+                          ease: "easeInOut"
+                        }}
+                      />
                     </div>
                   </motion.div>
                 ))}
@@ -307,7 +307,7 @@ export const OutcomesGrid = () => {
                   }}
                   viewport={{ once: false }}
                   transition={{
-                    delay: 1.2,
+                    delay: 1.6,
                     duration: 1.5,
                     ease: "easeOut"
                   }}
