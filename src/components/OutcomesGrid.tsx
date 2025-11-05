@@ -20,7 +20,7 @@ export const OutcomesGrid = () => {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-200px" }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-center mb-16 sm:mb-20 lg:mb-24 text-foreground px-4"
         >
